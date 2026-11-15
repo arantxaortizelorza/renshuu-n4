@@ -1,0 +1,2589 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Renshū N4</title>
+<meta name="description" content="Práctica de japonés para el Noken 4: gramática, vocabulario y kanji.">
+<meta name="theme-color" content="#F2F4F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F131A" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Renshū N4">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font-size:14px}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* Layout: una columna estrecha tipo cuaderno, pensada para el pulgar; tinta 藍 (índigo) sobre papel frío, 朱 para la ★ */
+:root{
+  --bg:#F2F4F7; --surface:#FFFFFF; --sunken:#E7EBF1; --ink:#172031; --muted:#5B6578; --line:#D5DBE5;
+  --ai:#2B4A8B; --ai-soft:#E1E8F6; --ai-ink:#FFFFFF; --shu:#C4432B;
+  --ok:#1E7A4C; --ok-soft:#DCF0E4; --ng:#B4372C; --ng-soft:#F7E0DC;
+  --f-ui:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP","Yu Gothic",system-ui,sans-serif;
+  --f-k:"Klee One","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F131A; --surface:#18202B; --sunken:#212A37; --ink:#E6EAF1; --muted:#9AA4B6; --line:#2C3646;
+  --ai:#8FA9EA; --ai-soft:#22304C; --ai-ink:#0F131A; --shu:#F08A70;
+  --ok:#5DC48E; --ok-soft:#15342A; --ng:#F0857A; --ng-soft:#3C1F1D; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0F131A; --surface:#18202B; --sunken:#212A37; --ink:#E6EAF1; --muted:#9AA4B6; --line:#2C3646;
+  --ai:#8FA9EA; --ai-soft:#22304C; --ai-ink:#0F131A; --shu:#F08A70;
+  --ok:#5DC48E; --ok-soft:#15342A; --ng:#F0857A; --ng-soft:#3C1F1D; color-scheme:dark;}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.6;min-height:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--ai);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nofuri rt{visibility:hidden}
+rt{font-size:.55em;color:var(--muted);font-weight:500}
+
+/* Barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:10px;min-height:56px}
+.bar-t{flex:1;min-width:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{flex:1;font-weight:700;font-size:18px;letter-spacing:.02em}
+.brand-k{font-family:var(--f-k);color:var(--ai);font-size:22px;margin-right:2px}
+.iconbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:18px;flex:none}
+.iconbtn.furi{font-family:var(--f-k);font-size:17px}
+.iconbtn.furi.on{background:var(--ai);color:var(--ai-ink);border-color:var(--ai)}
+.prog{flex:1;height:8px;border-radius:99px;background:var(--sunken);overflow:hidden}
+.prog-f{height:100%;background:var(--ai);border-radius:99px;transition:width .3s}
+.count{font-variant-numeric:tabular-nums;font-size:14px;color:var(--muted);min-width:3.2em;text-align:right}
+
+/* Inicio */
+main{padding-block:20px 40px}
+.hero h1{font-family:var(--f-k);font-weight:600;font-size:30px;line-height:1.25;margin:4px 0 6px;text-wrap:balance}
+.hero h1 span{color:var(--ai)}
+.hero p{margin:0 0 16px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px}
+.stats div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stats b{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.2}
+.stats span{font-size:12px;color:var(--muted)}
+.tiles{display:grid;gap:10px}
+.tile{display:flex;align-items:center;gap:14px;text-align:left;width:100%;padding:14px 16px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface)}
+.tile .gl{font-family:var(--f-k);font-size:40px;line-height:1;width:58px;height:58px;display:grid;place-items:center;border-radius:12px;background:var(--ai-soft);color:var(--ai);flex:none}
+.tile.all .gl{background:var(--ai);color:var(--ai-ink)}
+.tile .tt{flex:1;min-width:0}
+.tile .tt b{display:block;font-size:18px}
+.tile .tt span{font-size:13px;color:var(--muted)}
+.tile .arr{color:var(--muted);font-size:20px}
+.review{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:var(--r);border:1.5px dashed var(--shu);background:transparent;color:var(--shu);font-weight:700}
+.review span{background:var(--shu);color:var(--surface);border-radius:99px;padding:0 10px;font-variant-numeric:tabular-nums}
+.foot{font-size:13px;color:var(--muted);margin-top:22px}
+
+/* Sección */
+.sech{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.sech .gl{font-family:var(--f-k);font-size:46px;color:var(--ai);line-height:1}
+.sech h2{margin:0;font-size:22px}
+.sech p{margin:0;color:var(--muted);font-size:14px}
+.lbl{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:18px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;font-size:14px;font-variant-numeric:tabular-nums}
+.chip.on{background:var(--ai);border-color:var(--ai);color:var(--ai-ink)}
+.modes{display:grid;gap:8px;margin-top:6px}
+.tgs{display:grid;gap:6px}
+.tg{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tg.has{border-color:var(--ai)}
+.tgh{display:flex;align-items:stretch}
+.tgsel{flex:1;min-width:0;display:flex;align-items:center;gap:10px;text-align:left;background:transparent;border:0;padding:10px 12px;font-size:15px}
+.tck{flex:none;width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--ai-ink)}
+.tg.has .tck{background:var(--ai-soft);border-color:var(--ai);color:var(--ai)}
+.tgsel.on .tck{background:var(--ai);color:var(--ai-ink)}
+.tgn{flex:1;min-width:0;font-weight:500}
+.tgc{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tgx{flex:none;width:48px;border:0;border-left:1px solid var(--line);background:transparent;color:var(--muted);font-size:16px}
+.tgl{padding:0 12px 12px}
+.mode{display:flex;gap:12px;align-items:center;text-align:left;width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
+.mode .mj{font-size:12px;color:var(--ai);font-weight:700;display:block}
+.mode b{display:block;font-size:16px}
+.mode span.d{font-size:13px;color:var(--muted)}
+.mode .go{margin-left:auto;color:var(--muted)}
+.mode.star{border-color:var(--ai);background:var(--ai-soft)}
+
+/* Pregunta */
+.qmain{padding-block:16px 48px}
+.tag{display:inline-block;font-size:12px;font-weight:700;color:var(--ai);background:var(--ai-soft);border-radius:8px;padding:2px 8px;margin-bottom:10px}
+.prompt{font-size:20px;line-height:1.7;word-break:break-word}
+.prompt .bigk{font-family:var(--f-k);font-size:104px;line-height:1.1;text-align:center;padding:8px 0}
+.prompt .pword{font-family:var(--f-k);font-size:40px;text-align:center;line-height:1.8;padding:6px 0}
+.prompt .pmean{font-size:24px;font-weight:700;text-align:center;padding:14px 0 4px}
+.prompt .pmeta{font-size:14px;color:var(--muted);text-align:center}
+.psent{font-size:20px;line-height:2}
+.blank{display:inline-block;min-width:3.4em;border-bottom:2px solid var(--ai);margin:0 3px;height:1.3em;vertical-align:-2px}
+.hint{font-size:14px;color:var(--muted);font-style:italic;margin-top:2px}
+.sub{color:var(--muted);font-size:14px;margin:6px 0 14px}
+.slot{display:inline-block;width:3.2em;border-bottom:2px solid var(--muted);margin:0 3px;height:1.4em;vertical-align:-4px;text-align:center;line-height:1.4}
+.slot.star{border-color:var(--shu);color:var(--shu);font-weight:700}
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:54px;text-align:left;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;line-height:1.5}
+.opt:disabled{cursor:default;opacity:1}
+.opt .num{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.opt .ot{min-width:0;word-break:break-word}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .num{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.opt.ng{border-color:var(--ng);background:var(--ng-soft)}
+.opt.ng .num{background:var(--ng);border-color:var(--ng);color:var(--surface)}
+.kopts{grid-template-columns:1fr 1fr}
+.kopts .opt{justify-content:center;font-family:var(--f-k);font-size:44px;min-height:84px;position:relative}
+.kopts .opt .num{position:absolute;top:8px;left:8px}
+.passage{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:14px}
+.passage summary{font-weight:700;cursor:pointer;color:var(--ai)}
+.ptext{font-size:17px;line-height:2.1;white-space:pre-line;margin-top:6px}
+.inform{display:grid;gap:10px}
+.tin{width:100%;font:inherit;font-size:22px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.preview{min-height:1.4em;color:var(--ai);font-size:18px}
+.row{display:flex;gap:8px}
+.row>*{flex:1}
+.btn{border-radius:12px;padding:13px 16px;font-weight:700;border:1.5px solid var(--line);background:var(--surface);font-size:16px}
+.btn.primary{background:var(--ai);border-color:var(--ai);color:var(--ai-ink)}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* Feedback */
+.fb{margin-top:16px;border-radius:var(--r);padding:14px 16px;border:1.5px solid var(--line);background:var(--surface);display:grid;gap:10px}
+.fb.ok{border-color:var(--ok);background:var(--ok-soft)}
+.fb.ng{border-color:var(--ng);background:var(--ng-soft)}
+.fb-h{font-weight:700;font-size:17px}
+.fb.ok .fb-h{color:var(--ok)}
+.fb.ng .fb-h{color:var(--ng)}
+.fb-x{font-size:15px;line-height:1.7;word-break:break-word}
+.fb-x .jp{font-size:17px}
+.jk{font-family:var(--f-k);font-size:1.3em}
+
+/* Ordenar */
+.line{font-size:19px;line-height:2.6;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px;min-height:64px}
+.pc{display:inline-block;border:1.5px solid var(--ai);background:var(--ai-soft);color:var(--ink);border-radius:10px;padding:2px 10px;margin:2px;font-size:18px;line-height:1.6}
+.pc.empty{border-style:dashed;border-color:var(--line);background:transparent;min-width:3em;color:transparent}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.pool .pc{background:var(--surface);padding:8px 14px}
+
+/* Unir */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mcol{display:grid;gap:8px;align-content:start}
+.mb{min-height:58px;padding:8px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-size:15px;line-height:1.35;word-break:break-word}
+.mb.k{font-family:var(--f-k);font-size:30px}
+.mb.sel{border-color:var(--ai);background:var(--ai-soft)}
+.mb.done{border-color:var(--ok);background:var(--ok-soft);opacity:.55}
+.mb.bad{border-color:var(--ng);background:var(--ng-soft);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){.mb.bad{animation:none}.prog-f{transition:none}}
+
+/* Dibujar */
+.drawinfo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+.drawinfo b{font-size:20px}
+.pad{position:relative;width:100%;max-width:320px;aspect-ratio:1;margin:0 auto;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);overflow:hidden}
+.pad::before,.pad::after{content:"";position:absolute;pointer-events:none;border:0 dashed var(--line)}
+.pad::before{left:50%;top:0;bottom:0;border-left-width:1.5px}
+.pad::after{top:50%;left:0;right:0;border-top-width:1.5px}
+.pad canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.reveal{display:flex;align-items:center;justify-content:center;gap:18px;margin:12px 0}
+.reveal .bigk{font-family:var(--f-k);font-size:96px;line-height:1}
+
+/* Resultado */
+.score{text-align:center;padding:18px 0 8px}
+.score b{font-size:56px;font-variant-numeric:tabular-nums;line-height:1}
+.score span{display:block;color:var(--muted)}
+.score .kk{font-family:var(--f-k);font-size:28px;color:var(--ai);margin-bottom:6px}
+.wlist{display:grid;gap:8px;margin-top:10px}
+.witem{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ng);border-radius:10px;padding:10px 12px;font-size:14px;word-break:break-word}
+.witem .wp{font-size:16px}
+.witem .wp .bigk{font-family:var(--f-k);font-size:32px}
+.witem .wp .pword{font-family:var(--f-k);font-size:22px}
+.witem .wp .pmean{font-weight:700}
+.witem .wp .pmeta{display:none}
+.witem .wa{color:var(--ok);font-weight:700;margin-top:4px}
+.actions{display:grid;gap:8px;margin-top:20px}
+</style>
+
+<div id="app"></div>
+
+<script>
+'use strict';
+/* ================= DATOS ================= */
+/* Lista de kanji N4 (orden de los apuntes): kanji|onyomi|kunyomi|significado */
+const KANJI_RAW=`悪|アク、オ|わる・い|Mal
+安|アン|やす・い|Barato / tranquilo
+以|イ||De aquí para (以上, 以下)
+意|イ||Voluntad, idea
+医|イ||Curar, medicina
+一|イチ、イツ|ひと・つ|Uno
+員|イン||Miembro, socio
+飲|イン|の・む|Beber
+引|イン|ひ・く|Tirar, estirar / restar
+院|イン||Institución, pabellón
+雨|ウ|あめ|Lluvia
+右|ウ、ユウ|みぎ|Derecha
+運|ウン|はこ・ぶ|Suerte / transportar
+映|エイ|うつ・す、うつ・る|Reflejar, proyectar
+英|エイ||Inglaterra
+泳|エイ|およ・ぐ|Nadar
+駅|エキ||Estación (de tren)
+円|エン|まる・い|Yen / círculo
+遠|エン|とお・い|Lejano
+園|エン|その|Jardín, parque
+王|オウ||Rey
+横|オウ|よこ|Lado, lateral
+億|オク||Cien millones
+屋|オク|や|Tienda, establecimiento
+音|オン|おと|Sonido
+火|カ|ひ|Fuego
+花|カ|はな|Flor
+何|カ|なに、なん|Qué
+歌|カ|うた、うた・う|Canción / cantar
+夏|カ|なつ|Verano
+画|ガ、カク||Dibujo, cuadro, trazo
+家|カ、ケ|いえ|Casa
+下|カ|した、さ・がる、さ・げる、くだ・さる|Abajo / bajar
+貝|カイ||Concha, molusco
+海|カイ|うみ|Mar
+会|カイ|あ・う|Reunión / verse con
+絵|カイ|え|Pintura, ilustración
+開|カイ|あ・く、あ・ける|Abrirse / abrir
+回|カイ|まわ・る、まわ・す|Vez / girar
+界|カイ||Mundo, ámbito
+外|ガイ、ゲ|そと、ほか|Exterior / otro
+学|ガク|まな・ぶ|Estudio / aprender
+楽|ガク、ラク|たの・しい|Divertido / comodidad / música
+館|カン||Edificio, palacio
+漢|カン||China (dinastía Han)
+間|カン、ケン|あいだ、ま|Intervalo / entre
+丸|ガン|まる、まる・い|Redondo, círculo
+顔|ガン|かお|Cara, rostro
+帰|キ|かえ・る|Regresar, volver
+起|キ|お・きる、お・こす|Levantarse / despertar
+気|キ、ケ||Espíritu, ánimo, aire
+客|キャク||Cliente, invitado
+弓|キュウ|ゆみ|Arco
+休|キュウ|やす・む、やす・み|Descansar / vacaciones
+急|キュウ|いそ・ぐ|Urgencia / darse prisa
+究|キュウ|きわ・める|Investigar
+球|キュウ|たま|Esfera, pelota
+九|キュウ、ク|ここの・つ|Nueve
+去|キョ|さ・る|Pasar, irse
+魚|ギョ|さかな|Pez, pescado
+教|キョウ|おし・える|Enseñar
+橋|キョウ|はし|Puente
+業|ギョウ||Negocio, industria
+京|キョウ、ケイ|みやこ|Capital
+強|キョウ、ゴウ|つよ・い|Fuerte
+玉|ギョク|たま|Bola / joya
+近|キン|ちか・い|Cercano
+銀|ギン|しろがね|Plata
+金|キン、コン|かね|Oro / dinero
+苦|ク|くる・しい、にが・い|Doloroso / amargo
+空|クウ|そら、から|Cielo / vacío
+君|クン|きみ|Tú / sufijo (〜君)
+計|ケイ|はか・る|Medir, calcular
+軽|ケイ|かる・い|Ligero
+兄|ケイ、キョウ|あに|Hermano mayor
+血|ケツ|ち|Sangre
+月|ゲツ、ガツ|つき|Luna / mes
+見|ケン|み・る、み・える、み・せる|Ver / mostrar
+犬|ケン|いぬ|Perro
+県|ケン||Prefectura
+験|ケン||Examen, verificación
+建|ケン|た・てる、た・つ|Construir
+研|ケン|と・ぐ|Pulir / investigar
+元|ゲン|もと|Origen, base
+原|ゲン|はら|Original / campo, llanura
+言|ゲン、ゴン|い・う|Decir / palabra
+古|コ|ふる・い|Viejo
+戸|コ|と|Puerta
+五|ゴ|いつ・つ|Cinco
+午|ゴ||Mediodía
+語|ゴ|かた・る|Idioma / narrar
+後|ゴ、コウ|うし・ろ、あと|Detrás / después
+校|コウ||Escuela
+高|コウ|たか・い|Alto / caro
+考|コウ|かんが・える|Pensar, reflexionar
+光|コウ|ひかり、ひか・る|Luz / brillar
+広|コウ|ひろ・い|Amplio, ancho
+黄|コウ、オウ|き|Amarillo
+行|コウ、ギョウ|い・く、おこな・う|Ir / hacer, línea
+口|コウ、ク|くち|Boca
+工|コウ、ク||Obra, artesano
+国|コク|くに|País
+黒|コク|くろ、くろ・い|Negro
+今|コン、キン|いま|Ahora
+左|サ|ひだり|Izquierda
+作|サク|つく・る|Fabricar, hacer
+三|サン|みっ・つ|Tres
+山|サン|やま|Montaña
+四|シ|よっ・つ、よん|Cuatro
+糸|シ|いと|Hilo
+市|シ|いち|Ciudad / mercado
+死|シ|し・ぬ|Muerte / morir
+思|シ|おも・う|Pensar, creer
+子|シ|こ|Niño, niña
+私|シ|わたし、わたくし|Yo / privado
+紙|シ|かみ|Papel
+使|シ|つか・う|Usar
+仕|シ|つか・える|Servir
+姉|シ|あね|Hermana mayor
+止|シ|と・まる、と・める|Detenerse / detener
+始|シ|はじ・まる、はじ・める|Comenzar
+歯|シ|は|Diente
+指|シ|ゆび、さ・す|Dedo / señalar
+試|シ|ため・す、こころ・みる|Probar, intentar
+寺|ジ|てら|Templo budista
+時|ジ|とき|Hora, tiempo
+自|ジ|みずか・ら|Uno mismo, auto-
+耳|ジ|みみ|Oreja, oído
+事|ジ|こと|Hecho, asunto
+字|ジ||Letra, carácter
+次|ジ|つ・ぐ、つぎ|Siguiente
+持|ジ|も・つ|Tener, llevar
+七|シチ|なな、なな・つ、なの|Siete
+室|シツ||Habitación, sala
+質|シツ、シチ||Calidad / materia
+実|ジツ|み、みの・る|Verdad / fruto
+車|シャ|くるま|Coche
+者|シャ|もの|Persona
+社|シャ||Empresa, sociedad
+写|シャ|うつ・す|Copiar, fotografiar
+借|シャク|か・りる|Tomar prestado
+手|シュ|て|Mano
+首|シュ|くび|Cuello
+主|シュ|ぬし、おも|Dueño / principal
+取|シュ|と・る|Tomar, coger
+酒|シュ|さけ|Sake, alcohol
+週|シュウ||Semana
+集|シュウ|あつ・まる、あつ・める|Reunirse / reunir
+終|シュウ|お・わる、お・える|Terminar
+秋|シュウ|あき|Otoño
+習|シュウ|なら・う|Aprender
+住|ジュウ|す・む|Vivir, residir
+重|ジュウ|かさ・ねる、おも・い|Apilar / pesado
+十|ジュウ、ジ|とお、と|Diez
+出|シュツ|だ・す、で・る|Sacar / salir
+春|シュン|はる|Primavera
+書|ショ|か・く|Escribir / documento
+所|ショ|ところ|Lugar, sitio
+女|ジョ、ニョ|おんな|Mujer
+小|ショウ|こ、ちい・さい|Pequeño
+少|ショウ|すこ・し、すく・ない|Poco, escaso
+上|ジョウ|うえ、あ・がる、あ・げる|Arriba / subir / dar
+場|ジョウ|ば|Lugar, sitio
+食|ショク|た・べる、く・う|Comer
+色|ショク、シキ|いろ|Color
+心|シン|こころ|Corazón, mente
+新|シン|あたら・しい|Nuevo
+親|シン|おや、した・しい|Padres / íntimo
+森|シン|もり|Bosque
+真|シン|ま|Verdad / pleno
+神|シン|かみ|Dios
+人|ジン、ニン|ひと|Persona
+図|ズ、ト||Dibujo, gráfico
+水|スイ|みず|Agua
+数|スウ|かず、かぞ・える|Número / contar
+西|セイ|にし|Oeste
+声|セイ|こえ|Voz
+青|セイ|あお、あお・い|Azul, verde
+晴|セイ|は・れる、は・らす|Despejarse (el cielo)
+生|セイ、ショウ|なま、い・きる、う・まれる|Vivir / nacer / crudo
+正|セイ、ショウ|ただ・しい|Correcto, justo
+世|セイ、セ|よ|Mundo, sociedad, generación
+夕|セキ|ゆう|Atardecer
+石|セキ|いし|Piedra
+赤|セキ|あか、あか・い|Rojo
+切|セツ|き・る、き・れる|Cortar
+雪|セツ|ゆき|Nieve
+千|セン|ち|Mil
+川|セン|かわ|Río
+先|セン|さき|Anterior / punta
+船|セン|ふね|Barco
+前|ゼン|まえ|Delante / antes
+全|ゼン|まった・く、すべ・て|Todo / completamente
+早|ソウ|はや・い|Temprano
+草|ソウ|くさ|Hierba, planta
+走|ソウ|はし・る|Correr
+送|ソウ|おく・る|Enviar / acompañar
+足|ソク|あし、た・りる、た・す|Pie, pierna / bastar
+族|ゾク||Familia, clan
+村|ソン|むら|Pueblo, aldea
+多|タ|おお・い|Abundante, mucho
+体|タイ|からだ|Cuerpo
+太|タイ|ふと・い、ふと・る|Gordo, grueso
+待|タイ|ま・つ|Esperar
+貸|タイ|か・す|Prestar
+第|ダイ||Prefijo de ordinales
+代|ダイ|か・わる|Época, precio / sustituir
+題|ダイ||Tema, título
+大|ダイ、タイ|おお・きい|Grande
+台|ダイ、タイ||Pedestal / contador de máquinas
+男|ダン、ナン|おとこ|Hombre, varón
+知|チ|し・る|Saber, enterarse
+地|チ、ジ||Tierra, suelo
+池|チ|いけ|Estanque
+竹|チク|たけ|Bambú
+茶|チャ、サ||Té
+着|チャク|つ・く、き・る|Llegar / vestir
+中|チュウ|なか|Dentro / centro
+虫|チュウ|むし|Insecto, bicho
+注|チュウ|そそ・ぐ|Verter / nota
+昼|チュウ|ひる|Mediodía, día
+長|チョウ|なが・い|Largo / jefe
+町|チョウ|まち|Ciudad, barrio
+鳥|チョウ|とり|Pájaro
+朝|チョウ|あさ|Mañana
+通|ツウ|とお・る、かよ・う|Pasar por / frecuentar
+弟|テイ、ダイ|おとうと|Hermano menor
+定|テイ、ジョウ|さだ・める|Fijar, establecer
+庭|テイ|にわ|Jardín
+鉄|テツ|くろがね|Hierro
+天|テン||Cielo, paraíso
+点|テン||Punto
+店|テン|みせ|Tienda
+転|テン|ころ・ぶ、ころ・がる|Caerse / rodar
+田|デン|た|Campo de arroz
+電|デン||Electricidad
+都|ト|みやこ|Capital, gran ciudad
+売|バイ|う・る|Vender
+買|バイ|か・う|Comprar
+白|ハク|しろ、しろ・い|Blanco
+八|ハチ|やっ・つ、や|Ocho
+発|ハツ||Salida, disparo
+反|ハン||Anti-, contrario
+半|ハン|なか・ば|Mitad
+飯|ハン|めし|Arroz cocido, comida
+番|バン||Número, turno
+美|ビ|うつく・しい|Bello, hermoso
+百|ヒャク||Cien
+氷|ヒョウ|こおり|Hielo
+病|ビョウ||Enfermedad
+秒|ビョウ||Segundo (tiempo)
+品|ヒン|しな|Artículo, producto
+父|フ|ちち|Padre
+不|フ、ブ||Prefijo negativo (in-, des-)
+風|フウ|かぜ|Viento
+服|フク||Ropa
+物|ブツ|もの|Cosa, objeto
+聞|ブン|き・く、き・こえる|Oír, preguntar
+分|ブン、ブ、フン|わ・ける、わ・かる|Minuto, parte / entender
+度|ド|たび|Vez / grado
+土|ド、ト|つち|Tierra
+東|トウ|ひがし|Este
+答|トウ|こた・え、こた・える|Respuesta / responder
+刀|トウ|かたな|Espada, katana
+当|トウ|あ・てる、あ・たる|Acertar / dar en
+冬|トウ|ふゆ|Invierno
+島|トウ|しま|Isla
+頭|トウ|あたま|Cabeza
+道|ドウ|みち|Camino
+同|ドウ|おな・じ|Igual, mismo
+動|ドウ|うご・く、うご・かす|Moverse / mover
+堂|ドウ||Sala, salón
+特|トク||Especial
+読|ドク|よ・む|Leer
+内|ナイ|うち|Dentro, interior
+南|ナン|みなみ|Sur
+二|ニ|ふた・つ|Dos
+肉|ニク||Carne
+日|ニチ、ジツ|ひ、か|Día / sol
+入|ニュウ|はい・る、い・れる|Entrar / meter
+年|ネン|とし|Año
+馬|バ、マ|うま|Caballo
+文|ブン、モン||Frase, texto
+米|ベイ、マイ|こめ|Arroz / América
+別|ベツ|わか・れる|Otro, distinto / separarse
+勉|ベン|つと・める|Esforzarse
+母|ボ|はは|Madre
+歩|ホ、ブ|ある・く|Caminar
+方|ホウ|かた|Dirección / persona / manera
+北|ホク|きた|Norte
+木|ボク、モク|き|Árbol, madera
+本|ホン|もと|Libro / origen
+毎|マイ|ごと|Cada
+妹|マイ|いもうと|Hermana menor
+万|マン、バン||Diez mil
+味|ミ|あじ|Sabor
+明|メイ、ミョウ|あか・るい|Claro, luminoso
+名|メイ、ミョウ|な|Nombre / fama
+面|メン|おもて、つら|Cara / superficie
+毛|モウ|け|Pelo
+目|モク|め|Ojo
+門|モン||Puerta grande, portón
+問|モン|と・い|Pregunta, cuestión
+野|ヤ|の|Campo
+夜|ヤ|よる、よ|Noche
+友|ユウ|とも|Amigo
+有|ユウ|あ・る|Tener, haber
+曜|ヨウ||Día de la semana
+用|ヨウ|もち・いる|Uso / usar
+洋|ヨウ||Océano / occidente
+来|ライ|く・る|Venir / próximo
+理|リ||Lógica, razón
+立|リツ|た・つ|Levantarse, ponerse de pie
+旅|リョ|たび|Viaje
+料|リョウ||Precio / materiales
+力|リョク、リキ|ちから|Fuerza
+林|リン|はやし|Arboleda
+六|ロク|むっ・つ|Seis
+話|ワ|はな・す、はなし|Hablar / conversación`;
+
+/* Vocabulario N4: palabra|lectura|significado|categoría (n, v1 godan, v2 ichidan, v3 irregular, ai, na, adv) */
+const VOCAB_RAW=`会う|あう|ver a alguien, quedar con|v1
+開く|あく|abrirse|v1
+開ける|あける|abrir|v2
+上げる|あげる|dar; subir algo|v2
+遊ぶ|あそぶ|jugar, divertirse|v1
+集まる|あつまる|reunirse|v1
+集める|あつめる|reunir, coleccionar|v2
+謝る|あやまる|pedir perdón|v1
+洗う|あらう|lavar|v1
+歩く|あるく|caminar|v1
+言う|いう|decir|v1
+生きる|いきる|vivir (estar vivo)|v2
+行く|いく|ir|v1
+急ぐ|いそぐ|darse prisa|v1
+祈る|いのる|rezar, desear|v1
+要る|いる|necesitar|v1
+入れる|いれる|meter|v2
+植える|うえる|plantar|v2
+伺う|うかがう|visitar, preguntar (humilde)|v1
+受ける|うける|recibir; presentarse a (examen)|v2
+動く|うごく|moverse|v1
+歌う|うたう|cantar|v1
+写す|うつす|copiar|v1
+生まれる|うまれる|nacer|v2
+売る|うる|vender|v1
+選ぶ|えらぶ|elegir|v1
+起きる|おきる|levantarse, despertarse|v2
+置く|おく|poner, dejar|v1
+送る|おくる|enviar; acompañar|v1
+遅れる|おくれる|llegar tarde, retrasarse|v2
+怒る|おこる|enfadarse|v1
+教える|おしえる|enseñar|v2
+押す|おす|empujar, pulsar|v1
+落ちる|おちる|caer; suspender|v2
+覚える|おぼえる|memorizar, recordar|v2
+思う|おもう|pensar, creer|v1
+泳ぐ|およぐ|nadar|v1
+降りる|おりる|bajar (de un vehículo)|v2
+終わる|おわる|terminar|v1
+買う|かう|comprar|v1
+返す|かえす|devolver|v1
+帰る|かえる|volver (a casa)|v1
+変える|かえる|cambiar algo|v2
+かかる|かかる|tardar, costar|v1
+書く|かく|escribir|v1
+飾る|かざる|decorar|v1
+貸す|かす|prestar|v1
+勝つ|かつ|ganar|v1
+考える|かんがえる|pensar, reflexionar|v2
+頑張る|がんばる|esforzarse|v1
+聞く|きく|oír, escuchar, preguntar|v1
+決める|きめる|decidir|v2
+着る|きる|ponerse (ropa de cintura arriba)|v2
+切る|きる|cortar|v1
+比べる|くらべる|comparar|v2
+来る|くる|venir|v3
+消す|けす|apagar, borrar|v1
+答える|こたえる|responder|v2
+困る|こまる|tener problemas, estar en apuros|v1
+込む|こむ|estar lleno de gente|v1
+壊す|こわす|romper algo|v1
+壊れる|こわれる|romperse|v2
+探す|さがす|buscar|v1
+下げる|さげる|bajar algo|v2
+騒ぐ|さわぐ|hacer ruido, alborotar|v1
+触る|さわる|tocar|v1
+叱る|しかる|reñir, regañar|v1
+死ぬ|しぬ|morir|v1
+閉まる|しまる|cerrarse|v1
+閉める|しめる|cerrar|v2
+知る|しる|saber, enterarse|v1
+吸う|すう|fumar, aspirar|v1
+空く|すく|vaciarse, estar vacío|v1
+捨てる|すてる|tirar (a la basura)|v2
+住む|すむ|vivir, residir|v1
+座る|すわる|sentarse|v1
+する|する|hacer|v3
+育てる|そだてる|criar, cultivar|v2
+倒れる|たおれる|caerse, desplomarse|v2
+出す|だす|sacar; enviar; entregar|v1
+助ける|たすける|ayudar, salvar|v2
+立つ|たつ|ponerse de pie|v1
+建てる|たてる|construir|v2
+頼む|たのむ|pedir, encargar|v1
+食べる|たべる|comer|v2
+足りる|たりる|bastar, ser suficiente|v2
+違う|ちがう|ser diferente; estar equivocado|v1
+使う|つかう|usar|v1
+捕まえる|つかまえる|atrapar|v2
+疲れる|つかれる|cansarse|v2
+着く|つく|llegar|v1
+作る|つくる|hacer, fabricar|v1
+付ける|つける|encender; poner|v2
+続ける|つづける|continuar|v2
+包む|つつむ|envolver|v1
+勤める|つとめる|trabajar (en una empresa)|v2
+連れる|つれる|llevar (a alguien)|v2
+手伝う|てつだう|ayudar|v1
+出る|でる|salir|v2
+届ける|とどける|entregar, hacer llegar|v2
+泊まる|とまる|alojarse|v1
+止まる|とまる|pararse|v1
+止める|とめる|parar algo|v2
+取る|とる|coger, tomar|v1
+撮る|とる|sacar (una foto)|v1
+直す|なおす|arreglar, corregir|v1
+治る|なおる|curarse|v1
+泣く|なく|llorar|v1
+無くす|なくす|perder (algo)|v1
+投げる|なげる|lanzar|v2
+習う|ならう|aprender|v1
+並べる|ならべる|poner en fila, ordenar|v2
+鳴る|なる|sonar|v1
+なる|なる|convertirse en, llegar a ser|v1
+慣れる|なれる|acostumbrarse|v2
+逃げる|にげる|huir|v2
+似る|にる|parecerse|v2
+脱ぐ|ぬぐ|quitarse (ropa)|v1
+盗む|ぬすむ|robar|v1
+塗る|ぬる|pintar, untar|v1
+寝る|ねる|dormir, acostarse|v2
+残る|のこる|quedar, sobrar|v1
+登る|のぼる|subir, escalar|v1
+飲む|のむ|beber|v1
+乗る|のる|subir (a un vehículo)|v1
+入る|はいる|entrar|v1
+運ぶ|はこぶ|transportar|v1
+始まる|はじまる|empezar (intr.)|v1
+始める|はじめる|empezar algo (tr.)|v2
+走る|はしる|correr|v1
+働く|はたらく|trabajar|v1
+話す|はなす|hablar|v1
+払う|はらう|pagar|v1
+晴れる|はれる|despejarse|v2
+引く|ひく|tirar; coger (un resfriado)|v1
+弾く|ひく|tocar (un instrumento)|v1
+拾う|ひろう|recoger (del suelo)|v1
+増える|ふえる|aumentar|v2
+降る|ふる|caer (lluvia, nieve)|v1
+褒める|ほめる|elogiar|v2
+参る|まいる|ir, venir (humilde)|v1
+負ける|まける|perder (un partido)|v2
+間に合う|まにあう|llegar a tiempo|v1
+待つ|まつ|esperar|v1
+守る|まもる|proteger; cumplir|v1
+回る|まわる|girar, dar vueltas|v1
+見える|みえる|verse, ser visible|v2
+見せる|みせる|mostrar, enseñar|v2
+見つける|みつける|encontrar|v2
+見る|みる|ver, mirar|v2
+迎える|むかえる|recibir, ir a buscar|v2
+召し上がる|めしあがる|comer, beber (respetuoso)|v1
+申す|もうす|decir, llamarse (humilde)|v1
+持つ|もつ|tener, llevar|v1
+戻る|もどる|regresar|v1
+もらう|もらう|recibir|v1
+焼く|やく|asar, hornear|v1
+休む|やすむ|descansar; faltar|v1
+痩せる|やせる|adelgazar|v2
+止む|やむ|parar (la lluvia)|v1
+辞める|やめる|dejar (un trabajo)|v2
+揺れる|ゆれる|temblar, balancearse|v2
+汚れる|よごれる|ensuciarse|v2
+呼ぶ|よぶ|llamar|v1
+読む|よむ|leer|v1
+喜ぶ|よろこぶ|alegrarse|v1
+沸かす|わかす|hervir|v1
+分かる|わかる|entender|v1
+別れる|わかれる|separarse, despedirse|v2
+忘れる|わすれる|olvidar|v2
+渡す|わたす|entregar, pasar|v1
+渡る|わたる|cruzar|v1
+笑う|わらう|reír|v1
+勉強する|べんきょうする|estudiar|v3
+運転する|うんてんする|conducir|v3
+練習する|れんしゅうする|practicar|v3
+準備する|じゅんびする|preparar|v3
+説明する|せつめいする|explicar|v3
+結婚する|けっこんする|casarse|v3
+散歩する|さんぽする|pasear|v3
+心配する|しんぱいする|preocuparse|v3
+連絡する|れんらくする|contactar, avisar|v3
+旅行する|りょこうする|viajar|v3
+案内する|あんないする|guiar, enseñar un lugar|v3
+招待する|しょうたいする|invitar|v3
+予約する|よやくする|reservar|v3
+卒業する|そつぎょうする|graduarse|v3
+入院する|にゅういんする|ingresar en el hospital|v3
+遅刻する|ちこくする|llegar tarde|v3
+会議|かいぎ|reunión|n
+会場|かいじょう|lugar del evento|n
+会話|かいわ|conversación|n
+空気|くうき|aire|n
+空港|くうこう|aeropuerto|n
+駅員|えきいん|empleado de la estación|n
+映画館|えいがかん|cine|n
+病院|びょういん|hospital|n
+医者|いしゃ|médico|n
+歯医者|はいしゃ|dentista|n
+意見|いけん|opinión|n
+意味|いみ|significado|n
+以上|いじょう|más de; lo anterior|n
+以下|いか|menos de|n
+以外|いがい|excepto, aparte de|n
+運動|うんどう|ejercicio físico|n
+英語|えいご|inglés|n
+公園|こうえん|parque|n
+動物園|どうぶつえん|zoo|n
+音楽|おんがく|música|n
+火事|かじ|incendio|n
+家族|かぞく|familia|n
+会社員|かいしゃいん|empleado de empresa|n
+海岸|かいがん|costa, playa|n
+外国|がいこく|extranjero|n
+学生|がくせい|estudiante|n
+図書館|としょかん|biblioteca|n
+大使館|たいしかん|embajada|n
+漢字|かんじ|kanji|n
+時間|じかん|tiempo, horas|n
+顔|かお|cara|n
+元気|げんき|ánimo, salud|n
+天気|てんき|tiempo (atmosférico)|n
+電気|でんき|electricidad, luz|n
+病気|びょうき|enfermedad|n
+お客さん|おきゃくさん|cliente, invitado|n
+急行|きゅうこう|tren exprés|n
+研究|けんきゅう|investigación|n
+野球|やきゅう|béisbol|n
+教室|きょうしつ|aula|n
+銀行|ぎんこう|banco|n
+お金|おかね|dinero|n
+空|そら|cielo|n
+時計|とけい|reloj|n
+兄|あに|(mi) hermano mayor|n
+お兄さん|おにいさん|hermano mayor (de otro)|n
+試験|しけん|examen|n
+経験|けいけん|experiencia|n
+建物|たてもの|edificio|n
+言葉|ことば|palabra|n
+午前|ごぜん|por la mañana, a.m.|n
+午後|ごご|por la tarde, p.m.|n
+日本語|にほんご|japonés (idioma)|n
+物語|ものがたり|relato, cuento|n
+学校|がっこう|escuela|n
+高校|こうこう|instituto|n
+広場|ひろば|plaza|n
+工場|こうじょう|fábrica|n
+国|くに|país|n
+今年|ことし|este año|n
+今朝|けさ|esta mañana|n
+作文|さくぶん|redacción|n
+糸|いと|hilo|n
+手紙|てがみ|carta|n
+仕事|しごと|trabajo|n
+姉|あね|(mi) hermana mayor|n
+歯|は|diente|n
+指|ゆび|dedo|n
+寺|てら|templo budista|n
+自分|じぶん|uno mismo|n
+自転車|じてんしゃ|bicicleta|n
+自動車|じどうしゃ|automóvil|n
+耳|みみ|oreja|n
+食事|しょくじ|comida (acto de comer)|n
+文字|もじ|letra, carácter|n
+次|つぎ|siguiente|n
+気持ち|きもち|sentimiento, sensación|n
+質問|しつもん|pregunta|n
+写真|しゃしん|foto|n
+電車|でんしゃ|tren|n
+会社|かいしゃ|empresa|n
+社長|しゃちょう|presidente de una empresa|n
+手|て|mano|n
+首|くび|cuello|n
+主人|しゅじん|marido; dueño|n
+お酒|おさけ|alcohol, sake|n
+週末|しゅうまつ|fin de semana|n
+先週|せんしゅう|la semana pasada|n
+来週|らいしゅう|la semana que viene|n
+秋|あき|otoño|n
+住所|じゅうしょ|dirección (postal)|n
+出口|でぐち|salida|n
+入口|いりぐち|entrada|n
+春|はる|primavera|n
+教科書|きょうかしょ|libro de texto|n
+場所|ばしょ|lugar|n
+近所|きんじょ|vecindario|n
+女性|じょせい|mujer|n
+男性|だんせい|hombre|n
+小学校|しょうがっこう|escuela primaria|n
+屋上|おくじょう|azotea|n
+食堂|しょくどう|comedor|n
+景色|けしき|paisaje|n
+新聞|しんぶん|periódico|n
+両親|りょうしん|padres|n
+森|もり|bosque|n
+神社|じんじゃ|santuario sintoísta|n
+人口|じんこう|población|n
+数学|すうがく|matemáticas|n
+声|こえ|voz|n
+生活|せいかつ|vida diaria|n
+先生|せんせい|profesor|n
+正月|しょうがつ|Año Nuevo|n
+世界|せかい|mundo|n
+夕方|ゆうがた|atardecer|n
+石|いし|piedra|n
+赤ちゃん|あかちゃん|bebé|n
+切手|きって|sello (de correos)|n
+雪|ゆき|nieve|n
+川|かわ|río|n
+船|ふね|barco|n
+名前|なまえ|nombre|n
+全部|ぜんぶ|todo|n
+足|あし|pie, pierna|n
+村|むら|pueblo, aldea|n
+体|からだ|cuerpo|n
+台所|だいどころ|cocina (lugar)|n
+台風|たいふう|tifón|n
+問題|もんだい|problema, pregunta|n
+地下鉄|ちかてつ|metro|n
+地震|じしん|terremoto|n
+池|いけ|estanque|n
+お茶|おちゃ|té|n
+着物|きもの|kimono|n
+中止|ちゅうし|cancelación|n
+注意|ちゅうい|atención, advertencia|n
+昼休み|ひるやすみ|pausa del mediodía|n
+町|まち|ciudad, barrio|n
+鳥|とり|pájaro|n
+朝ご飯|あさごはん|desayuno|n
+兄弟|きょうだい|hermanos|n
+庭|にわ|jardín|n
+店員|てんいん|dependiente|n
+電話|でんわ|teléfono|n
+売り場|うりば|sección de una tienda|n
+買い物|かいもの|compras|n
+発音|はつおん|pronunciación|n
+出発|しゅっぱつ|salida, partida|n
+反対|はんたい|oposición, lo contrario|n
+半分|はんぶん|mitad|n
+番号|ばんごう|número|n
+美術館|びじゅつかん|museo de arte|n
+氷|こおり|hielo|n
+品物|しなもの|artículo, mercancía|n
+父|ちち|(mi) padre|n
+母|はは|(mi) madre|n
+お父さん|おとうさん|padre (de otro)|n
+お風呂|おふろ|baño (bañera)|n
+洋服|ようふく|ropa occidental|n
+動物|どうぶつ|animal|n
+飲み物|のみもの|bebida|n
+食べ物|たべもの|comida|n
+島|しま|isla|n
+頭|あたま|cabeza|n
+道|みち|camino|n
+特急|とっきゅう|tren rápido especial|n
+読書|どくしょ|lectura|n
+肉|にく|carne|n
+毎年|まいとし|cada año|n
+米|こめ|arroz (crudo)|n
+方法|ほうほう|método|n
+毎朝|まいあさ|cada mañana|n
+妹|いもうと|(mi) hermana menor|n
+弟|おとうと|(mi) hermano menor|n
+味|あじ|sabor|n
+野菜|やさい|verduras|n
+夜中|よなか|medianoche|n
+友達|ともだち|amigo|n
+用事|ようじ|asunto, recado|n
+来年|らいねん|el año que viene|n
+理由|りゆう|razón, motivo|n
+料理|りょうり|cocina, plato|n
+旅館|りょかん|posada japonesa|n
+旅行|りょこう|viaje|n
+力|ちから|fuerza|n
+約束|やくそく|promesa, cita|n
+趣味|しゅみ|afición|n
+規則|きそく|norma, regla|n
+機会|きかい|oportunidad|n
+留守|るす|ausencia (de casa)|n
+お土産|おみやげ|recuerdo, regalo de viaje|n
+財布|さいふ|cartera, monedero|n
+傘|かさ|paraguas|n
+鏡|かがみ|espejo|n
+眼鏡|めがね|gafas|n
+彼女|かのじょ|ella; novia|n
+子供|こども|niño|n
+宿題|しゅくだい|deberes|n
+授業|じゅぎょう|clase|n
+隣|となり|al lado; vecino|n
+箱|はこ|caja|n
+窓|まど|ventana|n
+部屋|へや|habitación|n
+冷蔵庫|れいぞうこ|nevera|n
+辞書|じしょ|diccionario|n
+雑誌|ざっし|revista|n
+靴|くつ|zapatos|n
+熱|ねつ|fiebre|n
+薬|くすり|medicina|n
+誕生日|たんじょうび|cumpleaños|n
+返事|へんじ|respuesta (a un mensaje)|n
+予定|よてい|plan, previsión|n
+準備|じゅんび|preparación|n
+説明|せつめい|explicación|n
+相談|そうだん|consulta|n
+文化|ぶんか|cultura|n
+地図|ちず|mapa|n
+番組|ばんぐみ|programa (de TV)|n
+季節|きせつ|estación del año|n
+悪い|わるい|malo|ai
+安い|やすい|barato|ai
+遠い|とおい|lejano|ai
+近い|ちかい|cercano|ai
+丸い|まるい|redondo|ai
+楽しい|たのしい|divertido|ai
+強い|つよい|fuerte|ai
+弱い|よわい|débil|ai
+苦い|にがい|amargo|ai
+軽い|かるい|ligero|ai
+重い|おもい|pesado|ai
+古い|ふるい|viejo|ai
+高い|たかい|alto, caro|ai
+広い|ひろい|amplio|ai
+狭い|せまい|estrecho|ai
+黒い|くろい|negro|ai
+少ない|すくない|poco, escaso|ai
+多い|おおい|mucho, abundante|ai
+新しい|あたらしい|nuevo|ai
+青い|あおい|azul|ai
+赤い|あかい|rojo|ai
+白い|しろい|blanco|ai
+正しい|ただしい|correcto|ai
+早い|はやい|temprano|ai
+速い|はやい|rápido|ai
+太い|ふとい|grueso|ai
+長い|ながい|largo|ai
+明るい|あかるい|luminoso, alegre|ai
+美しい|うつくしい|bello|ai
+暗い|くらい|oscuro|ai
+寒い|さむい|frío (tiempo)|ai
+暑い|あつい|caluroso|ai
+冷たい|つめたい|frío (al tacto)|ai
+優しい|やさしい|amable, cariñoso|ai
+易しい|やさしい|fácil|ai
+難しい|むずかしい|difícil|ai
+珍しい|めずらしい|raro, poco común|ai
+厳しい|きびしい|estricto|ai
+恥ずかしい|はずかしい|vergonzoso|ai
+寂しい|さびしい|solitario, triste|ai
+眠い|ねむい|tener sueño|ai
+痛い|いたい|doloroso|ai
+危ない|あぶない|peligroso|ai
+うるさい|うるさい|ruidoso, molesto|ai
+細かい|こまかい|detallado, fino|ai
+嬉しい|うれしい|contento|ai
+安全|あんぜん|seguro|na
+便利|べんり|práctico, cómodo|na
+不便|ふべん|poco práctico|na
+静か|しずか|tranquilo, silencioso|na
+賑やか|にぎやか|animado, bullicioso|na
+丁寧|ていねい|educado, cuidadoso|na
+簡単|かんたん|sencillo|na
+大変|たいへん|duro, terrible|na
+残念|ざんねん|una pena|na
+必要|ひつよう|necesario|na
+熱心|ねっしん|aplicado, entusiasta|na
+利口|りこう|listo, inteligente|na
+自由|じゆう|libre|na
+十分|じゅうぶん|suficiente|na
+複雑|ふくざつ|complicado|na
+真面目|まじめ|serio, formal|na
+無理|むり|imposible, excesivo|na
+親切|しんせつ|amable|na
+大切|たいせつ|importante, valioso|na
+上手|じょうず|hábil|na
+下手|へた|torpe|na
+有名|ゆうめい|famoso|na
+特別|とくべつ|especial|na
+全然|ぜんぜん|nada (+ negativo)|adv
+全く|まったく|en absoluto|adv
+ほとんど|ほとんど|casi|adv
+あまり|あまり|no mucho (+ negativo)|adv
+もうすぐ|もうすぐ|dentro de poco|adv
+なかなか|なかなか|bastante; no fácilmente|adv
+きっと|きっと|seguro que|adv
+必ず|かならず|sin falta|adv
+多分|たぶん|quizás|adv
+特に|とくに|especialmente|adv
+ずっと|ずっと|todo el tiempo; mucho más|adv
+もっと|もっと|más|adv
+はっきり|はっきり|claramente|adv
+しっかり|しっかり|bien, firmemente|adv
+そろそろ|そろそろ|ya va siendo hora|adv
+急に|きゅうに|de repente|adv
+初めて|はじめて|por primera vez|adv
+一生懸命|いっしょうけんめい|con todas las fuerzas|adv
+大勢|おおぜい|mucha gente|adv`;
+
+/* Gramática: frase con （　）|correcta|d1|d2|d3|explicación. Pista en español entre paréntesis al final. */
+const GQ_RAW=`私は毎日日本語（　）勉強しています。|を|が|に|で|を marca el complemento directo.
+公園（　）散歩します。|を|が|の|と|Con verbos de movimiento (散歩する, 歩く) を indica el lugar por donde se pasa.
+毎朝７時（　）起きます。|に|で|を|と|に con horas concretas: «a las…».
+ボールペン（　）手紙を書きます。|で|に|を|と|で indica el instrumento: «con».
+地震（　）家が壊れました。|で|に|を|と|で también indica la causa.
+新幹線は日本（　）一番速い電車です。|で|の|に|を|En el superlativo «el más… de…» se usa で, no の.
+電車（　）降りたとき、友達に会った。|を|に|で|と|降りる y 出る marcan con を el lugar del que se sale.
+毎朝、バス（　）乗って会社へ行きます。|に|を|で|と|乗る rige に: バスに乗る.
+駅で友達（　）会いました。|に|を|で|が|会う rige に (la persona con la que se queda).
+私は音楽（　）好きです。|が|を|に|で|Con 好き el objeto va con が: AはBが好きです.
+中国語（　）分かりません。|が|を|に|で|分かる rige が.
+テーブルの上に何（　）ありますか。|が|は|を|で|Los interrogativos que son sujeto llevan siempre が.
+外で雨（　）降っています。|が|を|で|に|Los fenómenos naturales como sujeto llevan が.
+冬になる（　）雪が降ります。|と|のに|ても|まで|と: consecuencia segura o habitual («si ocurre A, siempre B»).
+スーパーへ行く（　）、もう閉まっていた。|と|まで|ので|ても|と (o たら) + pasado: encontrarse con un hecho ya sucedido.
+仕事が終わっ（　）、迎えに行きます。|たら|ば|と|なら|たら: «cuando/una vez que ocurra A». Con と no se puede expresar voluntad en la 2ª parte.
+日本へ行く（　）、ＪＲパスを買ったほうがいいですよ。|なら|ば|たら|まで|なら: «si lo que vas a hacer es…»; reacciona a algo que ya sabemos.
+もっと早く（　）、間に合ったのに。|起きれば|起きると|起きるなら|起きて|ば: hipótesis. 〜ば〜のに expresa algo que no llegó a pasar.
+雨が降っている（　）、出かけます。(aunque está lloviendo)|のに|ので|から|ために|のに = aunque + indicativo (un hecho real).
+雨が降っ（　）、出かけます。(aunque llueva)|ても|たら|て|たり|〜ても = aunque + subjuntivo.
+水が冷たい（　）泳ぎます。(aunque el agua está fría)|のに|ので|から|まで|のに = aunque + indicativo.
+病気の（　）学校を休みました。|ため|ように|のに|まで|Sustantivo + のため: causa, «por».
+車を買う（　）、お金をためています。|ために|ように|のに|ので|ために: finalidad con el mismo sujeto y una acción controlable.
+子供たちがよく分かる（　）、ゆっくり話しました。|ように|ために|のに|ので|ように: finalidad con sujetos distintos o acción no controlable (分かる).
+宿題は金曜日（　）出してください。|までに|まで|から|より|までに: límite máximo, «como muy tarde el viernes».
+仕事は何時（　）ですか。(¿Hasta qué hora trabajas?)|まで|までに|ので|より|まで: «hasta» (algo que dura).
+鈴木さんは私（　）背が高いです。|より|ほど|まで|から|AはBより〜: A es más… que B.
+私は彼（　）金持ちではありません。|ほど|より|まで|ので|〜ほど + negativo: «no tan… como».
+横浜は福岡と同じ（　）大きいです。|ぐらい|ほど|より|まで|〜と同じぐらい: comparativo de igualdad.
+パリとマドリッドと、どちら（　）大きいですか。|が|を|は|に|どちら es interrogativo y sujeto: lleva が.
+マドリッド（　）パリのほうが大きいです。|より|ほど|から|まで|AよりBのほうが〜: B es más… que A.
+晩ご飯を食べ（　）テレビを見ます。(mientras)|ながら|ても|たり|まま|Radical + ながら: dos acciones simultáneas del mismo sujeto.
+若い（　）いろいろな国へ行きたい。(aprovechando que soy joven)|うちに|ながら|までに|ために|うちに: aprovechar un periodo, «mientras todavía…».
+私が留守の（　）、だれかが訪ねてきた。|間に|ながら|までに|より|〜の間に: un hecho puntual dentro de un intervalo.
+雨が（　）うちに帰りましょう。|降らない|降る|降った|降って|Negativo + うちに: «antes de que…».
+今夜、彼女は来る（　）だ。(seguro que viene)|はず|そう|つもり|ところ|はずだ: alta probabilidad, «debe de».
+東京から大阪まで三時間以上かかる（　）はない。(no es posible)|はず|つもり|ところ|ため|はずはない: «no puede ser que».
+明日は雪が降る（　）。(puede que)|かもしれない|はずがない|つもりだ|ところだ|〜かもしれない: «puede que…».
+このケーキは（　）ですね。(tiene pinta de estar buena)|おいしそう|おいしいそう|おいしくそう|おいしかったそう|Apariencia: adjetivo い sin い + そう.
+天気予報によると、明日は雨が（　）そうです。(dicen que)|降る|降り|降って|降ろう|Estilo indirecto: forma simple completa + そうです.
+かばんが（　）そうです。(está a punto de caerse)|落ち|落ちる|落ちて|落ちた|Apariencia con verbos: radical + そう («parece que va a…»).
+田中さんは元気（　）そうです。(dicen que está bien)|だ|な|に|で|Sustantivo o adj. な + だ + そうです = «dicen que». Sin だ (元気そう) sería «parece».
+日本へ行った（　）がありますか。|こと|もの|の|ところ|〜たことがある: experiencia, «¿has… alguna vez?».
+朝ご飯はもう食べましたか。―いいえ、まだ（　）。|食べていません|食べません|食べませんでした|食べたことがありません|まだ + 〜ていません: «todavía no».
+ここでたばこを吸っ（　）いけません。|ては|ても|たら|たり|〜てはいけない: prohibición.
+ここに座っ（　）いいですか。|ても|ては|たら|たり|〜てもいい: permiso.
+明日までにこの本を読まな（　）なりません。|ければ|くても|いで|くて|〜なければならない: obligación.
+このお酒は飲ま（　）ください。|ないで|なくて|なければ|ないと|〜ないでください: petición negativa.
+高く（　）いいです。(no importa que sea caro)|ても|ては|て|たら|Adj. い: 〜くてもいい = no importa que sea…
+明日はジョギングをし（　）もいいです。(no hace falta)|なくて|ないで|なければ|なくては|〜なくてもいい: no es necesario.
+窓から海（　）見えます。|が|を|に|で|見える (verse) rige が.
+私は泳ぐ（　）ができません。|こと|の|もの|ところ|〜ことができる. Aquí no se puede usar の nunca.
+誰かがギターを弾いている（　）が聞こえます。|の|こと|もの|ところ|Con verbos de percepción (見る, 聞こえる…) se sustantiva con の, no con こと.
+週末は本を読ん（　）テレビを見たりします。|だり|で|だら|でも|〜たり〜たりする: enumeración de acciones.
+この本は字が小さくて読み（　）です。(difícil de leer)|にくい|やすい|すぎ|たい|Radical + にくい: difícil de…
+彼は働き（　）。(trabaja demasiado)|すぎる|やすい|にくい|ながら|Radical + すぎる: demasiado.
+お金もない（　）、風邪もひいているし、大変だ。|し|て|のに|ので|〜し、〜し: enumera razones, «y encima».
+授業は今終わった（　）です。(acaba de terminar)|ところ|はず|つもり|ため|〜たところ: acabar de…
+これから出かける（　）です。(estoy a punto de salir)|ところ|ため|ので|まま|Forma diccionario + ところ: estar a punto de…
+来年から日本語を勉強する（　）です。(tengo intención de)|つもり|ところ|はず|そう|〜つもりです: intención.
+夏休みに富士山に登ろう（　）思っています。|と|を|に|が|Volitiva + と思っています: pienso hacer…
+私は新しいパソコンが（　）です。|ほしい|ほしがる|ほしがっている|ほしく|1ª persona: 〜がほしい.
+弟は新しいゲームを（　）います。|ほしがって|ほしくて|ほしい|ほしかって|3ª persona: 〜をほしがっている.
+彼女はカレーを食べ（　）っています。|たが|たく|たい|たかった|3ª persona: radical + たがる (食べたがっている).
+寝る前にドアを閉め（　）おきました。|て|た|ない|ても|〜ておく: dejar hecho, hacer de antemano.
+おいしかったので、ケーキを全部食べ（　）しまいました。|て|た|に|も|〜てしまう: acabar del todo (o lamentarse).
+この料理を食べ（　）みてください。|て|た|に|ても|〜てみる: probar a hacer.
+先生が駅まで車で送って（　）。|くださいました|さしあげました|いただきました|やりました|Un superior hace algo por mí: 〜てくださる. (いただく exigiría 先生に)
+私は友達に本を貸して（　）。|あげました|くれました|くださいました|いただきました|Yo hago algo por otro: 〜てあげる.
+友達が私に誕生日のプレゼントを（　）。|くれました|あげました|さしあげました|やりました|Alguien me da algo a mí: くれる.
+私は先生（　）辞書をいただきました。|に|が|を|で|Recibir de alguien: 人に（から）もらう／いただく.
+子供のとき、よく母に（　）。(me regañaba)|叱られました|叱りました|叱らせました|叱れました|Pasiva: 人に + 〜られる.
+私は犬に肉を（　）。(el perro se comió mi carne)|食べられました|食べさせました|食べました|食べさせられました|Pasiva de perjuicio: el sujeto sufre la acción.
+母は弟に野菜を（　）。(hizo comer)|食べさせました|食べられました|食べさせられました|食べました|Causativa: 〜させる (hacer o dejar hacer).
+私は先生に作文を（　）。(me obligó a escribir)|書かせられました|書かせました|書かれました|書けました|Causativo-pasiva: 〜させられる, «ser obligado a».
+この小説はセルバンテス（　）書かれました。|によって|を|で|と|Con verbos de creación, el agente de la pasiva va con によって.
+毎日練習して、日本語が話せる（　）になりました。|よう|こと|ため|そう|〜ようになる: llegar a (poder) hacer algo.
+漢字が読める（　）、毎日勉強しています。|ように|ために|ので|のに|Con verbos potenciales la finalidad se expresa con ように.
+窓を開けた（　）寝てしまいました。|まま|ながら|うちに|あとに|〜たまま: dejando algo tal cual estaba.
+手を洗って（　）食べなさい。|から|あとで|まで|ので|〜てから: después de (inmediato). あとで va con forma た.
+寝る（　）に歯を磨きます。|前|後|間|うち|Forma diccionario + 前に: antes de.
+ご飯を食べた（　）で、散歩します。|後|前|から|うち|Forma た + 後で: después de haber…
+先生は何時ごろ（　）か。(respetuoso de 来る)|いらっしゃいます|参ります|おります|伺います|尊敬語 de 来る: いらっしゃる. 参る es humilde.
+先生、この本をもう（　）か。(respetuoso de 読む)|お読みになりました|お読みしました|読みになりました|ご読みになりました|尊敬語: お + radical + になる.
+重そうですね。私がお持ち（　）。|します|になります|なさいます|いらっしゃいます|謙譲語: お + radical + する (lo hago yo).
+先生は今、何を（　）いますか。(respetuoso de 食べる)|召し上がって|いただいて|参って|申して|尊敬語 de 食べる: 召し上がる. いただく es humilde.
+はじめまして。田中と（　）。|申します|おっしゃいます|言われます|ご覧になります|謙譲語 de 言う: 申す.
+社長はもうお帰りに（　）。|なりました|しました|いたしました|ありました|尊敬語: お帰りになる.
+一緒に映画を見に（　）か。(invitación)|行きません|行きたくない|行きませんでした|行かなくて|Invitación: 〜ませんか.
+マリアさんがいつ来る（　）分かりません。|か|と|の|が|Interrogativa indirecta: interrogativo + 〜か.
+たばこがある（　）どうか分かりません。|か|と|が|の|〜かどうか: «si… o no».
+この本は新しく（　）、面白くもありません。|も|て|ても|で|〜くも〜くもない: ni… ni…
+この部屋は静か（　）きれいです。|で|て|く|に|Adj. な / sustantivo + で para unir: 静かできれい.
+このかばんは（　）いいです。(barata y buena)|安くて|安いで|安くで|安いて|Adj. い: 〜くて para unir.
+もっと勉強すればよかった（　）。(ojalá hubiera estudiado)|のに|ので|ために|まで|〜ばよかったのに: lamento.
+明日、晴れれば（　）なあ。(ojalá haga bueno)|いい|ある|だめ|する|〜ばいいな: deseo.
+部屋に入ると、電話が鳴って（　）。|いた|いく|おく|みた|と + hecho encontrado: 〜ていた.
+彼は三年間日本語を勉強して（　）。(viene estudiando)|きた|おいた|みた|あった|〜てきた: llevar/venir haciendo.
+部屋の電気がつけて（　）。(alguien la ha encendido)|あります|います|おきます|みます|Transitivo + てある: estado resultado de una acción intencionada.
+ドアが開いて（　）。(simple estado)|います|あります|おきます|みます|Intransitivo + ている: estado.
+私は日本料理が食べたいです（　）、彼女は食べたくありません。|が|と|し|から|が: «pero».
+あの店はまだ（　）いません。|開いて|開け|開く|開いた|まだ〜ていない: todavía no.
+あそこにいる（　）は彼女のお父さんです。|の|こと|もの|ところ|の sustituye a 人 cuando el verbo principal es «ser».
+ビールをたくさん飲む（　）は体によくないです。|の|ところ|ため|はず|Sustantivación con の (o こと).
+雨が降って（　）、テニスができません。(como está lloviendo)|いるので|いるのに|いても|いながら|ので: causa objetiva.
+疲れている（　）休みたい。(porque estoy cansado)|から|のに|ても|ながら|から: causa (más subjetiva).
+ここは静か（　）好きです。|だから|から|いから|なのに|Adj. な + だから.
+泳ぐ前に準備体操をしない（　）なりません。|と|ば|て|たら|〜ないとならない: obligación.
+その写真を（　）ください。(muéstramelas)|見せて|見て|見えて|見られて|見せる = mostrar.
+何（　）手紙を書いていますか。―鉛筆で書いています。|で|に|を|が|何で (なにで): ¿con qué?
+冷蔵庫の中に牛乳（　）ジュースもありません。|も|と|や|か|AもBも + negativo: ni A ni B.
+その部屋の中に２１人（　）います。(nada menos que)|も|しか|だけ|まで|Número + も: énfasis en la cantidad.
+一時間半（　）かかりません。(solo se tarda)|しか|も|だけ|ほど|しか + negativo: solo.
+庭（　）花があります。|に|で|を|へ|Existencia (ある・いる): lugar + に.
+ビール（　）ワインを買いましょう。(cerveza o vino)|か|と|も|の|か: disyunción «o».
+机の上に本や雑誌（　）があります。|など|まで|しか|ほど|AやBなど: enumeración no exhaustiva.
+学校は何時（　）ですか。(¿A qué hora empieza?)|から|まで|に|で|から: momento de partida.
+窓（　）海が見えます。(a través de la ventana)|から|まで|より|へ|から: «a través de».
+来年、日本（　）行きます。|へ|を|で|が|へ: dirección.
+教えて（　）ありがとうございます。|くれて|あげて|もらって|やって|Alguien hace algo por mí: 〜てくれる.
+母に写真を撮って（　）。(me sacó una foto)|もらいました|くれました|あげました|ください|人に〜てもらう: recibir el favor de alguien.
+空が暗いですね。雨が降り（　）です。|そう|はず|つもり|ところ|Radical + そう: parece que va a…
+教室に誰（　）いません。|も|か|が|を|誰も + negativo: nadie.
+箱の中に何（　）ありますか。―はい、本があります。|か|も|で|と|何か: algo.
+夏休みにどこ（　）行きますか。―いいえ、どこへも行きません。|かへ|へも|でも|もへ|どこかへ: a algún sitio.
+私はあなたにここに（　）ほしいです。|来て|来た|来る|来たい|〜てほしい: quiero que alguien haga algo.
+暑いので、冷たいビールが飲み（　）なりました。|たく|たい|たくて|たかった|〜たくなる: entrar ganas de.
+兄はたばこを吸わ（　）なりました。(dejó de fumar)|なく|ない|ず|なくて|〜なくなる: dejar de.
+彼女は歌い（　）仕事をします。|ながら|たり|ても|まま|ながら: simultaneidad.
+私は車の運転（　）できます。|が|を|に|で|Sustantivo + ができる.`;
+
+/* ★ y construcción: antes|pieza1/pieza2/pieza3/pieza4|después|posición de la ★ (0-3)|traducción */
+const ORD_RAW=`私は|日本へ/行った/ことが/ありません|。|2|Nunca he ido a Japón.
+この本は|字が/小さくて/とても/読みにくい|です。|2|Este libro es muy difícil de leer porque la letra es pequeña.
+雨が|降って/いる/のに/彼は|出かけました。|3|Aunque está lloviendo, él ha salido.
+私は|来年から/日本語を/勉強する/つもり|です。|2|Tengo intención de estudiar japonés desde el año que viene.
+先生は|子供たちが/よく/分かるように/ゆっくり|話しました。|2|El profesor habló despacio para que los niños lo entendieran bien.
+新幹線は|日本で/一番/速い/電車|です。|1|El Shinkansen es el tren más rápido de Japón.
+昨日は|窓を/開けた/まま/寝て|しまいました。|2|Ayer me dormí con la ventana abierta.
+父は|朝ご飯を/食べ/ながら/新聞を|読みます。|2|Mi padre lee el periódico mientras desayuna.
+私は|母に/日記を/読まれて/困りました|。|2|Mi madre me leyó el diario y me sentó fatal.
+先生に|駅まで/車で/送って/いただきました|。|2|El profesor tuvo la amabilidad de llevarme en coche a la estación.
+部屋に|入る/と/電話が/鳴って|いました。|1|Al entrar en la habitación, el teléfono estaba sonando.
+もっと|早く/起きれば/間に/合った|のに。|1|Si me hubiera levantado antes, habría llegado a tiempo.
+鈴木さんは|私/より/背が/高い|です。|2|Suzuki es más alto que yo.
+私は|彼/ほど/金持ち/では|ありません。|1|No soy tan rico como él.
+ここで|たばこを/吸って/は/いけません|。|2|Aquí no se puede fumar.
+週末は|本を/読んだり/テレビを/見たり|します。|2|Los fines de semana leo libros, veo la tele, etc.
+雨が|降らない/うちに/早く/帰り|ましょう。|1|Volvamos pronto antes de que llueva.
+漢字が|読める/ように/毎日/勉強|しています。|1|Estudio cada día para llegar a leer kanji.
+手を|洗って/から/ご飯を/食べ|なさい。|2|Lávate las manos y después come.
+東京から|大阪まで/三時間も/かかる/はずが|ありません。|2|No es posible que se tarde tres horas de Tokio a Osaka.
+弟は|新しい/ゲームを/ほしがって/います|。|2|Mi hermano pequeño quiere un videojuego nuevo.
+このケーキは|甘くて/とても/おいしそう/です|ね。|1|Esta tarta parece dulce y muy rica.
+母は|弟に/嫌いな/野菜を/食べさせました|。|1|Mi madre hizo que mi hermano comiera la verdura que no le gusta.
+日本語が|話せる/ように/なって/うれしい|です。|1|Me alegro de haber llegado a hablar japonés.
+試験の|前に/もっと/勉強すれば/よかった|のに。|2|Ojalá hubiera estudiado más antes del examen.
+友達が|誕生日に/プレゼントを/買って/くれました|。|2|Mi amigo me compró un regalo de cumpleaños.
+教室には|学生が/一人も/いません/でした|。|1|No había ni un solo estudiante en el aula.`;
+
+/* Patrones: patrón|significado|ejemplo */
+const PAT_RAW=`〜てもいい|permiso: se puede, puedes…|ここに座ってもいいですか。
+〜てはいけない|prohibición: no se debe|ここでたばこを吸ってはいけません。
+〜なければならない|obligación: tener que|毎日薬を飲まなければなりません。
+〜なくてもいい|no hace falta|明日は来なくてもいいです。
+〜たことがある|haber hecho alguna vez|日本へ行ったことがあります。
+〜たり〜たりする|hacer cosas como… (enumeración)|本を読んだりテレビを見たりします。
+〜ながら|mientras (el mismo sujeto)|お茶を飲みながらテレビを見ます。
+〜うちに|aprovechando que, antes de que|若いうちに遊んでください。
+〜すぎる|demasiado|彼は働きすぎる。
+〜やすい|fácil de|この本は読みやすい。
+〜にくい|difícil de|この本は読みにくい。
+〜そうだ (apariencia)|parece que, tiene pinta de|このケーキはおいしそうです。
+〜そうだ (oído)|dicen que, según dicen|明日は雨が降るそうです。
+〜はずだ|debe de, seguramente|彼女は来るはずだ。
+〜かもしれない|puede que|明日は雪かもしれない。
+〜でしょう|supongo que, probablemente|疲れているでしょう。
+〜つもりだ|tener la intención de|来年留学するつもりです。
+〜(よ)うと思う|pensar hacer, ir a…|電話しようと思っています。
+〜てみる|probar a hacer|この料理を食べてみてください。
+〜ておく|dejar hecho, hacer de antemano|ドアを閉めておいた。
+〜てしまう|terminar del todo / por desgracia|財布を忘れてしまった。
+〜てある|estado resultado de una acción intencionada|電気がつけてある。
+〜てきた|venir haciendo, llevar haciendo|三年間日本語を勉強してきた。
+〜るところだ|estar a punto de|今から出かけるところです。
+〜たところだ|acabar de|授業が終わったところです。
+〜ているところだ|justo ahora estar haciendo|手紙を書いているところです。
+〜たがる|querer (3ª persona)|弟はゲームを買いたがっている。
+〜てほしい|querer que alguien haga algo|ここに座ってほしい。
+〜ように|para que (acción no controlable)|忘れないようにメモする。
+〜ようになる|llegar a, empezar a|漢字が読めるようになった。
+〜なくなる|dejar de|たばこを吸わなくなった。
+〜たまま|tal cual, dejando algo como estaba|窓を開けたまま寝た。
+〜てから|después de (inmediato)|手を洗ってから食べる。
+〜まえに|antes de|寝る前に歯を磨く。
+〜のに|aunque + indicativo (hecho real)|雨なのに出かける。
+〜ても|aunque + subjuntivo|雨が降っても出かける。
+〜し、〜し|y además (varias razones)|お金もないし、時間もない。
+〜と (condicional)|si / cuando (consecuencia segura)|春になると花が咲く。
+〜たら|si / una vez que|仕事が終わったら行きます。
+〜ば|si (hipótesis)|安ければ買います。
+〜なら|si se trata de, si lo que…|日本へ行くなら京都がいいよ。
+〜ばよかった|ojalá hubiera…|もっと勉強すればよかった。
+〜ばいいな|ojalá (deseo)|晴れればいいな。
+〜てあげる|hacer algo por otro|友達に本を貸してあげた。
+〜てくれる|alguien hace algo por mí|母が料理を作ってくれた。
+〜てもらう|recibir el favor de|友達に手伝ってもらった。
+〜させる|hacer hacer / dejar hacer|子供に野菜を食べさせる。
+〜させられる|ser obligado a hacer|先生に作文を書かせられた。
+〜ことができる|poder, saber hacer|日本語を話すことができる。
+〜ほど〜ない|no tan… como|私は彼ほど背が高くない。
+〜かどうか|si… o no|行くかどうか分からない。
+〜ませんか|invitación: ¿por qué no…?|一緒に行きませんか。
+〜なさい|imperativo (a niños o inferiores)|早く寝なさい。
+〜始める|empezar a|雨が降り始めた。
+〜続ける|seguir haciendo|仕事を探し続けている。
+〜ないで|sin hacer / no hagas|走らないで、歩いて来てください。
+お〜になる|lenguaje respetuoso (尊敬語)|先生がお帰りになる。
+お〜する|lenguaje humilde (謙譲語)|私がお持ちします。`;
+
+/* Keigo: normal|尊敬語|謙譲語|significado */
+const KEIGO_RAW=`する|なさる|いたす|hacer
+行く|いらっしゃる|参る|ir
+来る|いらっしゃる|参る|venir
+いる|いらっしゃる|おる|estar
+食べる|召し上がる|いただく|comer
+飲む|召し上がる|いただく|beber
+見る|ご覧になる|拝見する|ver
+言う|おっしゃる|申す|decir
+知る|ご存知だ|存じる|saber
+寝る|お休みになる|—|dormir
+死ぬ|お亡くなりになる|—|morir
+もらう|—|いただく|recibir
+あげる|—|差し上げる|dar
+くれる|くださる|—|dar (a mí)
+聞く|—|伺う|preguntar, escuchar`;
+
+/* Vocabulario en contexto (文脈規定): frase|correcta|d1|d2|d3|traducción */
+const CTX_RAW=`雨が降りそうなので、（　）を持って行きます。|傘|財布|眼鏡|鏡|Como parece que va a llover, me llevo el paraguas.
+道が分からなかったので、駅員に（　）しました。|質問|運動|準備|約束|Como no sabía el camino, le pregunté al empleado de la estación.
+熱があるので、今日は会社を（　）。|休みます|働きます|勤めます|始めます|Como tengo fiebre, hoy falto al trabajo.
+日本では、家に入るとき、靴を（　）。|脱ぎます|着ます|取ります|切ります|En Japón, al entrar en casa, uno se quita los zapatos.
+寒いので、窓を（　）ください。|閉めて|開けて|付けて|消して|Hace frío, cierra la ventana, por favor.
+暗いので、電気を（　）ください。|付けて|消して|閉めて|止めて|Está oscuro, enciende la luz, por favor.
+部屋を出るときは、電気を（　）ください。|消して|付けて|開けて|入れて|Cuando salgas de la habitación, apaga la luz.
+明日は試験なので、今晩は（　）勉強します。|一生懸命|全然|あまり|ほとんど|Mañana tengo examen, así que esta noche estudiaré a tope.
+この漢字の（　）が分かりません。|意味|味|色|声|No entiendo el significado de este kanji.
+先生の話を（　）聞いてください。|しっかり|全然|急に|ほとんど|Escuchad bien lo que dice el profesor.
+私の（　）は映画を見ることです。|趣味|規則|用事|理由|Mi afición es ver películas.
+電車に間に合うように、（　）。|急ぎましょう|休みましょう|遊びましょう|待ちましょう|Démonos prisa para llegar a tiempo al tren.
+財布を（　）しまいました。どうしよう。|無くして|拾って|渡して|届けて|He perdido la cartera. ¿Qué hago?
+窓から富士山が（　）。|見えます|見せます|見ます|見つけます|Desde la ventana se ve el monte Fuji.
+お金が（　）ので、買えません。|足りない|要らない|多い|残る|Como no me llega el dinero, no puedo comprarlo.
+母は台所で料理を（　）います。|作って|建てて|育てて|飾って|Mi madre está cocinando en la cocina.
+このかばんは（　）て、持ちやすいです。|軽く|重く|太く|苦く|Este bolso es ligero y fácil de llevar.
+道が（　）いて、車が動きません。|込んで|空いて|晴れて|揺れて|La carretera está atascada y los coches no se mueven.
+昨日の夜、地震で家が（　）。|揺れました|晴れました|笑いました|育ちました|Anoche la casa tembló por un terremoto.
+日曜日なので、銀行は（　）います。|閉まって|消して|下げて|止めて|Como es domingo, el banco está cerrado.
+図書館で本を三冊（　）。|借りました|貸しました|売りました|払いました|He sacado tres libros de la biblioteca.
+友達に辞書を（　）あげました。|貸して|借りて|払って|迎えて|Le presté el diccionario a mi amigo.
+駅まで友達を（　）に行きます。|迎え|払い|貸し|植え|Voy a la estación a recoger a un amigo.
+毎日練習したので、日本語が（　）なりました。|上手に|下手に|大切に|残念に|Como practiqué cada día, he mejorado en japonés.
+この問題は（　）で、誰でもできます。|簡単|複雑|大変|無理|Este problema es sencillo, cualquiera puede hacerlo.
+夜遅くまで（　）ください。隣の人が寝ています。|騒がないで|急がないで|選ばないで|比べないで|No hagáis ruido hasta tarde, los vecinos duermen.
+来週の会議の（　）をしています。|準備|出発|反対|経験|Estoy preparando la reunión de la semana que viene.
+赤ちゃんが（　）いるので、静かにしてください。|寝て|走って|騒いで|遊んで|El bebé está durmiendo, así que silencio, por favor.
+あの店の店員はとても（　）です。いつも笑顔で説明してくれます。|親切|複雑|無理|十分|El dependiente de esa tienda es muy amable.
+子供が池に（　）、大変でした。|落ちて|降りて|下げて|倒れて|Un niño se cayó al estanque; fue un susto.
+この時計は（　）ので、直してもらいます。|壊れた|生まれた|晴れた|慣れた|Este reloj se ha roto, así que lo voy a llevar a arreglar.
+夏は（　）ので、窓を開けて寝ます。|暑い|寒い|冷たい|眠い|En verano hace calor, así que duermo con la ventana abierta.
+旅行の写真を友達に（　）。|見せました|見えました|見つけました|迎えました|Le enseñé a mi amigo las fotos del viaje.`;
+
+/* Paráfrasis (言い換え): frase|equivalente|d1|d2|d3 */
+const PARA_RAW=`この本は読みやすいです。|この本は簡単に読めます。|この本は読みにくいです。|この本は読んだことがあります。|この本は読まなければなりません。
+田中さんは料理が上手です。|田中さんは料理を作るのがうまいです。|田中さんは料理が好きではありません。|田中さんは料理をしたことがありません。|田中さんは料理を習っています。
+明日は来なくてもいいです。|明日は来る必要はありません。|明日は必ず来てください。|明日は来てはいけません。|明日は来るかもしれません。
+部屋の電気が消えています。|部屋は暗いです。|部屋は明るいです。|部屋は狭いです。|部屋はうるさいです。
+父は会社に勤めています。|父は会社で働いています。|父は会社を作りました。|父は会社を辞めました。|父は会社を探しています。
+兄はたばこを吸わなくなりました。|兄はたばこをやめました。|兄はたばこを始めました。|兄はたばこが好きになりました。|兄はたばこを買いました。
+彼女は日本語が話せるようになりました。|前は話せませんでしたが、今は話せます。|前は話せましたが、今は話せません。|まだ話せません。|ずっと前から話せます。
+このレストランはいつも込んでいます。|このレストランはいつも人が多いです。|このレストランはいつも静かです。|このレストランはいつも高いです。|このレストランはよく休みます。
+この映画はつまらなかったです。|この映画は面白くなかったです。|この映画はとても面白かったです。|この映画は長かったです。|この映画は怖かったです。
+山田さんは留守です。|山田さんは家にいません。|山田さんは家にいます。|山田さんは寝ています。|山田さんは病気です。
+母に褒められました。|母は「よくできましたね」と言いました。|母は「だめでしょう」と言いました。|母は「早く寝なさい」と言いました。|母は「手伝って」と言いました。
+先生に作文を書かせられました。|先生が「作文を書きなさい」と言いました。|先生が作文を書きました。|先生に作文を書いてもらいました。|先生が作文を読みました。
+雨が降りそうです。|もうすぐ雨が降ると思います。|雨が降ったそうです。|雨がやみました。|雨が降っています。
+鈴木さんは私ほど背が高くないです。|私は鈴木さんより背が高いです。|鈴木さんは私より背が高いです。|鈴木さんと私は同じぐらいの背です。|鈴木さんはとても背が高いです。
+来週、国へ帰るつもりです。|来週、国へ帰ろうと思っています。|来週、国へ帰ったことがあります。|来週、国へ帰ってはいけません。|来週、国へ帰ったところです。`;
+
+/* Frases para traducir: tema|piezas separadas por /|traducción */
+const TR_RAW=`part|私は/毎朝/７時に/起きます。|Me levanto todos los días a las siete.
+part|駅の/前で/友達を/待っています。|Estoy esperando a un amigo delante de la estación.
+part|バスで/学校へ/行きます。|Voy a la escuela en autobús.
+part|私は/日本の/音楽が/好きです。|Me gusta la música japonesa.
+part|庭に/大きい/木が/あります。|En el jardín hay un árbol grande.
+part|公園を/散歩しました。|Paseé por el parque.
+part|妹は/友達と/映画を/見に/行きました。|Mi hermana pequeña fue a ver una película con una amiga.
+part|図書館は/９時から/６時まで/開いています。|La biblioteca abre de nueve a seis.
+intq|教室に/誰も/いません。|No hay nadie en el aula.
+intq|箱の/中に/何か/ありますか。|¿Hay algo dentro de la caja?
+intq|財布に/千円しか/ありません。|Solo tengo mil yenes en la cartera.
+intq|この/町に/何人/住んでいますか。|¿Cuántas personas viven en este pueblo?
+intq|夏休みに/どこへも/行きませんでした。|En las vacaciones de verano no fui a ninguna parte.
+comp|東京は/大阪より/大きいです。|Tokio es más grande que Osaka.
+comp|私は/兄ほど/背が/高くないです。|No soy tan alto como mi hermano mayor.
+comp|季節の/中で/秋が/一番/好きです。|De todas las estaciones, la que más me gusta es el otoño.
+comp|電車と/バスと/どちらが/速いですか。|¿Qué es más rápido, el tren o el autobús?
+comp|この/かばんは/あの/かばんと/同じぐらい/重いです。|Este bolso pesa lo mismo que aquel.
+cond|春に/なると/花が/咲きます。|Cuando llega la primavera, salen las flores.
+cond|駅に/着いたら/電話して/ください。|Llámame cuando llegues a la estación.
+cond|安ければ/買います。|Si es barato, lo compro.
+cond|京都へ/行くなら/お寺を/見た/ほうが/いいですよ。|Si vas a Kioto, deberías ver los templos.
+cond|もっと/勉強すれば/よかった。|Ojalá hubiera estudiado más.
+cond|明日/晴れれば/いいなあ。|Ojalá mañana haga bueno.
+conc|雨が/降っているのに/出かけました。|Salió aunque estaba lloviendo.
+conc|高くても/買いたいです。|Aunque sea caro, quiero comprarlo.
+conc|頭が/痛いので/会社を/休みます。|Como me duele la cabeza, falto al trabajo.
+conc|疲れたから/少し/休みましょう。|Como estamos cansados, descansemos un poco.
+conc|病気の/ため/学校を/休みました。|Falté a la escuela por enfermedad.
+conc|この/店は/安いし/おいしいし/よく/来ます。|Esta tienda es barata y encima está rica, así que vengo a menudo.
+coord|この/部屋は/広くて/明るいです。|Esta habitación es amplia y luminosa.
+coord|兄は/医者で/姉は/先生です。|Mi hermano mayor es médico y mi hermana mayor, profesora.
+coord|肉も/魚も/食べません。|No como ni carne ni pescado.
+coord|買い物を/して/それから/家に/帰りました。|Hice la compra y luego volví a casa.
+time|音楽を/聞きながら/勉強します。|Estudio mientras escucho música.
+time|寝る/前に/歯を/磨きます。|Me lavo los dientes antes de dormir.
+time|ご飯を/食べた/後で/散歩します。|Doy un paseo después de comer.
+time|手を/洗ってから/食べて/ください。|Lávate las manos y después come.
+time|雨が/降らない/うちに/帰りましょう。|Volvamos antes de que llueva.
+time|休みの/間に/日本人と/知り合いました。|Durante las vacaciones conocí a un japonés.
+asp|窓が/開いています。|La ventana está abierta.
+asp|旅行の/前に/ホテルを/予約して/おきます。|Antes del viaje dejo reservado el hotel.
+asp|電車に/傘を/忘れて/しまいました。|Me he dejado el paraguas en el tren.
+asp|この/料理を/食べて/みて/ください。|Prueba esta comida.
+asp|今/出かける/ところです。|Estoy a punto de salir.
+asp|授業が/終わった/ところです。|La clase acaba de terminar.
+asp|まだ/宿題を/していません。|Todavía no he hecho los deberes.
+asp|机の/上に/花が/飾って/あります。|Sobre la mesa hay flores puestas de adorno.
+perm|ここで/写真を/撮っても/いいですか。|¿Puedo sacar fotos aquí?
+perm|教室で/ご飯を/食べては/いけません。|No se puede comer en el aula.
+perm|毎日/薬を/飲まなければ/なりません。|Tengo que tomar la medicina todos los días.
+perm|明日は/来なくても/いいです。|Mañana no hace falta que vengas.
+perm|ここに/車を/止めないで/ください。|No aparque el coche aquí, por favor.
+prob|明日は/雨が/降るかもしれません。|Puede que mañana llueva.
+prob|田中さんは/もう/家に/着いた/はずです。|Tanaka ya debe de haber llegado a casa.
+prob|この/ケーキは/おいしそうです。|Esta tarta tiene pinta de estar rica.
+prob|天気予報に/よると/明日は/雪が/降るそうです。|Según el pronóstico, mañana nevará.
+prob|空が/暗いですね。/雨が/降りそうです。|El cielo está oscuro. Parece que va a llover.
+want|新しい/パソコンが/ほしいです。|Quiero un ordenador nuevo.
+want|夏休みに/富士山に/登りたいです。|En vacaciones de verano quiero subir al monte Fuji.
+want|来年/日本へ/留学する/つもりです。|Tengo intención de ir a estudiar a Japón el año que viene.
+want|週末は/友達に/会おうと/思っています。|Este fin de semana pienso quedar con amigos.
+want|弟は/犬を/飼いたがっています。|Mi hermano pequeño quiere tener un perro.
+want|母に/早く/元気に/なって/ほしいです。|Quiero que mi madre se recupere pronto.
+fin|日本語を/勉強する/ために/日本へ/来ました。|Vine a Japón para estudiar japonés.
+fin|忘れない/ように/メモします。|Lo apunto para no olvidarlo.
+fin|漢字が/読める/ように/なりました。|He llegado a poder leer kanji.
+fin|父は/たばこを/吸わなく/なりました。|Mi padre ha dejado de fumar.
+give|私は/妹に/本を/あげました。|Le di un libro a mi hermana pequeña.
+give|友達が/私に/花を/くれました。|Un amigo me dio flores.
+give|先生に/辞書を/貸して/いただきました。|El profesor tuvo la amabilidad de prestarme el diccionario.
+give|母が/お弁当を/作って/くれました。|Mi madre me preparó la comida.
+give|兄に/宿題を/手伝って/もらいました。|Mi hermano mayor me ayudó con los deberes.
+pass|私は/先生に/褒められました。|El profesor me elogió.
+pass|電車の/中で/足を/踏まれました。|En el tren me pisaron el pie.
+pass|母は/弟に/野菜を/食べさせました。|Mi madre hizo que mi hermano comiera verdura.
+pass|先生に/作文を/書かせられました。|El profesor me obligó a escribir una redacción.
+keigo|社長は/もう/お帰りに/なりました。|El presidente ya se ha ido a casa.
+keigo|先生は/何を/召し上がりますか。|Profesor, ¿qué va a tomar?
+keigo|私が/荷物を/お持ちします。|Yo le llevo el equipaje.
+keigo|はじめまして。/田中と/申します。|Encantado. Me llamo Tanaka.
+misc|日本へ/行った/ことが/ありますか。|¿Has ido alguna vez a Japón?
+misc|私は/日本語を/話す/ことが/できます。|Sé hablar japonés.
+misc|週末は/掃除を/したり/洗濯を/したり/します。|Los fines de semana limpio, hago la colada, etc.
+misc|この/本は/読みやすいです。|Este libro es fácil de leer.
+misc|昨日は/食べすぎました。|Ayer comí demasiado.
+misc|一緒に/お茶を/飲みませんか。|¿Tomamos un té juntos?
+misc|彼が/来るか/どうか/分かりません。|No sé si él vendrá o no.`;
+
+/* Temas de gramática */
+/* Secciones de los apuntes (mismo orden) */
+const SECS=[['pedir','Petición 〜を下さい y contadores'],['pron','Pronombres personales y posesivos'],['demo','Demostrativos (これ・この…)'],['interr','Interrogativos'],['num','Numerales y fechas'],['part','Partículas básicas'],['toki','Temporales 〜とき'],['noni','Concesivas のに／ても'],['edad','La edad'],['hora','La hora'],['aruiru','Verbos ある e いる'],['adj','Adjetivos en な y en い'],['suki','Gustar 好き'],['tai','Voluntad 〜たい'],['adv','Adverbios a partir de adjetivos (く・に)'],['verb','Verbos: ます, negativo, gerundio, pasado'],['tekudasai','Gerundio y súplica 〜てください'],['mashou','Forma exhortativa 〜ましょう／〜よう'],['imp','Imperativo (なさい y categórico)'],['coord','Coordinación y adversativos'],['kan','Sufijo de duración 間'],['perm','Permiso y prohibición'],['partv','Uso de partículas según el verbo'],['sust','Sustantivación (の・こと・もの・人)'],['moumada','もう y まだ'],['to','Condicional / temporal と'],['tarabanara','Otras condicionales たら・ば・なら'],['teiru','Gerundio + いる'],['tearu','Gerundio + ある'],['suru','Verbos con する'],['darou','Futuro だろう・でしょう'],['omou','Opinión 〜と思う'],['kara','Causales から y ので'],['shi','Conjunción し'],['yasui','Fácil / difícil de (やすい・にくい)'],['tari','Secuencia 〜たり〜たり'],['comp','Comparativas y superlativos'],['cant','Expresión de la cantidad'],['sugiru','Demasiado 〜すぎる'],['nda','Énfasis 〜のです／〜んです'],['maeato','Antes / después (前に・後で・てから)'],['prob','Probabilidad y suposición'],['invit','Invitación 〜ませんか'],['soudesu','Estilo indirecto (そうです・と言っています)'],['tekita','Venir haciendo 〜てきた'],['rel','Oraciones de relativo'],['temiru','Intentar 〜てみる'],['nagara','Simultaneidad (ながら・間・うちに)'],['hazu','Alta y baja probabilidad はず'],['takunaru','〜たくなる／〜たくなくなる'],['shiru','El verbo 知る'],['intent','Intención (ようと思う・つもり)'],['kadouka','Interrogación indirecta か・かどうか'],['oblig','Obligación'],['permiso2','Permiso (でもいい・くてもいい・なくてもいい)'],['pot','Potencial (できる y forma potencial)'],['naide','Unión sin conjunciones (ないで・くて)'],['ba','Formación del condicional 〜ば'],['ojala','Ojalá (ばいいな・ばよかったのに)'],['keiken','Experiencia 〜たことがある'],['sou','Apariencia 〜そう'],['tokoro','Perífrasis con ところ'],['hoshii','Deseo (ほしい・てほしい・たがる)'],['tame','Finalidad ため・ように'],['youni','Ponerse a / dejar de (ようになる・なくなる)'],['teoku','Dejar hecho 〜ておく'],['mama','まま'],['shimau','Gerundio + しまう'],['give','Dar y recibir (あげる・くれる・もらう…)'],['hajimeru','Empezar, terminar, seguir'],['ukemi','Voz pasiva'],['shieki','Causativa y causativo-pasiva'],['waga','Las partículas は y が'],['keigo','Keigo'],['conj','Repaso: todas las conjugaciones']];
+const TOPICS=Object.fromEntries(SECS);
+/* Bloques temáticos que agrupan las secciones */
+const TGROUPS=[
+  ['Lo básico','pedir pron demo interr num edad hora aruiru'],
+  ['Partículas','part partv waga'],
+  ['Adjetivos','adj suki adv sugiru yasui sou'],
+  ['Verbos: formas','verb tekudasai mashou imp pot suru shiru hajimeru conj'],
+  ['Formas con て','teiru tearu teoku mama shimau temiru tekita tokoro'],
+  ['Deseo, intención e invitación','tai hoshii takunaru intent invit'],
+  ['Permiso y obligación','perm permiso2 oblig'],
+  ['Condicionales','to tarabanara ba ojala'],
+  ['Causa, concesión y finalidad','kara noni shi tame youni'],
+  ['Tiempo y experiencia','toki kan maeato nagara moumada keiken'],
+  ['Unir frases y estilo indirecto','coord naide tari sust rel kadouka soudesu omou nda'],
+  ['Probabilidad','prob darou hazu'],
+  ['Comparación y cantidad','comp cant'],
+  ['Dar, recibir, pasiva y causativa','give ukemi shieki'],
+  ['Keigo','keigo']
+].map(([n,s])=>({n,s:s.split(' ')}));
+
+/* Más frases para completar: sección|frase|correcta|d1|d2|d3|explicación */
+const GQ2_RAW=`pedir|ノートを（　）下さい。(un cuaderno)|一冊|一枚|一本|一個|冊 cuenta libros y cuadernos.
+pedir|切手を（　）下さい。(tres sellos)|三枚|三冊|三本|三台|枚 cuenta cosas planas: papel, sellos, camisetas.
+pedir|ビールを（　）下さい。(dos cervezas)|二本|二枚|二冊|二匹|本 cuenta objetos largos: botellas, lápices…
+pedir|消しゴムを（　）下さい。(una goma)|一個|一冊|一枚|一台|個 cuenta objetos pequeños.
+pedir|家に猫が（　）います。(dos gatos)|二匹|二本|二台|二個|匹 cuenta animales pequeños.
+pedir|車を（　）持っています。(dos coches)|二台|二匹|二本|二冊|台 cuenta máquinas y vehículos.
+pedir|靴を（　）買いました。(dos pares)|二足|二台|二枚|二個|足 cuenta pares de calzado.
+pedir|コーヒーを（　）下さい。(dos)|二つ|二人|二匹|二冊|つ es el contador genérico (一つ, 二つ…).
+pedir|学生が（　）います。(tres estudiantes)|三人|三つ|三匹|三台|人 cuenta personas (一人, 二人, 三人…).
+pedir|鉛筆を（　）下さい。(cinco lápices)|五本|五枚|五冊|五匹|本: objetos largos y finos.
+pron|これは（　）本ですか。―私のです。|誰の|誰が|何の|どの|誰の: ¿de quién?
+pron|あれは（　）傘ですか。―いいえ、田中さんのです。|あなたの|あなた|あなたは|あなたが|Pronombre + の = posesivo: あなたの傘.
+pron|この辞書は（　）です。(es mío)|私の|私|私は|私が|私の = mío (el sustantivo se puede omitir).
+pron|田中さんと鈴木さんは私の友達です。（　）は大学生です。|彼ら|彼|彼女|私|Ellos: 彼ら／彼たち.
+pron|（　）は日本人ですか。(¿Ella es japonesa?)|彼女|彼|彼ら|私たち|Ella: 彼女.
+demo|（　）本は私のです。(este libro)|この|これ|ここ|こちら|この + sustantivo (adjetivo). これ va solo (pronombre).
+demo|（　）は何ですか。(¿Qué es eso?)|それ|その|そこ|そちら|それ: pronombre, sustituye al nombre.
+demo|あなたの傘は（　）ですか。(¿Cuál es?)|どれ|どの|どこ|この|どれ: ¿cuál? (pronombre).
+demo|（　）人はだれですか。(aquella persona)|あの|あれ|あそこ|ああ|あの + sustantivo.
+demo|トイレは（　）ですか。|どこ|どれ|どの|この|どこ: ¿dónde?
+demo|（　）かばんがあなたのですか。(¿Qué bolso?)|どの|どれ|どこ|どう|どの + sustantivo: ¿qué/cuál…?
+interr|このかばんは（　）ですか。―三千円です。|いくら|いくつ|いつ|どこ|いくら: ¿cuánto (dinero)?
+interr|りんごは（　）ありますか。―五つあります。|いくつ|いくら|いつ|どれ|いくつ: ¿cuántos? (genérico)
+interr|東京から大阪まで（　）かかりますか。(¿cuánto tiempo?)|どのくらい|いくら|いくつ|どれ|どのくらい: ¿cuánto? (abstracto: tiempo, distancia).
+interr|（　）日本へ帰りますか。―来月です。|いつ|どこ|だれ|どう|いつ: ¿cuándo?
+interr|昨日は（　）学校に来なかったんですか。(¿por qué?)|どうして|どうやって|どんな|どれ|どうして／なぜ: ¿por qué?
+interr|（　）学校へ来ましたか。―バスで来ました。|どうやって|どうして|どんな|いつ|どうやって: ¿cómo?, ¿de qué manera?
+interr|（　）音楽が好きですか。―ロックが好きです。|どんな|どう|どれ|どこ|どんな + sustantivo: ¿qué tipo de…?
+interr|今日は（　）ですか。―水曜日です。|何曜日|何日|何時|何月|何曜日: ¿qué día de la semana?
+interr|試験は（　）でしたか。―難しかったです。(¿qué tal?)|どう|どんな|どれ|どこ|どう: ¿qué tal?, ¿cómo?
+interr|日本とスペインと、（　）が好きですか。|どちら|どれ|どこ|だれ|Entre dos opciones: どちら.
+edad|あなたは（　）ですか。―二十歳です。|何歳|何時|何年|何人|何歳／おいくつ: ¿cuántos años?
+edad|お（　）ですか。(¿qué edad tiene usted?)|いくつ|いくら|なに|どれ|おいくつですか: forma educada de preguntar la edad.
+edad|弟は十（　）です。|歳|年|月|時|〜歳 (さい): años de edad.
+hora|今、（　）ですか。―三時です。|何時|何分|何時間|何曜日|何時: ¿qué hora?
+hora|毎日（　）勉強しますか。―二時間です。|何時間|何時|何曜日|何分|何時間: ¿cuántas horas?
+hora|何時（　）起きますか。|に|で|を|が|Hora concreta + に.
+hora|今は十二時十五分（　）です。(menos cuarto)|前|後|半|間|〜分前: menos…
+hora|八時（　）に起きます。(y media)|半|前|分|間|半: y media.
+toki|新聞を読む（　）、眼鏡をかけます。|とき|と|まで|ので|〜とき: cuando.
+toki|家に帰った（　）、お風呂に入りました。(cuando llegué)|とき|まえ|ながら|うちに|Pasado + とき: cuando (una vez hecho).
+toki|家に帰る（　）、山田さんに会いました。(de camino a casa)|とき|たら|ので|まで|Forma diccionario + とき: antes o durante la acción.
+toki|子供の（　）、よく川で泳ぎました。|とき|あと|まえ|ため|Sustantivo + の + とき.
+toki|暇な（　）、本を読みます。|とき|ので|のに|まで|Adj. な + な + とき.
+toki|寒い（　）は、コートを着ます。|とき|まで|から|ので|Adj. い + とき.
+aruiru|机の上に本が（　）。|あります|います|あるです|いる|ある: objetos inanimados (y plantas).
+aruiru|木の後ろに猫が（　）。|います|あります|ある|します|いる: seres animados (personas y animales).
+aruiru|教室に先生が（　）。|います|あります|あるます|いります|いる: personas.
+aruiru|池の中に何か（　）か。―はい、金魚がいます。|います|あります|いきます|きます|Preguntando por animales: 何かいますか.
+aruiru|駅の前に銀行が（　）。|あります|います|あるます|いるます|ある: edificios y cosas.
+adj|この部屋は（　）。(no es bonita)|きれいではありません|きれくないです|きれいくないです|きれいないです|きれい es adjetivo な: negativo ではありません.
+adj|昨日は（　）です。(hizo frío)|寒かった|寒いでした|寒くでした|寒いかった|Adj. い en pasado: 〜かった.
+adj|その映画は（　）。(no fue interesante)|面白くなかったです|面白いじゃなかったです|面白くないでした|面白いでしたない|Pasado negativo de い: 〜くなかった.
+adj|昨日の町は（　）。(estaba tranquila)|静かでした|静かかったです|静かだったでした|静かいでした|Pasado de な: でした／だった.
+adj|顔が（　）なりました。(se puso rojo)|赤く|赤い|赤に|赤くて|Adj. い + なる: 〜くなる.
+adj|部屋を（　）しました。(la dejé limpia)|きれいに|きれく|きれいで|きれいな|Adj. な + する: 〜にする.
+adj|（　）車ですね。(un coche bonito)|きれいな|きれい|きれいの|きれいに|Adj. な delante de sustantivo: 〜な.
+adj|これは（　）本です。|新しい|新しいな|新しの|新しく|Adj. い delante de sustantivo: directamente.
+adj|このケーキはあまり（　）。|おいしくないです|おいしいではありません|おいしいないです|おいしくでないです|Negativo de い: 〜くない.
+suki|私の（　）音楽はジャズです。(mi música favorita)|好きな|好き|好きの|好きに|好き funciona como adj. な: 好きな + sustantivo.
+suki|魚はあまり好き（　）ありません。|では|が|に|く|Negativo de 好き (adj. な): 好きではありません.
+suki|子供のとき、野菜が（　）。(no me gustaban)|好きではありませんでした|好きくなかったです|好きないでした|好きでなかったでした|Pasado negativo de un adj. な.
+suki|どんな映画が（　）ですか。|好き|好きな|好きの|好きに|〜が好きです.
+tai|冷たい水が（　）です。(quiero beber)|飲みたい|飲むたい|飲んだい|飲みだい|Radical + たい.
+tai|今日は何も（　）。(no quiero comer)|食べたくないです|食べたいじゃないです|食べないたいです|食べたいないです|たい se conjuga como adj. い: 〜たくない.
+tai|子供のとき、医者に（　）。(quería ser)|なりたかったです|なりたいでした|なりたくでした|なるたかった|Pasado: 〜たかった.
+tai|日本へ行き（　）と思います。|たい|たく|たかって|たがる|〜たいと思います: me gustaría…
+adv|字を（　）書いてください。(con letra bonita)|きれいに|きれく|きれいな|きれいで|Adj. な → adverbio: 〜に.
+adv|図書館では（　）話してください。|静かに|静かな|静かく|静かで|Adj. な → adverbio: 〜に.
+adv|毎朝（　）起きます。(temprano)|早く|早い|早に|早くて|Adj. い → adverbio: 〜く.
+adv|彼は毎日（　）勉強しています。(con entusiasmo)|熱心に|熱心な|熱心く|熱心で|Adj. な → adverbio: 〜に.
+adv|壁を（　）塗りました。(de rojo)|赤く|赤い|赤に|赤な|Adj. い → adverbio: 〜く.
+adv|彼は（　）走ります。(rápido)|速く|速い|速に|速くて|Adj. い → adverbio: 〜く.
+verb|昨日は映画を（　）。(vi)|見ました|見ます|見ません|見ましょう|Pasado cortés: 〜ました.
+verb|今朝は朝ご飯を（　）。(no comí)|食べませんでした|食べません|食べました|食べないでした|Pasado negativo cortés: 〜ませんでした.
+verb|毎日コーヒーを（　）。(bebo)|飲みます|飲みました|飲みません|飲ませます|Presente cortés: 〜ます.
+tekudasai|ここに名前を（　）下さい。|書いて|書き|書く|書いた|Gerundio + 下さい: haga…, por favor.
+tekudasai|どうぞ（　）下さい。(siéntese)|座って|座り|座る|座った|Gerundio + 下さい.
+tekudasai|ここで写真を撮ら（　）下さい。|ないで|なくて|ず|ない|〜ないで下さい: no haga…, por favor.
+tekudasai|ちょっと（　）下さい。(espere)|待って|待ち|待つ|待た|Gerundio + 下さい.
+mashou|一緒に昼ご飯を（　）。(comamos)|食べましょう|食べません|食べました|食べたい|Radical + ましょう: vamos a…
+mashou|映画へ（　）か。(¿vamos?)|行きましょう|行きました|行きたい|行って|〜ましょうか: invitación suave.
+mashou|疲れたね。少し（　）。(descansemos, coloquial)|休もう|休みよう|休むう|休めよう|Volitiva grupo 1: u → o + う.
+mashou|明日は早く（　）。(levantémonos, coloquial)|起きよう|起きろう|起こう|起きおう|Volitiva grupo 2: quita る + よう.
+mashou|週末、何を（　）か。(¿qué hacemos?)|しましょう|しろう|すろう|すよう|する → しましょう (cortés) / しよう (coloquial).
+imp|早く寝（　）。(a un niño)|なさい|ろう|ない|たい|Radical + なさい: imperativo a niños o inferiores.
+imp|宿題をし（　）。|なさい|なさり|ないさい|なさえ|する → しなさい.
+imp|「（　）！」と警官が言った。(¡alto!)|止まれ|止まる|止まろ|止まりな|Imperativo categórico grupo 1: u → e.
+imp|「早く（　）！」(¡come!)|食べろ|食べれ|食べり|食べらる|Imperativo categórico grupo 2: quita る + ろ.
+imp|ここで泳ぐ（　）！(¡no nades!)|な|ない|なさい|ろ|Imperativo negativo: forma diccionario + な.
+imp|こっちへ（　）！(¡ven!)|来い|来ろ|来れ|来り|Imperativo de 来る: 来い (こい).
+coord|買い物をしました。（　）、友達の家へ行きました。(y luego)|それから|でも|だから|どうして|それから: después, luego.
+coord|私は日本人です。（　）東京で生まれました。(y además)|そして|でも|だから|どうして|そして: une dos frases.
+coord|私は三時に学校に（　）、五時に家に戻りました。|行き|行く|行いて|行きて|Unión de verbos con el radical: 行き、… (estilo escrito).
+coord|彼は日本人（　）中国人でもありません。|でも|で|も|と|〜でも〜でもない: ni… ni…
+coord|このパンは安くて（　）です。|おいしい|おいしく|おいしいで|おいしかって|Tras 〜くて, el último adjetivo va en forma normal.
+coord|私はスペイン人です。（　）彼女はそうではありません。|でも|そして|それから|だから|でも: sin embargo.
+kan|兄は三年（　）韓国にいました。|間|時|分|年|〜年間: durante X años.
+kan|一週（　）にどのくらい勉強しますか。|間|日|時|週|Con semanas, 間 no se puede quitar: 一週間.
+kan|大阪から名古屋まで何（　）ぐらいかかりますか。(¿cuántas horas?)|時間|時|曜日|月|Con horas, 間 no se puede quitar: 何時間.
+kan|十秒（　）息を止めて下さい。|間|時|分|後|〜秒間: durante X segundos.
+kan|先週風邪をひいたので、三日（　）寝ていました。|間|時|分|月|〜日間: durante X días.
+partv|窓（　）開けてください。|を|が|に|で|Verbo transitivo: を.
+partv|部屋（　）出るとき、ドアを閉めてください。|を|に|で|が|出る: el lugar del que se sale va con を.
+partv|彼は私の肩（　）触った。|に|を|で|が|触る rige に.
+partv|非常口（　）出る。(a través de)|から|を|に|へ|から: a través de, por.
+partv|美術館に入るのに入場券（　）必要です。|が|を|で|と|必要 rige が.
+partv|昨日、学校（　）休みました。|を|に|で|が|休む (faltar a algo) rige を.
+partv|両親の仕事（　）手伝う。|を|に|で|が|手伝う rige を.
+partv|美術館（　）入る。|に|を|で|が|入る rige に.
+sust|日本語を話す（　）は楽しいです。|の|もの|人|ところ|Sustantivación con の: «(el) hablar japonés».
+sust|赤い（　）がほしいです。(el rojo)|の|こと|ところ|はず|の sustituye a una cosa ya mencionada.
+sust|面白い（　）に会いました。(una persona)|人|こと|ところ|はず|人: persona.
+sust|私の趣味は本を読む（　）です。|こと|ところ|はず|まま|こと: el hecho de…
+sust|今朝、ルイスさんが走っている（　）を見た。|の|こと|もの|はず|Con verbos de percepción solo vale の.
+moumada|宿題は（　）終わりましたか。|もう|まだ|ずっと|すぐ|もう: ya.
+moumada|いいえ、（　）終わっていません。|まだ|もう|もっと|すぐ|まだ + negativo: todavía no.
+moumada|（　）十時ですよ。早く寝なさい。(ya son las diez)|もう|まだ|もっと|すぐ|もう: ya.
+moumada|雨は（　）降っています。(todavía)|まだ|もう|もっと|すぐ|まだ + afirmativo: todavía.
+to|この道を少し行く（　）、たばこ屋があります。|と|ので|のに|まで|と: si haces A, encuentras B (siempre).
+to|上田さんは手紙を書く（　）、すぐ出かけました。(nada más)|と|ので|ても|まで|と: inmediatez, «en cuanto».
+to|このボタンを押す（　）、水が出ます。|と|ても|のに|まで|と: consecuencia segura.
+tarabanara|四時になっ（　）、出かけましょう。|たら|と|ば|て|Con invitación en la 2ª parte: たら (no と).
+tarabanara|英語（　）、山田さんに聞いてみて。|なら|と|たら|ば|Sustantivo + なら: si se trata de…
+tarabanara|お金があっ（　）、旅行したいです。(si tuviera dinero)|たら|と|て|ても|たら: si…
+teiru|今、カレーを食べて（　）。|います|あります|おきます|しまいます|Transitivo + ている: acción en curso.
+teiru|あの人はまだ生きて（　）。|います|あります|みます|きます|Intransitivo + ている: estado.
+teiru|彼はあの会社で働いて（　）。(trabaja allí)|います|あります|おきます|みます|ている: costumbre o repetición.
+teiru|グラスに牛乳が入って（　）。|います|あります|おきます|みます|Intransitivo + ている: estado.
+teiru|とても疲れて（　）。|います|あります|おきます|しまいます|疲れている: estado.
+tearu|ドアが開けて（　）。(alguien la dejó abierta)|あります|います|おきます|みます|Transitivo + てある: estado intencionado.
+tearu|壁に地図がはって（　）。|あります|います|しまいます|みます|Transitivo + てある.
+tearu|机の上に本が並べて（　）。|あります|います|みます|きます|Transitivo + てある.
+tearu|電気が（　）います。(la luz está encendida, simple estado)|ついて|つけて|つく|つけ|Intransitivo (つく) + ている: mero estado.
+suru|私は日本語を（　）します。|勉強|勉強を|勉強が|勉強に|No se puede repetir を: 日本語を勉強します.
+suru|私は日本語の勉強（　）します。|を|が|に|で|〜の勉強をする: «hacer el estudio de».
+suru|家（　）掃除しましょう。|を|の|が|で|家を掃除する.
+suru|家の掃除（　）しましょう。|を|が|に|で|家の掃除をする.
+suru|毎朝、公園で運動（　）。|します|なります|あります|います|Sustantivo + する.
+darou|明日はたぶん雨が（　）でしょう。|降る|降り|降って|降れ|Forma simple + でしょう.
+darou|彼は来ない（　）。(probablemente, coloquial)|だろう|ましょう|なさい|たい|だろう: forma coloquial de でしょう.
+darou|あの人はたぶん学生（　）。|でしょう|ましょう|ません|たい|Sustantivo + でしょう.
+darou|田中さんは明日来る（　）と思います。|だろう|ましょう|ろう|よう|〜だろうと思います: creo que…
+omou|この映画はどう（　）か。|思います|思えば|思って|思おう|どう思いますか: ¿qué te parece?
+omou|それは面白い（　）思います。|と|を|が|に|〜と思います.
+omou|彼女はきれい（　）と思います。|だ|な|の|に|Adj. な / sustantivo + だ + と思う.
+omou|彼は先生（　）と思います。|だ|な|の|が|Sustantivo + だ + と思う.
+omou|あの店はおいしい（　）思います。|と|だと|なと|のと|Adj. い + と思う (sin だ).
+kara|頭が痛い（　）、散歩に出かけません。|ので|のに|ても|まで|ので: causa objetiva.
+kara|彼女はきれいな（　）、いつも褒められている。(como es guapa)|ので|から|だので|なから|Adj. な: 〜なので／〜だから.
+kara|お茶を飲んで（　）、仕事をします。(después de)|から|ので|のに|ても|Gerundio + から es temporal (después de), no causal.
+kara|飲みすぎた（　）病気になりました。|から|てから|まで|のに|Pasado + から: causal.
+shi|この部屋は広い（　）、明るいし、気に入りました。|し|て|のに|まで|〜し、〜し: enumera razones.
+shi|田中さんも来た（　）、中村さんも来た。|し|て|ても|まで|La forma que precede a し va en coloquial.
+tari|夏休みに山に登っ（　）、川で泳いだりしました。|たり|て|ても|たら|〜たり〜たりする.
+tari|彼は泣い（　）笑ったりします。|たり|て|ても|たら|たり también expresa alternancia.
+sugiru|このかばんは高（　）。|すぎます|くすぎます|いすぎます|かすぎます|Adj. い: quita い + すぎる.
+sugiru|昨日は飲み（　）、頭が痛いです。|すぎて|すぎで|すぎる|すぎた|Radical + すぎる (se conjuga como verbo).
+sugiru|この部屋は静か（　）。|すぎます|にすぎます|なすぎます|ですぎます|Adj. な + すぎる.
+cant|部屋は人で（　）だ。|いっぱい|たくさん|少し|大勢|いっぱい: lleno.
+cant|パーティーに（　）の学生が来た。|大勢|少ない|全く|あまり|大勢: mucha gente (solo personas).
+cant|これは（　）面白くない。(nada)|全然|たくさん|大勢|全部|全然 + negativo.
+cant|お金を（　）使ってしまった。(todo)|全部|全然|全く|あまり|全部: todo.
+cant|サラゴサは学生が（　）です。(hay muchos)|多い|少し|全部|全然|En japonés se prefiere el adjetivo: 多い.
+cant|彼はお金を（　）持っていない。(casi no)|ほとんど|全部|大勢|たくさん|ほとんど + negativo: casi no.
+cant|魚が（　）好きではない。(no demasiado)|あまり|全部|大勢|いっぱい|あまり + negativo.
+nda|どうしたんですか。―財布を落とした（　）です。|ん|こと|もの|はず|〜んです: explicación, «es que…».
+nda|昨日はどうして来なかった（　）ですか。|の|こと|もの|はず|〜のですか: pide una explicación.
+nda|彼は怒った（　）。(es que se ha enfadado)|のです|ことです|ものです|ところです|〜のです: «es que…».
+nda|すみません、ちょっと頭が痛い（　）。|んです|なんです|のんです|んだです|Adj. い + んです.
+prob|彼は明日来る（　）。(puede que)|かもしれません|ましょう|なさい|たいです|〜かもしれません: puede que…
+prob|私たちは（　）、君たちと一緒に行きます。(quizás)|多分|全部|全然|あまり|多分 (たぶん): quizás.
+prob|あなたは疲れている（　）。(supongo)|でしょう|ましょう|ません|たい|〜でしょう: suposición.
+prob|黒い服を着ている人は社長さん（　）。(será el jefe)|でしょう|ましょう|ます|たい|〜でしょう: suposición.
+prob|彼女は今家にいる（　）と思います。|だろう|ましょう|よう|ろう|〜だろうと思います.
+invit|一緒に中華料理を食べに（　）か。|行きません|行きなさい|行きたい|行きましょ|Invitación: 〜ませんか.
+invit|来年、世界一周旅行を一緒にし（　）か。|ません|なさい|たい|ろ|Invitación: 〜ませんか.
+invit|コーヒーでも飲み（　）か。|ません|ない|なさい|ろ|Invitación: 〜ませんか.
+soudesu|彼らは家に帰りたい（　）言っています。|と|を|が|に|〜と言っています: dice(n) que…
+soudesu|あの会社は大きなビルを建てたかった（　）です。(según dicen)|そう|よう|はず|つもり|Forma simple + そうです: según dicen.
+soudesu|彼は何かおいしいものが食べたい（　）です。(dice que)|そう|ため|ところ|まま|〜たいそうです: dice que quiere…
+soudesu|ニュースによると、明日は（　）そうです。(hará buen tiempo)|晴れる|晴れ|晴れて|晴れろ|Forma simple + そうです.
+tekita|私はこの会社で十二年間働いて（　）。|きました|いきました|おきました|みました|〜てきた: llevar haciendo.
+tekita|彼女はその事件で苦労して（　）。|きた|おいた|みた|あった|〜てきた: venir haciendo.
+rel|昨日（　）人は私の友達です。|来た|来たの|来たが|来たな|Relativo: verbo (forma simple) + sustantivo.
+rel|私が買った本は、テーブルの上（　）あります。|に|で|を|が|Existencia: lugar + に.
+rel|その本を読んでいる子供（　）中国人です。|は|が|を|に|El sujeto de la principal: は.
+rel|これは私（　）作ったケーキです。|が|を|は|で|El sujeto dentro de la oración de relativo va con が, no con は.
+rel|（　）人はみんな死んだ。(los que iban en ese avión)|その飛行機に乗っていた|その飛行機に乗っていたの|その飛行機を乗っていた|その飛行機に乗っていたな|La oración de relativo va delante del sustantivo, sin partícula.
+rel|うちでは、一番早く起きる（　）は祖母です。|の|こと|もの|ところ|の = la que (persona), con verbo «ser».
+temiru|その服を着て（　）。(pruébatelo)|みて|おいて|しまって|あって|〜てみる: probar a.
+temiru|やって（　）ください。(inténtalo)|みて|あって|いて|おる|〜てみてください.
+hazu|彼のお兄さんは大学生（　）はずだ。|の|な|だ|で|Sustantivo + の + はず.
+hazu|それは面白い（　）。(debe de ser interesante)|はずだ|ほしい|つもりだ|ところだ|Adj. い + はずだ.
+hazu|この魚は新鮮（　）はずだ。|な|の|だ|に|Adj. な + な + はず.
+hazu|その知らせが本当の（　）はない。|はず|つもり|ところ|まま|〜はずはない: no puede ser.
+takunaru|お酒を飲みたく（　）。(ya no me apetece beber)|なくなった|なかった|ないなった|なくした|〜たくなくなる: perder las ganas.
+takunaru|急に勉強し（　）なりました。|たく|たい|たくて|たがって|〜たくなる: entrar ganas.
+shiru|田中さんの電話番号を（　）か。|知っています|知ります|知りています|知るです|知る se usa en forma ている: 知っています (lo sé).
+shiru|いいえ、（　）。(no lo sé)|知りません|知っていません|知ります|知りしません|En negativo se dice 知りません.
+shiru|そのことはもう（　）。(ya lo sabía)|知っていました|知ります|知っていません|知るでした|知っていました: (ya) lo sabía.
+shiru|昨日のニュースで（　）。(me enteré)|知りました|知っています|知りません|知って|知りました: me enteré.
+intent|彼を助けよう（　）思ったが、無駄だった。|と|を|が|に|Volitiva + と思う.
+intent|その旅行のために車を借りる（　）です。|つもり|ところ|はず|そう|〜つもりです: tengo la intención de…
+intent|五時に電話（　）と思いましたが、できませんでした。(quise llamar)|しよう|する|して|しろ|Volitiva de する: しよう.
+intent|夏休みに日本へ（　）と思っています。(pienso ir)|行こう|行きよう|行けよう|行かよう|Volitiva grupo 1: u → o + う.
+kadouka|この本が難しい（　）どうか、読んでみてください。|か|と|が|の|〜かどうか: si… o no.
+kadouka|たばこはどこにある（　）彼に聞いてみて。|か|と|が|を|Interrogativo + か.
+oblig|もっと努力しなく（　）いけない。|ては|ても|て|たら|〜なくてはいけない.
+oblig|もう六時だから、電車に乗らな（　）。|ければならない|くてもいい|いでください|かった|〜なければならない.
+oblig|作文を書くときは、もっと漢字を使わない（　）いけない。|と|ば|て|たら|〜ないといけない.
+oblig|病気だから、毎日この薬を飲まな（　）なりません。|ければ|くても|いで|かった|〜なければなりません.
+permiso2|すみません、鉛筆（　）いいですか。|でも|も|で|でて|Sustantivo + でもいい: ¿vale con…?
+permiso2|静か（　）もいいです。|で|に|く|な|Adj. な + でもいい.
+permiso2|きれい（　）なくてもいいです。|じゃ|く|に|な|Adj. な + じゃなくてもいい.
+permiso2|あまり大き（　）なくてもいいです。|く|い|で|じゃ|Adj. い: 〜くなくてもいい.
+pot|私は日本語が（　）。(sé hablar)|話せます|話されます|話させます|話しれます|Potencial grupo 1: u → e + る.
+pot|そんな難しい漢字は（　）。(no sé escribir)|書けません|書かれません|書かせません|書きれません|Potencial: 書ける.
+pot|この品物は食べ（　）ません。(no se puede comer)|られ|らせ|られて|られれ|Potencial grupo 2: 〜られる.
+pot|私は泳ぐことが（　）。|できません|しません|ありません|なりません|〜ことができる.
+pot|明日、来（　）ますか。(¿puedes venir?)|られ|させ|らせ|られれ|Potencial de 来る: 来（こ）られる.
+pot|日本語を話すこと（　）できます。|が|を|に|で|〜ことができる.
+naide|走ら（　）、歩いて来て下さい。|ないで|なくて|ないと|なければ|〜ないで: sin hacer / en lugar de.
+naide|そんなに泣いてい（　）、何があったか教えて下さい。|ないで|なくて|ないと|なければ|〜ないで.
+naide|値段が高（　）、買うことができませんでした。|くて|いで|くで|いて|〜くて: causa (por ser…).
+naide|朝ご飯を食べ（　）、学校へ行きました。(sin desayunar)|ないで|なくて|ないと|なければ|〜ないで: sin hacer.
+ba|安（　）買います。|ければ|いれば|くれば|いば|Adj. い: 〜ければ.
+ba|時間が（　）、行きます。(si tengo)|あれば|あるば|あらば|あったば|Grupo 1: u → e + ば.
+ba|静か（　）、勉強できます。|なら|ければ|くれば|れば|Adj. な: 〜なら（ば）.
+ba|早く（　）、間に合います。|起きれば|起きば|起けば|起きるば|Grupo 2: quita る + れば.
+ba|雨が（　）、行きません。(si llueve)|降れば|降らば|降りば|降るば|Grupo 1: u → e + ば.
+ba|学生で（　）、安くなります。|あれば|いれば|ければ|れば|Sustantivo + であれば.
+ojala|日本語が話せれ（　）いいのに。|ば|と|て|ても|〜ばいいのに: ojalá (lamento).
+ojala|合格できれば（　）なあ。|いい|ある|する|なる|〜ばいいな: ojalá.
+keiken|日本へ行ったことは（　）。(nunca)|ありません|いません|しません|なりません|〜たことはない: nunca.
+keiken|カレーを（　）ことがありますか。|食べた|食べる|食べて|食べ|〜たことがある: forma た.
+sou|（　）パーティーですね。(parece divertida)|楽しそうな|楽しいそうな|楽しそうの|楽しくそうな|〜そう funciona como adj. な: 楽しそうな + sustantivo.
+sou|このケーキはおいし（　）です。(no parece buena)|くなさそう|くないそう|いなさそう|なさそう|Negativo de apariencia: 〜くなさそう.
+sou|クーデターがあり（　）です。|そう|はず|よう|ため|Radical + そう: parece que va a…
+sou|元気（　）ですね。(parece sano)|そう|だそう|なそう|にそう|Adj. な + そう. (だそう = dicen que)
+sou|雨が降り（　）。(no parece que vaya a llover)|そうにない|そうだ|そうです|そうな|〜そうにない: no parece que…
+tokoro|今、手紙を書いている（　）です。|ところ|はず|そう|つもり|〜ているところ: justo ahora.
+tame|転ばない（　）注意して下さい。|ように|ために|ので|のに|ように con algo no controlable.
+tame|それを見る（　）来ました。|ために|ように|ので|まで|ために: mismo sujeto, acción controlable.
+youni|お酒を飲む（　）になりました。(empecé a beber)|よう|こと|ため|まま|〜ようになる.
+youni|もう漢字が読め（　）なりました。(ya no puedo leer)|なく|ないで|ずに|なくて|〜なくなる: dejar de.
+teoku|旅行の前にホテルを予約して（　）。|おきます|あります|います|みます|〜ておく: hacer de antemano.
+teoku|電気をつけて（　）ないで下さい。(no la dejes encendida)|おか|あら|いら|みら|〜ておかないで: no lo dejes…
+mama|私は座った（　）でいる。(sigo sentado)|まま|ながら|うちに|ところ|〜たままでいる: seguir…
+mama|日本人は魚を生の（　）食べます。|まま|ながら|うちに|あとで|Sustantivo + の + まま: tal cual.
+mama|家はその（　）にしておいて下さい。|まま|ながら|うち|あと|そのまま: tal como está.
+shimau|教科書を家に忘れて（　）。|しまいました|おきました|ありました|みました|〜てしまう: lamento.
+shimau|試験の時間に遅れて（　）。|しまった|おいた|あった|みた|〜てしまう: lamento.
+hajimeru|車は走り（　）。(empezó a correr)|始めた|終えた|続けた|すぎた|Radical + 始める.
+hajimeru|その本を読み（　）。(acabé de leer)|終えた|始めた|続けた|すぎた|Radical + 終える.
+hajimeru|彼女はまだ仕事を探し（　）いる。|続けて|終えて|すぎて|やすくて|Radical + 続ける.
+hajimeru|手紙を書き（　）。(empecé a escribir)|始めた|終えた|続けた|すぎた|Radical + 始める.
+ukemi|ハイキングのとき、雨（　）降られた。|に|を|が|で|Pasiva indirecta: el agente con に.
+ukemi|私は誰か（　）足を踏まれた。|に|を|が|で|Pasiva de dueño: 人に〜を〜られる.
+ukemi|社長（　）従業員にメダルが渡された。|から|に|を|で|Verbos de entrega: el agente va con から.
+ukemi|天皇はヨーロッパを訪問（　）。(respetuoso)|されます|させます|させられます|できます|Pasiva de respeto.
+ukemi|私は三年前に母に（　）。(se me murió)|死なれました|死にました|死なせました|死ねました|Pasiva de perjuicio con intransitivo.
+shieki|ちょっと失礼（　）下さい。|させて|されて|させられて|しられて|〜させて下さい: permítame…
+shieki|子供たち（　）公園へ行かせた。(les dejé ir)|に|を|が|で|Intransitivo: に = dejar hacer; を = obligar.
+shieki|社長さんは社員に長い話を（　）。|聞かせました|聞かれました|聞けました|聞きました|Causativa: 聞かせる.
+shieki|会議に参加させて（　）。(me tomo la libertad)|いただきます|くれます|あげます|やります|〜させていただきます.
+waga|新しい先生（　）来ました。(primera mención)|が|は|を|に|が presenta algo nuevo; は lo ya conocido.
+waga|私（　）弁護士です。(el abogado soy yo, no otro)|が|は|を|の|が remarca el sujeto.
+waga|彼が買った本（　）、テーブルの上にあります。|は|が|を|に|Sujeto de la principal: は. De la subordinada: が.
+waga|マリアさんは目（　）青いです。|が|を|に|で|La parte respecto del todo: 全体は 部分が.
+waga|頭（　）痛いです。|が|を|に|で|La parte del cuerpo: が.
+waga|雪（　）白いです。(en general)|は|が|を|に|Atributiva con «ser»: は.
+comp|この車はあの車よりずっと速く（　）。|走る|走り|走ろ|走れば|ずっと: mucho más.
+comp|彼は頭が悪いというより、（　）怠け者だ。|むしろ|もっと|ずっと|一番|〜というより、むしろ: más que A, B.
+comp|富士山は日本で（　）高い山です。|一番|もっと|ずっと|より|〜で一番: el más… de.
+comp|この映画は（　）面白かったです。(muy)|とても|あまり|全然|ほとんど|Superlativo absoluto: とても, 大変, 非常に.
+comp|冬は一年で（　）寒い季節だ。|最も|もっと|より|ずっと|最も (もっとも): el más.
+takunaru|暑いので、アイスクリームが食べ（　）なった。|たく|たい|たくて|たがって|〜たくなる: entrar ganas de.
+takunaru|その話を聞いて、日本へ行き（　）なりました。|たく|たい|たかった|たがる|〜たくなる: entrar ganas de.
+takunaru|疲れたので、勉強し（　）なくなった。(perdí las ganas)|たく|たい|ないで|なく|〜たくなくなる: perder las ganas.`;
+
+/* Más frases para traducir: sección|piezas|traducción */
+const TR2_RAW=`pedir|ビールを/二本/下さい。|Dos cervezas, por favor.
+pedir|切手を/三枚/下さい。|Tres sellos, por favor.
+pedir|消しゴムを/一個/下さい。|Una goma de borrar, por favor.
+pron|この/傘は/私のです。|Este paraguas es mío.
+pron|彼女は/私の/友達です。|Ella es mi amiga.
+demo|それは/何ですか。|¿Qué es eso?
+demo|あの/人は/だれですか。|¿Quién es aquella persona?
+demo|トイレは/どこですか。|¿Dónde está el baño?
+interr|この/かばんは/いくらですか。|¿Cuánto cuesta este bolso?
+interr|どうして/昨日/来なかったんですか。|¿Por qué no viniste ayer?
+interr|どんな/映画が/好きですか。|¿Qué tipo de películas te gustan?
+num|この/本は/三千円です。|Este libro cuesta tres mil yenes.
+num|私の/誕生日は/五月/八日です。|Mi cumpleaños es el 8 de mayo.
+hora|今/何時ですか。|¿Qué hora es ahora?
+hora|毎朝/六時半に/起きます。|Me levanto a las seis y media todas las mañanas.
+edad|私は/二十歳です。|Tengo veinte años.
+edad|お父さんは/おいくつですか。|¿Cuántos años tiene tu padre?
+toki|子供の/とき、/よく/川で/泳ぎました。|De pequeño nadaba a menudo en el río.
+toki|新聞を/読む/とき、/眼鏡を/かけます。|Cuando leo el periódico me pongo las gafas.
+toki|日本へ/行った/とき、/着物を/着ました。|Cuando fui a Japón me puse un kimono.
+aruiru|木の/下に/犬が/います。|Hay un perro debajo del árbol.
+aruiru|冷蔵庫に/牛乳が/ありません。|No hay leche en la nevera.
+adj|昨日は/とても/寒かったです。|Ayer hizo mucho frío.
+adj|その/映画は/面白くなかったです。|Esa película no fue interesante.
+adj|この/町は/静かでは/ありません。|Este pueblo no es tranquilo.
+suki|私の/好きな/食べ物は/すしです。|Mi comida favorita es el sushi.
+suki|兄は/野菜が/好きでは/ありません。|A mi hermano mayor no le gustan las verduras.
+tai|冷たい/水が/飲みたいです。|Quiero beber agua fría.
+tai|今日は/何も/したくないです。|Hoy no quiero hacer nada.
+adv|字を/きれいに/書いて/ください。|Escribe con letra bonita, por favor.
+adv|図書館では/静かに/して/ください。|En la biblioteca guardad silencio.
+verb|昨日は/どこへも/行きませんでした。|Ayer no fui a ningún sitio.
+verb|毎朝/コーヒーを/飲みます。|Todas las mañanas bebo café.
+tekudasai|ここに/名前を/書いて/下さい。|Escriba aquí su nombre, por favor.
+tekudasai|ここで/たばこを/吸わないで/下さい。|No fume aquí, por favor.
+mashou|一緒に/昼ご飯を/食べましょう。|Comamos juntos.
+mashou|疲れたから/少し/休もう。|Estoy cansado, descansemos un poco.
+imp|早く/寝なさい。|¡Vete a dormir ya!
+imp|ここで/泳ぐな。|¡No nades aquí!
+kan|兄は/三年間/韓国に/いました。|Mi hermano mayor estuvo tres años en Corea del Sur.
+kan|一週間に/何時間/日本語を/勉強しますか。|¿Cuántas horas a la semana estudias japonés?
+partv|部屋を/出る/とき、/電気を/消して/ください。|Cuando salgas de la habitación, apaga la luz.
+partv|電車を/降りた/とき、/友達に/会いました。|Al bajar del tren me encontré con un amigo.
+sust|日本語を/話すのは/楽しいです。|Hablar japonés es divertido.
+sust|私の/趣味は/写真を/撮る/ことです。|Mi afición es sacar fotos.
+moumada|もう/晩ご飯を/食べましたか。|¿Ya has cenado?
+to|この/ボタンを/押すと/水が/出ます。|Si pulsas este botón, sale agua.
+teiru|妹は/今/テレビを/見ています。|Mi hermana pequeña está viendo la tele ahora.
+teiru|父は/銀行で/働いています。|Mi padre trabaja en un banco.
+tearu|ドアが/開けて/あります。|La puerta está abierta (alguien la ha dejado así).
+suru|私は/毎晩/日本語を/勉強します。|Estudio japonés todas las noches.
+suru|家の/掃除を/しましょう。|Hagamos la limpieza de la casa.
+darou|明日は/たぶん/晴れるでしょう。|Mañana probablemente hará buen tiempo.
+darou|彼は/来ないだろうと/思います。|Creo que él no vendrá.
+omou|この/映画を/どう/思いますか。|¿Qué te parece esta película?
+omou|彼女は/親切だと/思います。|Creo que ella es amable.
+nda|どうして/遅れたんですか。|¿Por qué has llegado tarde? (¿qué ha pasado?)
+nda|頭が/痛いんです。|Es que me duele la cabeza.
+cant|彼は/お金を/ほとんど/持っていません。|Él casi no tiene dinero.
+cant|部屋は/人で/いっぱいです。|La habitación está llena de gente.
+sugiru|この/問題は/難しすぎます。|Este problema es demasiado difícil.
+tekita|私は/この/会社で/十年間/働いてきました。|Llevo diez años trabajando en esta empresa.
+rel|昨日/来た/人は/私の/友達です。|La persona que vino ayer es mi amiga.
+rel|私が/買った/本は/テーブルの/上に/あります。|El libro que compré está encima de la mesa.
+rel|あそこで/新聞を/読んでいる/人は/田中さんです。|La persona que lee el periódico allí es Tanaka.
+hazu|今夜/彼女は/来る/はずです。|Ella debe de venir esta noche.
+hazu|そんな/はずは/ありません。|No puede ser.
+takunaru|急に/お酒が/飲みたく/なりました。|De repente me entraron ganas de beber.
+shiru|田中さんの/住所を/知っていますか。|¿Sabes la dirección de Tanaka?
+shiru|いいえ、/知りません。|No, no lo sé.
+oblig|もう/六時だから/帰らなければ/なりません。|Ya son las seis, así que tengo que volver.
+permiso2|鉛筆でも/いいですか。|¿Vale con lápiz?
+naide|朝ご飯を/食べないで/学校へ/行きました。|Fui a la escuela sin desayunar.
+ba|時間が/あれば/行きます。|Si tengo tiempo, iré.
+sou|この/本は/面白そうです。|Este libro parece interesante.
+tokoro|今/手紙を/書いている/ところです。|Justo ahora estoy escribiendo una carta.
+mama|窓を/開けた/まま/寝ました。|Me dormí con la ventana abierta.
+hajimeru|雨が/降り始めました。|Ha empezado a llover.
+hajimeru|やっと/本を/読み終えました。|Por fin terminé de leer el libro.
+ukemi|雨に/降られました。|Me pilló la lluvia.
+ukemi|この/小説は/セルバンテスに/よって/書かれました。|Esta novela fue escrita por Cervantes.
+shieki|すみません、/ちょっと/休ませて/下さい。|Perdone, déjeme descansar un momento.
+waga|新しい/先生が/来ました。|Ha venido un profesor nuevo.
+waga|マリアさんは/目が/青いです。|María tiene los ojos azules.
+comp|彼は/頭が/悪いと/いうより/むしろ/怠け者だ。|Más que tonto, es perezoso.`;
+
+/* Más patrones: sección|patrón|significado|ejemplo */
+const PAT2_RAW=`toki|〜とき|cuando…|新聞を読むとき、眼鏡をかけます。
+nda|〜んです／〜のです|es que… (explicación)|頭が痛いんです。
+darou|〜だろう|probablemente (coloquial)|明日は雨だろう。
+comp|〜というより、むしろ|más que A, (es) B|病気というより、むしろ疲れている。
+suru|〜をする (verbos con する)|hacer + sustantivo|日本語の勉強をする。
+kan|〜間|durante (duración)|三年間日本にいた。
+adv|〜く／〜に|adverbio a partir de un adjetivo|きれいに書く。
+shiru|知っている|saber, estar enterado|田中さんを知っています。
+mashou|〜ましょう|vamos a… (exhortativo)|一緒に行きましょう。
+tekudasai|〜てください|haga…, por favor|ここに座ってください。
+moumada|まだ〜ていない|todavía no|まだ食べていません。
+rel|verbo + sustantivo|el/la que… (oración de relativo)|昨日来た人は友達です。
+waga|AはBが〜|A tiene B… (la parte de un todo)|マリアさんは目が青い。`;
+
+/* Números, horas, fechas y edad: escritura|lectura|d1|d2|d3|sección|pista */
+const NUM_RAW=`三百|さんびゃく|さんひゃく|さんぴゃく|みつひゃく|num|
+六百|ろっぴゃく|ろくひゃく|ろくびゃく|ろっひゃく|num|
+八百|はっぴゃく|はちひゃく|はちびゃく|やっひゃく|num|
+二百|にひゃく|にびゃく|にぴゃく|ふたひゃく|num|
+三千|さんぜん|さんせん|みっせん|さんちぇん|num|
+八千|はっせん|はちせん|はっぜん|やっせん|num|
+六千|ろくせん|ろっせん|ろくぜん|むっせん|num|
+一万|いちまん|ひとまん|いっまん|いちばん|num|
+一億|いちおく|ひとおく|いっおく|いちよく|num|
+四十|よんじゅう|よじゅう|よっじゅう|しっじゅう|num|
+九十|きゅうじゅう|くじゅう|きゅじゅう|ここのじゅう|num|
+一日|ついたち|ひとひ|いちひ|いっか|num|día 1 del mes
+二日|ふつか|ふたか|にか|ふたつか|num|día 2 del mes
+三日|みっか|さんにち|みか|みつか|num|día 3 del mes
+四日|よっか|よんにち|よか|しか|num|día 4 del mes
+五日|いつか|ごにち|ごか|いつつか|num|día 5 del mes
+八日|ようか|はちにち|やっか|はっか|num|día 8 del mes
+九日|ここのか|きゅうにち|くか|ここか|num|día 9 del mes
+十日|とおか|じゅうにち|とうか|じっか|num|día 10 del mes
+二十日|はつか|にじゅうにち|にじゅっか|ふたとおか|num|día 20 del mes
+四時|よじ|よんじ|しじ|よっじ|hora|
+七時|しちじ|しちじい|なのじ|しっじ|hora|
+九時|くじ|きゅうじ|きゅじ|ここのじ|hora|
+一分|いっぷん|いちふん|いちぷん|ひとふん|hora|
+三分|さんぷん|さんふん|さっぷん|みっぷん|hora|
+四分|よんぷん|よんふん|よっぷん|しぷん|hora|
+六分|ろっぷん|ろくふん|ろくぷん|ろっふん|hora|
+十分|じゅっぷん|じゅうふん|じゅっふん|とおふん|hora|diez minutos
+八時半|はちじはん|やじはん|はっじはん|はちじばん|hora|
+十二時|じゅうにじ|じゅうふたじ|じゅうにち|じゅにじ|hora|
+午前|ごぜん|ごまえ|うまえ|こぜん|hora|
+午後|ごご|ごあと|ごこ|うご|hora|
+二時間|にじかん|ふたじかん|にじま|にけん|hora|
+何時|なんじ|なにじ|なんとき|なにとき|hora|
+二十歳|はたち|はつか|にじゅうとし|ふたとおさい|edad|
+八歳|はっさい|やっさい|はっとし|やさい|edad|
+一歳|いっさい|いちさい|ひとさい|いさい|edad|
+十歳|じゅっさい|とおさい|じゅっとし|じゅうとし|edad|
+三歳|さんさい|みっさい|さんざい|みさい|edad|
+何歳|なんさい|なにさい|なんとし|いくさい|edad|
+六十八歳|ろくじゅうはっさい|ろくじゅうやっさい|ろっじゅうはっさい|むじゅうやさい|edad|`;
+/* Sección de cada frase existente, en orden */
+const GQT=('part partv part part part comp partv partv partv suki partv interr waga to to tarabanara tarabanara tarabanara noni noni '+
+'noni part tame tame part part comp comp comp comp comp nagara nagara nagara nagara hazu hazu prob sou soudesu '+
+'sou soudesu keiken moumada perm perm oblig tekudasai permiso2 permiso2 waga pot sust tari yasui sugiru shi tokoro tokoro intent '+
+'intent hoshii hoshii hoshii teoku shimau temiru give give give give ukemi ukemi shieki shieki ukemi youni tame mama maeato '+
+'maeato maeato keigo keigo keigo keigo keigo keigo invit kadouka kadouka coord coord coord ojala ojala to tekita tearu teiru '+
+'coord moumada sust sust kara kara kara oblig shieki interr part part cant aruiru part part part part part give '+
+'give sou cant cant cant hoshii takunaru youni nagara pot').split(' ');
+const ORDT='keiken yasui noni intent tame comp mama nagara ukemi give to tarabanara comp comp perm tari nagara tame maeato hazu hoshii sou shieki youni ojala give cant'.split(' ');
+const PATT=('perm perm oblig permiso2 keiken tari nagara nagara sugiru yasui yasui sou soudesu hazu prob darou intent intent temiru teoku shimau tearu tekita tokoro tokoro tokoro hoshii hoshii '+
+'tame youni youni mama maeato maeato noni noni shi to tarabanara ba tarabanara ojala ojala give give give shieki shieki pot comp kadouka invit imp hajimeru hajimeru naide keigo keigo').split(' ');
+const TRT=('part part part suki aruiru partv part part cant cant cant interr cant comp comp comp comp comp to tarabanara ba tarabanara ojala ojala noni noni kara kara part shi '+
+'coord coord part coord nagara maeato maeato maeato nagara nagara teiru teoku shimau temiru tokoro tokoro moumada tearu perm perm oblig permiso2 tekudasai prob hazu sou soudesu sou '+
+'hoshii tai intent intent hoshii hoshii tame tame youni youni give give give give give ukemi ukemi shieki shieki keigo keigo keigo keigo keiken pot tari yasui sugiru invit kadouka').split(' ');
+/* Formas verbales y de adjetivo que practica cada sección */
+const TFORMS={verb:['masu','nai','te','ta'],tekudasai:['te','nai'],mashou:['vol','masu'],imp:['imp','nasai'],tai:['tai'],ba:['ba'],pot:['pot'],ukemi:['pass'],shieki:['caus'],intent:['vol'],teiru:['te'],tearu:['te'],tari:['ta'],keiken:['ta'],oblig:['nai'],perm:['te'],permiso2:['nai','te'],naide:['nai'],tarabanara:['ta','ba'],give:['te'],temiru:['te'],teoku:['te'],shimau:['te'],keigo:['masu']};
+const ADJF={adj:['neg','past','pastneg','te'],adv:['adv','naru'],ba:['ba'],sou:['sou'],coord:['te'],permiso2:['te']};
+
+/* Lecturas (読解). [漢字|かな] = furigana */
+const RD=[
+{t:'私の週末',txt:`[私|わたし]は[毎週|まいしゅう][土曜日|どようび]に、[近所|きんじょ]の[図書館|としょかん]へ[行|い]きます。図書館は[駅|えき]から[歩|ある]いて[十分|じゅっぷん]ぐらいのところにあります。とても[静|しず]かなので、[勉強|べんきょう]しやすいです。[午前中|ごぜんちゅう]は[日本語|にほんご]の[教科書|きょうかしょ]を[読|よ]んだり、[漢字|かんじ]を[練習|れんしゅう]したりします。お[昼|ひる]は図書館の[近|ちか]くの[食堂|しょくどう]で[安|やす]いラーメンを[食|た]べます。[午後|ごご]は[友達|ともだち]と[公園|こうえん]を[散歩|さんぽ]します。[日曜日|にちようび]は[家|いえ]で[洗濯|せんたく]や[掃除|そうじ]をしなければなりません。`,
+qs:[['この人は土曜日の午前中に何をしますか。','日本語の勉強をします。','友達と散歩します。','ラーメンを作ります。','洗濯をします。'],
+['図書館はどんなところですか。','静かで、勉強しやすいところ','駅のすぐ前の、うるさいところ','ラーメンが食べられるところ','洗濯ができるところ'],
+['日曜日にこの人がすることは何ですか。','家の仕事','図書館の仕事','公園の掃除','漢字のテスト']]},
+{t:'ゆきさんからのメール',txt:`マリアさん、お[元気|げんき]ですか。[先週|せんしゅう]は[誕生日|たんじょうび]のパーティーに[来|き]てくれて、ありがとうございました。マリアさんにもらった[花|はな]は[今|いま]も[部屋|へや]に[飾|かざ]ってあります。
+ところで、[来月|らいげつ]の[三日|みっか]に[京都|きょうと]へ[旅行|りょこう]に[行|い]こうと[思|おも]っています。マリアさんも[一緒|いっしょ]に行きませんか。京都にはまだ行ったことがないと[言|い]っていましたね。お[寺|てら]を[見|み]たり、[着物|きもの]を[着|き]たりしたいです。[旅館|りょかん]の[予約|よやく]は[私|わたし]がしておきます。行けるかどうか、[金曜日|きんようび]までに[返事|へんじ]をください。
+ゆき`,
+qs:[['マリアさんはゆきさんに何をあげましたか。','花','着物','旅館の予約','お寺の写真'],
+['マリアさんについて、正しいのはどれですか。','京都へ行ったことがない。','京都に住んでいる。','先週、京都へ行った。','パーティーに行かなかった。'],
+['マリアさんは何をしなければなりませんか。','金曜日までに返事をする。','旅館を予約する。','着物を買う。','三日までにお寺を調べる。']]},
+{t:'図書館からのお知らせ',txt:`【[図書館|としょかん]からのお[知|し]らせ】
+[来週|らいしゅう]の[月曜日|げつようび]から[水曜日|すいようび]まで、[建物|たてもの]の[工事|こうじ]のため、図書館は[休|やす]みです。[本|ほん]を[返|かえ]したい[人|ひと]は、[入口|いりぐち]の[横|よこ]にある[箱|はこ]に[入|い]れてください。
+[木曜日|もくようび]からはいつものように[午前|ごぜん][九時|くじ]から[午後|ごご][八時|はちじ]まで[開|あ]いています。また、木曜日は[新|あたら]しい本がたくさん入りますので、ぜひ[来|き]てください。`,
+qs:[['図書館はどうして休みですか。','建物の工事があるから','新しい本が入るから','日曜日だから','箱を作るから'],
+['火曜日に本を返したい人はどうしますか。','入口の横の箱に入れる。','木曜日まで家に置いておく。','午後八時に図書館に持って行く。','図書館の人に電話する。'],
+['木曜日、図書館は何時に閉まりますか。','午後八時','午前九時','午後九時','午後五時']]},
+{t:'私の村と東京',txt:`[私|わたし]は[北海道|ほっかいどう]の[小|ちい]さい[村|むら]で[生|う]まれました。村には[店|みせ]が[少|すく]なくて[不便|ふべん]でしたが、[空気|くうき]がきれいで、[星|ほし]がとてもよく[見|み]えました。
+[十八歳|じゅうはっさい]のとき、[大学|だいがく]に[入|はい]るために[東京|とうきょう]へ[来|き]ました。東京は村よりずっと[便利|べんり]です。[地下鉄|ちかてつ]もありますし、[夜|よる][遅|おそ]くまで[開|あ]いている店もたくさんあります。でも、[人|ひと]が[多|おお]すぎて、ときどき[疲|つか]れます。[将来|しょうらい]は村へ[帰|かえ]って、[家族|かぞく]の[近|ちか]くで[働|はたら]きたいと[思|おも]っています。`,
+qs:[['この人の村について、正しくないのはどれですか。','店が多くて便利だった。','空気がきれいだった。','星がよく見えた。','北海道にある。'],
+['この人はどうして東京へ来ましたか。','大学で勉強するため','仕事を探すため','家族と住むため','地下鉄に乗るため'],
+['この人は将来どうしたいですか。','村に帰って働きたい。','東京でずっと働きたい。','外国で働きたい。','大学の先生になりたい。']]},
+{t:'日記',txt:`[十月|じゅうがつ][十五日|じゅうごにち]
+[今日|きょう]は[朝|あさ]から[雨|あめ]だった。[電車|でんしゃ]を[降|お]りたとき、[傘|かさ]を電車の[中|なか]に[忘|わす]れてしまった。しかたがないので、[駅|えき]の[前|まえ]のコンビニで[新|あたら]しい傘を[買|か]った。
+[会社|かいしゃ]に[着|つ]くと、[会議|かいぎ]はもう[始|はじ]まっていた。[部長|ぶちょう]に「もっと[早|はや]く[来|き]なさい」と[注意|ちゅうい]された。[本当|ほんとう]に[運|うん]が[悪|わる]い[日|ひ]だった。
+でも、[夜|よる]、駅に[電話|でんわ]したら、私の傘が[届|とど]いていると[言|い]われた。[明日|あした][取|と]りに[行|い]こうと[思|おも]う。`,
+qs:[['この人はどうして新しい傘を買いましたか。','電車に傘を忘れたから','傘が壊れたから','雨が強かったから','部長に言われたから'],
+['会社に着いたとき、どうでしたか。','会議はもう始まっていた。','会議はまだ始まっていなかった。','部長がいなかった。','会議が中止になった。'],
+['この人は明日何をするつもりですか。','駅へ傘を取りに行く。','新しい傘を買う。','早く会社へ行く。','部長に電話する。']]},
+{t:'アルバイト募集',txt:`【アルバイト[募集|ぼしゅう]】カフェ・さくら
+・[仕事|しごと]：コーヒーを[作|つく]ったり、[料理|りょうり]を[運|はこ]んだりする仕事です。
+・[時間|じかん]：[月|げつ]〜[金|きん]　[午後|ごご]５[時|じ]〜９時／[土|ど]・[日|にち]　[午前|ごぜん]１０時〜午後６時
+・[時給|じきゅう]：１，１００[円|えん]（土・日は１，２００円）
+・[日本語|にほんご]が[少|すこ]し[話|はな]せる[人|ひと]ならだいじょうぶです。[経験|けいけん]がなくてもいいです。
+・[週|しゅう]に３[日|か][以上|いじょう][働|はたら]ける人を[探|さが]しています。
+・[興味|きょうみ]がある人は、[店長|てんちょう]の[山田|やまだ]に[電話|でんわ]してください。`,
+qs:[['土曜日に５時間働いたら、いくらもらえますか。','６，０００円','５，５００円','１，２００円','６，５００円'],
+['このアルバイトができないのはどんな人ですか。','週に１日だけ働きたい人','経験がない人','日本語が少ししか話せない人','日曜日に働けない人'],
+['興味がある人はどうしますか。','山田さんに電話する。','カフェにメールを送る。','店に行ってコーヒーを作る。','月曜日の５時に店に来る。']]},
+{t:'私のアパート',txt:`[日本|にほん]に[来|き]てから、[駅|えき]の[近|ちか]くのアパートに[住|す]んでいます。[部屋|へや]は[狭|せま]いですが、[窓|まど]から[川|かわ]が[見|み]えて、とても[明|あか]るいです。[家賃|やちん]は[少|すこ]し[高|たか]いですが、駅まで[歩|ある]いて[三分|さんぷん]なので、[便利|べんり]です。
+[困|こま]っているのは、[隣|となり]の[人|ひと]です。[毎晩|まいばん][遅|おそ]くまで[大|おお]きい[音|おと]で[音楽|おんがく]を[聞|き]いているので、よく[眠|ねむ]れません。[大家|おおや]さんに[相談|そうだん]しようと[思|おも]っています。`,
+qs:[['このアパートのいいところは何ですか。','駅に近くて便利なところ','部屋が広いところ','家賃が安いところ','隣の人が静かなところ'],
+['この人は何に困っていますか。','隣の人がうるさいこと','部屋が暗いこと','川の音が大きいこと','駅が遠いこと'],
+['この人はこれから何をしますか。','大家さんに話す。','引っ越す。','隣の人と音楽を聞く。','新しい窓を買う。']]}
+];
+
+/* ================= UTILIDADES ================= */
+const rnd=n=>Math.floor(Math.random()*n);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const sample=(a,n)=>shuffle(a).slice(0,n);
+const uniq=a=>[...new Set(a)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rb=s=>String(s).replace(/\[([^\]|]+)\|([^\]]+)\]/g,'<ruby>$1<rt>$2</rt></ruby>');
+const hasKanji=s=>/[一-鿿々]/.test(s);
+const toHira=s=>String(s).replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
+const ruby=(w,r)=>hasKanji(w)?`<ruby>${w}<rt>${r}</rt></ruby>`:w;
+const lines=s=>s.trim().split('\n').map(l=>l.split('|'));
+
+/* ================= PARSEO ================= */
+const K=lines(KANJI_RAW).map(([k,on,kun,m],i)=>({k,on:on?on.split('、').filter(Boolean):[],kun:kun?kun.split('、').filter(Boolean):[],m,n:i+1}));
+const KBY={};K.forEach(k=>KBY[k.k]=k);
+const V=lines(VOCAB_RAW).map(([w,r,m,c])=>({w,r,m,c}));
+const VBY={};V.forEach(v=>VBY[v.w]=v);
+const GQ=lines(GQ_RAW);
+lines(GQ2_RAW).forEach(([t,...r])=>{GQ.push(r);GQT.push(t);});
+const NUM=lines(NUM_RAW).map(([k,r,d1,d2,d3,s,h])=>({k,r,w:[d1,d2,d3],s,h:h||''}));
+const ORD=lines(ORD_RAW).map(([pre,ps,post,st,es])=>({pre,p:ps.split('/'),post,st:+st,es}));
+const PAT=lines(PAT_RAW).map(([p,m,e])=>({p,m,e}));
+lines(PAT2_RAW).forEach(([t,p,m,e])=>{PAT.push({p,m,e});PATT.push(t);});
+const KEIGO=lines(KEIGO_RAW);
+const CTX=lines(CTX_RAW);
+const PARA=lines(PARA_RAW);
+const TR=lines(TR_RAW).map(([tp,t,es],i)=>({tp:TRT[i]||tp,toks:t.split('/'),es})).concat(lines(TR2_RAW).map(([tp,t,es])=>({tp,toks:t.split('/'),es})));
+const ADJ=V.filter(v=>v.c==='ai'||v.c==='na');
+const CATN={n:'sustantivo',v1:'verbo · grupo 1',v2:'verbo · grupo 2',v3:'verbo irregular',ai:'adjetivo い',na:'adjetivo な',adv:'adverbio'};
+const cg=c=>c[0]==='v'?'v':c;
+const NOCONJ=new Set(['召し上がる','参る','申す','伺う','要る']);
+const CONJV=V.filter(v=>v.c[0]==='v'&&!NOCONJ.has(v.w));
+const KSIZE=20;
+const KGROUPS=Math.ceil(K.length/KSIZE);
+
+/* ================= ESTADO ================= */
+const KEY='renshu-n4-v1';
+function defState(){return {items:{},days:[],answered:0,correct:0,furi:true,len:10,kg:[],gt:[]};}
+let S=defState();
+try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(defState(),JSON.parse(raw));}catch(e){}
+S.gt=(S.gt||[]).filter(t=>TOPICS[t]);
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();};
+function mark(id,ok){
+  if(!id)return;
+  const it=S.items[id]||(S.items[id]={r:0,w:0});
+  if(ok){it.r++;}else{it.w++;}
+  S.answered++;if(ok)S.correct++;
+  const d=today();if(!S.days.includes(d)){S.days.push(d);if(S.days.length>400)S.days.shift();}
+  save();
+}
+function streak(){
+  let n=0;const d=new Date();
+  for(;;){const k=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    if(S.days.includes(k)){n++;d.setDate(d.getDate()-1);}else{if(n===0&&k===today()){d.setDate(d.getDate()-1);const k2=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();if(!S.days.includes(k2))break;continue;}break;}}
+  return n;
+}
+const failIds=()=>Object.keys(S.items).filter(id=>S.items[id].w>S.items[id].r).sort((a,b)=>(S.items[b].w-S.items[b].r)-(S.items[a].w-S.items[a].r));
+function weight(id){const it=S.items[id];if(!it)return 1.3;return Math.max(.25,1+it.w*2-it.r*.6);}
+function pickW(arr,n,idf){
+  const pool=arr.map(x=>({x,w:weight(idf?idf(x):x)}));const out=[];
+  while(out.length<n&&pool.length){let tot=0;pool.forEach(p=>tot+=p.w);let r=Math.random()*tot,i=0;
+    for(;i<pool.length;i++){r-=pool[i].w;if(r<=0)break;}
+    out.push(pool.splice(Math.min(i,pool.length-1),1)[0].x);}
+  return out;
+}
+const KR=()=>{const g=S.kg||[];if(!g.length)return K;return K.filter((_,i)=>g.includes(Math.floor(i/KSIZE)));};
+const inT=tp=>!(S.gt||[]).length||S.gt.includes(tp);
+const conjForms=()=>{const g=S.gt||[];if(!g.length||g.includes('conj'))return FKEYS;return uniq(g.flatMap(t=>TFORMS[t]||[]));};
+const adjForms=()=>{const g=S.gt||[];if(!g.length||g.includes('conj'))return AK;return uniq(g.flatMap(t=>ADJF[t]||[]));};
+function allT(f){const g=S.gt;S.gt=[];try{return f();}finally{S.gt=g;}}
+
+/* ================= KANA ================= */
+const RO={};
+('a:あ i:い u:う e:え o:お ka:か ki:き ku:く ke:け ko:こ sa:さ shi:し si:し su:す se:せ so:そ ta:た chi:ち ti:ち tsu:つ tu:つ te:て to:と na:な ni:に nu:ぬ ne:ね no:の ha:は hi:ひ fu:ふ hu:ふ he:へ ho:ほ ma:ま mi:み mu:む me:め mo:も ya:や yu:ゆ yo:よ ra:ら ri:り ru:る re:れ ro:ろ wa:わ wo:を '+
+'ga:が gi:ぎ gu:ぐ ge:げ go:ご za:ざ ji:じ zi:じ zu:ず ze:ぜ zo:ぞ da:だ di:ぢ du:づ de:で do:ど ba:ば bi:び bu:ぶ be:べ bo:ぼ pa:ぱ pi:ぴ pu:ぷ pe:ぺ po:ぽ '+
+'kya:きゃ kyu:きゅ kyo:きょ sha:しゃ shu:しゅ sho:しょ sya:しゃ syu:しゅ syo:しょ cha:ちゃ chu:ちゅ cho:ちょ tya:ちゃ tyu:ちゅ tyo:ちょ nya:にゃ nyu:にゅ nyo:にょ hya:ひゃ hyu:ひゅ hyo:ひょ '+
+'mya:みゃ myu:みゅ myo:みょ rya:りゃ ryu:りゅ ryo:りょ gya:ぎゃ gyu:ぎゅ gyo:ぎょ ja:じゃ ju:じゅ jo:じょ jya:じゃ jyu:じゅ jyo:じょ zya:じゃ zyu:じゅ zyo:じょ bya:びゃ byu:びゅ byo:びょ pya:ぴゃ pyu:ぴゅ pyo:ぴょ '+
+'xtsu:っ ltsu:っ xtu:っ xa:ぁ xi:ぃ xu:ぅ xe:ぇ xo:ぉ xya:ゃ xyu:ゅ xyo:ょ').split(' ').forEach(p=>{const [a,b]=p.split(':');RO[a]=b;});
+function romaji(s){
+  s=s.toLowerCase();let o='',i=0;
+  while(i<s.length){const c=s[i],nx=s[i+1];
+    if(c==='-'){o+='ー';i++;continue;}
+    if(!/[a-z']/.test(c)){o+=c;i++;continue;}
+    if(c==='n'){
+      if(nx==="'"){o+='ん';i+=2;continue;}
+      if(nx==='n'){o+='ん';i+=(s[i+2]&&/[aiueoy]/.test(s[i+2]))?1:2;continue;}
+      if(!nx||!/[aiueoy]/.test(nx)){o+='ん';i++;continue;}
+    }
+    if(/[bcdfghjkmpqrstvwxyz]/.test(c)&&nx===c){o+='っ';i++;continue;}
+    let m=false;for(const L of [4,3,2,1]){const k=s.substr(i,L);if(RO[k]){o+=RO[k];i+=L;m=true;break;}}
+    if(!m){o+=c;i++;}
+  }
+  return o;
+}
+const normAns=x=>{x=String(x).trim();if(/[a-z]/i.test(x))x=romaji(x);return toHira(x).replace(/[\s・。、.．]/g,'');};
+
+/* ================= CONJUGACIÓN ================= */
+const ROW={u:'うくぐすつぬぶむる',i:'いきぎしちにびみり',a:'わかがさたなばまら',e:'えけげせてねべめれ',o:'おこごそとのぼもろ'};
+const sh=(c,row)=>{const i=ROW.u.indexOf(c);return i<0?c:ROW[row][i];};
+const FORMS={masu:'forma ます',nai:'forma ない',te:'forma て',ta:'forma た (pasado coloquial)',pot:'forma potencial',pass:'voz pasiva',caus:'forma causativa',vol:'forma volitiva (〜う／よう)',ba:'condicional 〜ば',imp:'imperativo categórico',nasai:'imperativo 〜なさい',tai:'forma 〜たい'};
+const FKEYS=Object.keys(FORMS);
+const SURU={masu:'します',nai:'しない',te:'して',ta:'した',pot:'できる',pass:'される',caus:'させる',vol:'しよう',ba:'すれば',imp:'しろ',nasai:'しなさい',tai:'したい'};
+const KURU_K={masu:'ます',nai:'ない',te:'て',ta:'た',pot:'られる',pass:'られる',caus:'させる',vol:'よう',ba:'れば',imp:'い',nasai:'なさい',tai:'たい'};
+const KURU_R={masu:'きます',nai:'こない',te:'きて',ta:'きた',pot:'こられる',pass:'こられる',caus:'こさせる',vol:'こよう',ba:'くれば',imp:'こい',nasai:'きなさい',tai:'きたい'};
+const ICHI={masu:'ます',nai:'ない',te:'て',ta:'た',pot:'られる',pass:'られる',caus:'させる',vol:'よう',ba:'れば',imp:'ろ',nasai:'なさい',tai:'たい'};
+function conj(v,t,f){
+  if(t==='v3'){
+    if(v.endsWith('する'))return v.slice(0,-2)+SURU[f];
+    if(v.endsWith('来る'))return v.slice(0,-1)+KURU_K[f];
+    if(v.endsWith('くる'))return v.slice(0,-2)+KURU_R[f];
+  }
+  if(t==='v2')return v.slice(0,-1)+ICHI[f];
+  const s=v.slice(0,-1),c=v.slice(-1);
+  switch(f){
+    case 'masu':return s+sh(c,'i')+'ます';
+    case 'nai':return s+sh(c,'a')+'ない';
+    case 'te':case 'ta':{const T=f==='te'?['て','で']:['た','だ'];
+      if(v==='行く'||v==='いく')return s+'っ'+T[0];
+      if('うつる'.includes(c))return s+'っ'+T[0];
+      if('むぶぬ'.includes(c))return s+'ん'+T[1];
+      if(c==='く')return s+'い'+T[0];
+      if(c==='ぐ')return s+'い'+T[1];
+      return s+'し'+T[0];}
+    case 'pot':return s+sh(c,'e')+'る';
+    case 'pass':return s+sh(c,'a')+'れる';
+    case 'caus':return s+sh(c,'a')+'せる';
+    case 'vol':return s+sh(c,'o')+'う';
+    case 'ba':return s+sh(c,'e')+'ば';
+    case 'imp':return s+sh(c,'e');
+    case 'nasai':return s+sh(c,'i')+'なさい';
+    case 'tai':return s+sh(c,'i')+'たい';
+  }
+}
+const CONFUSE={pot:['pass','caus'],pass:['pot','caus'],caus:['pass','pot'],vol:['ba','imp','masu'],ba:['vol','imp','pot'],imp:['ba','vol','nasai'],nai:['pass','caus','vol'],masu:['nai','te','tai'],te:['ta','masu'],ta:['te','masu'],nasai:['tai','masu'],tai:['nasai','masu']};
+function conjDistract(v,t,f){
+  const ok=conj(v,t,f),c=[];
+  if(t==='v1'&&v.endsWith('る'))c.push(conj(v,'v2',f));
+  if(t==='v2')c.push(conj(v,'v1',f));
+  if(t==='v1'&&(f==='te'||f==='ta')){const s=v.slice(0,-1);
+    shuffle(f==='te'?['って','んで','いて','いで','して']:['った','んだ','いた','いだ','した']).forEach(e=>c.push(s+e));
+    c.push(s+sh(v.slice(-1),'i')+(f==='te'?'て':'た'));}
+  CONFUSE[f].forEach(g=>c.push(conj(v,t,g)));
+  shuffle(FKEYS).forEach(g=>c.push(conj(v,t,g)));
+  return uniq(c).filter(x=>x&&x!==ok).slice(0,3);
+}
+const RULES={
+  masu:{v1:'Grupo 1: la última sílaba pasa de u → i + ます (書く→書きます).',v2:'Grupo 2: quita る + ます.',v3:'Irregulares: する→します, 来る→来（き）ます.'},
+  nai:{v1:'Grupo 1: u → a + ない; los terminados en う hacen わない (買う→買わない).',v2:'Grupo 2: quita る + ない.',v3:'する→しない, 来る→来（こ）ない.'},
+  te:{v1:'Grupo 1: う・つ・る→って · む・ぶ・ぬ→んで · く→いて · ぐ→いで · す→して (excepción: 行く→行って).',v2:'Grupo 2: quita る + て.',v3:'する→して, 来る→来（き）て.'},
+  ta:{v1:'Grupo 1: う・つ・る→った · む・ぶ・ぬ→んだ · く→いた · ぐ→いだ · す→した (excepción: 行く→行った).',v2:'Grupo 2: quita る + た.',v3:'する→した, 来る→来（き）た.'},
+  pot:{v1:'Potencial grupo 1: u → e + る (書く→書ける).',v2:'Potencial grupo 2: quita る + られる. La forma sin ら («ら抜き», 食べれる) es coloquial.',v3:'する→できる, 来る→来（こ）られる.'},
+  pass:{v1:'Pasiva grupo 1: u → a + れる; los terminados en う hacen われる (言う→言われる).',v2:'Pasiva grupo 2: quita る + られる (igual que el potencial).',v3:'する→される, 来る→来（こ）られる.'},
+  caus:{v1:'Causativa grupo 1: u → a + せる (書く→書かせる, 言う→言わせる).',v2:'Causativa grupo 2: quita る + させる.',v3:'する→させる, 来る→来（こ）させる.'},
+  vol:{v1:'Volitiva grupo 1: u → o + う (行く→行こう).',v2:'Volitiva grupo 2: quita る + よう.',v3:'する→しよう, 来る→来（こ）よう.'},
+  ba:{v1:'Condicional grupo 1: u → e + ば (書く→書けば).',v2:'Condicional grupo 2: quita る + れば.',v3:'する→すれば, 来る→来（く）れば.'},
+  imp:{v1:'Imperativo categórico grupo 1: u → e (待つ→待て).',v2:'Imperativo grupo 2: quita る + ろ (食べろ).',v3:'する→しろ, 来る→来（こ）い.'},
+  nasai:{v1:'Radical (forma ます sin ます) + なさい.',v2:'Radical (quita る) + なさい.',v3:'する→しなさい, 来る→来（き）なさい.'},
+  tai:{v1:'Radical (forma ます sin ます) + たい. Se conjuga como adjetivo い.',v2:'Radical (quita る) + たい.',v3:'する→したい, 来る→来（き）たい.'}
+};
+
+/* ================= GENERADORES ================= */
+function mc(o){
+  const wrong=uniq(o.wrong).filter(x=>x!==o.correct).slice(0,3);
+  const options=shuffle([o.correct,...wrong]);
+  return Object.assign({},o,{type:'mc',options,ans:options.indexOf(o.correct)});
+}
+function blankify(q){
+  let hint='';const m=q.match(/\s*\(([^)]+)\)\s*$/);
+  if(m){hint=m[1];q=q.slice(0,m.index);}
+  return `<div class="psent">${esc(q).replace('（　）','<span class="blank"></span>')}</div>`+(hint?`<div class="hint">${esc(hint)}</div>`:'');
+}
+const kunForms=s=>uniq([s.replace(/・/g,''),s.split('・')[0]]);
+function kWords(k){return V.filter(v=>v.w.includes(k.k)).slice(0,4).map(v=>`${ruby(v.w,v.r)} ${esc(v.m)}`).join(' · ');}
+function kInfo(k){const w=kWords(k);return `<span class="jk">${k.k}</span>　音：${k.on.join('、')||'—'}　訓：${k.kun.join('、')||'—'}<br>${esc(k.m)}${w?`<br><span style="color:var(--muted)">Palabras:</span> ${w}`:''}`;}
+function vInfo(v){
+  const ks=[...v.w].filter(c=>KBY[c]).map(c=>`<span class="jk">${c}</span> ${esc(KBY[c].m)}`).join(' · ');
+  return `<span class="jp">${ruby(v.w,v.r)}</span>（${v.r}）: ${esc(v.m)} · <i>${CATN[v.c]}</i>${ks?`<br>${ks}`:''}`;
+}
+function kanjiQ(k,t){
+  const others=K.filter(x=>x!==k&&x.m!==k.m);
+  const tag={m:'漢字 → significado',f:'significado → 漢字',o:'音読み (onyomi)',u:'訓読み (kunyomi)',to:'Escribe el onyomi',tu:'Escribe el kunyomi',d:'Escribir a mano'}[t];
+  const base={id:`k:${k.k}:${t}`,tag,explain:kInfo(k)};
+  switch(t){
+    case 'm':return mc(Object.assign(base,{prompt:`<div class="bigk">${k.k}</div>`,sub:'¿Qué significa este kanji?',correct:esc(k.m),wrong:sample(others,3).map(x=>esc(x.m))}));
+    case 'f':{const hintR=k.kun[0]||k.on[0]||'';return mc(Object.assign(base,{prompt:`<div class="pmean">${esc(k.m)}</div><div class="pmeta">${hintR}</div>`,sub:'¿Qué kanji es?',correct:k.k,wrong:sample(others,3).map(x=>x.k),kopt:true}));}
+    case 'o':{const c=k.on.join('、');const first=k.on[0][0];
+      const near=shuffle(others.filter(x=>x.on.length&&x.on.join('、')!==c&&x.on[0][0]===first));
+      const far=shuffle(others.filter(x=>x.on.length&&x.on.join('、')!==c));
+      return mc(Object.assign(base,{prompt:`<div class="bigk">${k.k}</div>`,sub:'¿Cuál es su onyomi (音読み)?',correct:c,wrong:uniq(near.slice(0,2).concat(far).map(x=>x.on.join('、'))).filter(x=>x!==c).slice(0,3)}));}
+    case 'u':{const c=k.kun.join('、');
+      return mc(Object.assign(base,{prompt:`<div class="bigk">${k.k}</div>`,sub:'¿Cuál es su kunyomi (訓読み)?',correct:c,wrong:sample(others.filter(x=>x.kun.length&&x.kun.join('、')!==c),10).map(x=>x.kun.join('、'))}));}
+    case 'to':return Object.assign(base,{type:'input',prompt:`<div class="bigk">${k.k}</div>`,sub:`Escribe <b>una</b> lectura onyomi (en kana o romaji). Significa: ${esc(k.m)}`,accept:k.on.map(toHira),show:k.on.join('、')});
+    case 'tu':return Object.assign(base,{type:'input',prompt:`<div class="bigk">${k.k}</div>`,sub:`Escribe <b>una</b> lectura kunyomi (en kana o romaji). Significa: ${esc(k.m)}`,accept:k.kun.flatMap(kunForms),show:k.kun.join('、')});
+    case 'd':return Object.assign(base,{type:'draw',k,prompt:`<div class="pmean">${esc(k.m)}</div>`,sub:'Dibuja el kanji con el dedo y luego compruébalo.'});
+  }
+}
+const VOICE={};{const D='かがきぎくぐけげこごさざしじすずせぜそぞただてでとどはばひびふぶへべほぼ';for(let i=0;i<D.length;i+=2){VOICE[D[i]]=D[i+1];VOICE[D[i+1]]=D[i];}}
+const SMALL={'ゃ':'や','ゅ':'ゆ','ょ':'よ'};
+function readMut(r){
+  const a=[...r],o=new Set();
+  const rep=(i,c)=>a.slice(0,i).concat(c,a.slice(i+1)).join('');
+  const del=i=>a.slice(0,i).concat(a.slice(i+1)).join('');
+  const ins=(i,c)=>a.slice(0,i).concat(c,a.slice(i)).join('');
+  a.forEach((c,i)=>{
+    if(VOICE[c])o.add(rep(i,VOICE[c]));
+    if(SMALL[c])o.add(rep(i,SMALL[c]));
+    if(c==='う'&&i>0&&'おこそとのほもよろごぞどぼょゅくすつむるぐずぶ'.includes(a[i-1]))o.add(del(i));
+    if('ょゅ'.includes(c)&&a[i+1]!=='う')o.add(ins(i+1,'う'));
+    if(c==='っ')o.add(del(i));
+    if(c==='ん'&&i<a.length-1)o.add(del(i));
+    if(c==='い'&&i>0&&'えけせてねへめれげぜでべ'.includes(a[i-1]))o.add(del(i));
+    if(i>0&&'かきくけこさしすせそたちてとぱぴぷぺぽ'.includes(c)&&!'っんー'.includes(a[i-1]))o.add(ins(i,'っ'));
+  });
+  o.delete(r);return [...o];
+}
+function readDistract(v){
+  let d=shuffle(readMut(v.r)).filter(x=>!V.some(y=>y.w===v.w&&y.r===x));
+  if(d.length<3)d=d.concat(shuffle(V.filter(x=>x!==v&&Math.abs(x.r.length-v.r.length)<=1)).map(x=>x.r));
+  return uniq(d).filter(x=>x!==v.r).slice(0,3);
+}
+function writeDistract(v){
+  const chars=[...v.w],out=[];
+  chars.forEach((ch,i)=>{const kk=KBY[ch];if(!kk)return;const keys=kk.on.map(toHira);
+    const subs=K.filter(x=>x.k!==ch&&x.on.some(o=>keys.includes(toHira(o))));
+    shuffle(subs).slice(0,2).forEach(s=>{const c=chars.slice();c[i]=s.k;out.push(c.join(''));});});
+  let res=shuffle(uniq(out)).filter(w=>!(VBY[w]&&VBY[w].r===v.r)&&w!==v.w);
+  if(res.length<3)res=res.concat(shuffle(V.filter(x=>x!==v&&hasKanji(x.w)&&x.w.length===v.w.length)).map(x=>x.w));
+  if(res.length<3)res=res.concat(shuffle(V.filter(x=>x!==v&&hasKanji(x.w)&&x.c===v.c)).map(x=>x.w));
+  return uniq(res).filter(w=>w!==v.w).slice(0,3);
+}
+function vocabQ(v,t){
+  const same=V.filter(x=>x!==v&&cg(x.c)===cg(v.c)&&x.m!==v.m);
+  const base={id:`v:${v.w}:${t}`,explain:vInfo(v)};
+  switch(t){
+    case 'je':return mc(Object.assign(base,{tag:'語彙 · japonés → español',prompt:`<div class="pword">${ruby(v.w,v.r)}</div>`,sub:'¿Qué significa?',correct:esc(v.m),wrong:sample(same,3).map(x=>esc(x.m))}));
+    case 'ej':return mc(Object.assign(base,{tag:'語彙 · español → japonés',prompt:`<div class="pmean">${esc(v.m)}</div><div class="pmeta">${CATN[v.c]}</div>`,sub:'¿Cómo se dice en japonés?',correct:ruby(v.w,v.r),wrong:sample(same,3).map(x=>ruby(x.w,x.r))}));
+    case 'r':return mc(Object.assign(base,{tag:'漢字読み · lectura',prompt:`<div class="pword">${v.w}</div>`,sub:'¿Cómo se lee esta palabra?',correct:v.r,wrong:readDistract(v)}));
+    case 'w':return mc(Object.assign(base,{tag:'表記 · escritura',prompt:`<div class="pword">${v.r}</div><div class="pmeta">${esc(v.m)}</div>`,sub:'¿Cómo se escribe con kanji?',correct:v.w,wrong:writeDistract(v)}));
+    case 't':return Object.assign(base,{type:'input',tag:'語彙 · escribe la palabra',prompt:`<div class="pmean">${esc(v.m)}</div><div class="pmeta">${CATN[v.c]}</div>`,sub:'Escríbela en kana o en romaji.',accept:[v.r,v.w],show:`${ruby(v.w,v.r)}（${v.r}）`});
+  }
+}
+function ctxQ(i){const [q,c,...rest]=CTX[i];const es=rest[3];
+  return mc({id:`x:${i}`,tag:'文脈規定 · vocabulario en contexto',prompt:blankify(q),sub:'Elige la palabra que mejor encaja.',correct:c,wrong:rest.slice(0,3),explain:`<span class="jp">${esc(q.replace('（　）','【'+c+'】'))}</span><br>${esc(es)}`});}
+function paraQ(i){const [q,c,...w]=PARA[i];
+  return mc({id:`p:${i}`,tag:'言い換え · mismo significado',prompt:`<div class="psent">${esc(q)}</div>`,sub:'¿Qué frase significa casi lo mismo?',correct:c,wrong:w,explain:`<span class="jp">${esc(q)}</span> ≈ <span class="jp">${esc(c)}</span>`});}
+function gformQ(i){const [q,c,d1,d2,d3,ex]=GQ[i];
+  return mc({id:`g:${i}`,tag:`文法 · ${esc(TOPICS[GQT[i]]||'elige la forma')}`,prompt:blankify(q),sub:'Elige lo que va en （　）.',correct:c,wrong:[d1,d2,d3],explain:`<span class="jp">${esc(q.replace(/\s*\([^)]*\)\s*$/,'').replace('（　）','【'+c+'】'))}</span><br>${esc(ex||'')}`});}
+/* Adjetivos */
+const AFORMS={neg:'forma negativa',past:'forma pasada',pastneg:'pasado negativo',te:'forma て (para unir)',adv:'forma adverbial (〜く／〜に)',naru:'forma 〜なる (volverse…)',ba:'condicional (〜ければ／〜なら)',sou:'apariencia (〜そう)'};
+const AK=Object.keys(AFORMS);
+const AI_END={neg:'くない',past:'かった',pastneg:'くなかった',te:'くて',adv:'く',naru:'くなる',ba:'ければ',sou:'そう'};
+const NA_END={neg:'ではない',past:'だった',pastneg:'ではなかった',te:'で',adv:'に',naru:'になる',ba:'なら',sou:'そう'};
+const AI_BAD={neg:'くない',past:'でした',pastneg:'じゃなかった',te:'で',adv:'に',naru:'になる',ba:'ば',sou:'そう'};
+function aconj(w,c,f){return c==='ai'?w.slice(0,-1)+AI_END[f]:w+NA_END[f];}
+function adjQ(v,f){
+  const ok=aconj(v.w,v.c,f),c=[];
+  if(v.c==='ai'){c.push(v.w+NA_END[f]);c.push(v.w+AI_BAD[f]);}else{c.push(v.w+AI_END[f]);c.push(v.w+'な'+NA_END[f]);}
+  shuffle(AK).forEach(g=>c.push(aconj(v.w,v.c,g)));
+  const rule=v.c==='ai'?'Adjetivo い (quita la い): 〜くない · 〜かった · 〜くなかった · 〜くて · 〜く · 〜くなる · 〜ければ · 〜そう':'Adjetivo な: 〜ではない · 〜だった · 〜ではなかった · 〜で · 〜に · 〜になる · 〜なら · 〜そう';
+  return mc({id:`a:${v.w}:${f}`,tag:'形容詞 · conjuga el adjetivo',prompt:`<div class="pword">${ruby(v.w,v.r)}</div><div class="pmeta">${esc(v.m)}</div>`,sub:`¿Cuál es su <b>${AFORMS[f]}</b>?`,correct:ok,wrong:uniq(c).filter(x=>x!==ok),explain:`${rule}<br><span class="jp">${v.w} → <b>${ok}</b></span>`});
+}
+function numQ(i){const n=NUM[i];
+  return mc({id:`n:${i}`,tag:`数字・時間 · ${esc(TOPICS[n.s])}`,prompt:`<div class="pword">${n.k}</div>`,sub:n.h?`¿Cómo se lee? (${esc(n.h)})`:'¿Cómo se lee?',correct:n.r,wrong:n.w,explain:`<span class="jp">${n.k}</span> = <b>${n.r}</b>`});}
+function starQ(i){const o=ORD[i];
+  const slots=o.p.map((_,j)=>j===o.st?'<span class="slot star">★</span>':'<span class="slot"></span>').join('');
+  return mc({id:`o:${i}`,tag:'文の組み立て · la estrella ★',prompt:`<div class="psent">${esc(o.pre)}${slots}${esc(o.post)}</div>`,sub:'Ordena las piezas mentalmente. ¿Cuál va en la ★?',correct:o.p[o.st],wrong:o.p.filter((_,j)=>j!==o.st),explain:`<span class="jp">${esc(o.pre)}${o.p.map((x,j)=>j===o.st?`<b>${esc(x)}</b>`:esc(x)).join('')}${esc(o.post)}</span><br>${esc(o.es)}`});}
+function buildQ(i){const o=ORD[i];return {id:`b:${i}`,type:'order',tag:'並べ替え · construye la frase',toks:o.p,extra:[],pre:o.pre,post:o.post,prompt:`<div class="hint">${esc(o.es)}</div>`,sub:'Toca las piezas en el orden correcto.',answerText:esc(o.pre+o.p.join('')+o.post),explain:`<span class="jp">${esc(o.pre+o.p.join('')+o.post)}</span><br>${esc(o.es)}`};}
+function trQ(i,d){
+  const t=TR[i],jp=t.toks.join('');
+  const same=shuffle(TR.filter(x=>x!==t&&x.tp===t.tp)),oth=shuffle(TR.filter(x=>x!==t&&x.tp!==t.tp));
+  const pickD=f=>uniq(same.concat(oth).map(f));
+  const explain=`<span class="jp">${esc(jp)}</span><br>${esc(t.es)}<br><span style="color:var(--muted)">Tema: ${esc(TOPICS[t.tp])}</span>`;
+  if(d==='je')return mc({id:`t:${i}:je`,tag:'翻訳 · japonés → español',prompt:`<div class="psent">${esc(jp)}</div>`,sub:'¿Qué significa esta frase?',correct:esc(t.es),wrong:pickD(x=>esc(x.es)),explain});
+  if(d==='ej')return mc({id:`t:${i}:ej`,tag:'翻訳 · español → japonés',prompt:`<div class="psent">${esc(t.es)}</div>`,sub:'¿Cuál es la traducción correcta?',correct:esc(jp),wrong:pickD(x=>esc(x.toks.join(''))),explain});
+  const have=new Set(t.toks);
+  const extra=sample(uniq(TR.filter(x=>x!==t).flatMap(x=>x.toks)).filter(x=>!have.has(x)),2);
+  return {id:`t:${i}:b`,type:'order',tag:'翻訳 · construye en japonés',prompt:`<div class="psent">${esc(t.es)}</div>`,sub:'Toca las piezas en orden. Sobran dos.',toks:t.toks,extra,pre:'',post:'',override:true,answerText:esc(jp),explain};
+}
+function conjQ(v,f){const ok=conj(v.w,v.c,f);
+  return mc({id:`c:${v.w}:${f}`,tag:'活用 · conjugación',prompt:`<div class="pword">${ruby(v.w,v.r)}</div><div class="pmeta">${esc(v.m)}</div>`,sub:`¿Cuál es su <b>${FORMS[f]}</b>?`,correct:ok,wrong:conjDistract(v.w,v.c,f),explain:`${RULES[f][v.c]}<br><span class="jp">${v.w} → <b>${ok}</b></span>（${conj(v.r,v.c,f)}）`});}
+function conjTQ(v,f){const ok=conj(v.w,v.c,f),okr=conj(v.r,v.c,f);
+  return {id:`ct:${v.w}:${f}`,type:'input',tag:'活用 · escribe la forma',prompt:`<div class="pword">${ruby(v.w,v.r)}</div><div class="pmeta">${v.r} · ${esc(v.m)}</div>`,sub:`Escribe su <b>${FORMS[f]}</b> (kana o romaji).`,accept:[okr,ok],show:`${ok}（${okr}）`,explain:RULES[f][v.c]};}
+function patQ(i,d){const p=PAT[i];const others=PAT.filter(x=>x!==p);
+  if(d==='pm')return mc({id:`gp:${i}:pm`,tag:'文型 · ¿qué significa?',prompt:`<div class="pword" style="font-size:30px">${esc(p.p)}</div>`,sub:'¿Qué significa este patrón?',correct:esc(p.m),wrong:sample(others,3).map(x=>esc(x.m)),explain:`<span class="jp">${esc(p.e)}</span>`});
+  return mc({id:`gp:${i}:mp`,tag:'文型 · ¿qué patrón es?',prompt:`<div class="pmean">${esc(p.m)}</div>`,sub:'¿Con qué patrón se expresa?',correct:esc(p.p),wrong:sample(others,3).map(x=>esc(x.p)),explain:`<span class="jp">${esc(p.e)}</span>`});}
+function keigoQ(i,d){const k=KEIGO[i];const c=d==='s'?k[1]:k[2];
+  const pool=uniq(KEIGO.flatMap(x=>[x[1],x[2]])).filter(x=>x!=='—'&&x!==c);
+  const other=d==='s'?k[2]:k[1];
+  const wrong=(other!=='—'&&other!==c?[other]:[]).concat(shuffle(pool));
+  return mc({id:`kg:${i}:${d}`,tag:'敬語 · keigo',prompt:`<div class="pword">${k[0]}</div><div class="pmeta">${esc(k[3])}</div>`,sub:`¿Cuál es su forma <b>${d==='s'?'respetuosa (尊敬語)':'humilde (謙譲語)'}</b>?`,correct:c,wrong,explain:`${k[0]} → 尊敬語: <b>${k[1]}</b> · 謙譲語: <b>${k[2]}</b><br>Regla general: 尊敬語 = お + radical + になる · 謙譲語 = お + radical + する.`});}
+function readQ(p,q){const P=RD[p],Q=P.qs[q];
+  return mc({id:`r:${p}:${q}`,tag:`読解 · ${P.t}`,passage:P,prompt:`<div class="psent">${esc(Q[0])}</div>`,sub:`Pregunta ${q+1} de ${P.qs.length}`,correct:Q[1],wrong:Q.slice(2),explain:'Vuelve a leer el texto si dudas: la respuesta está en él.'});}
+
+function regen(id){
+  const p=id.split(':');
+  try{switch(p[0]){
+    case 'k':return KBY[p[1]]?kanjiQ(KBY[p[1]],p[2]):null;
+    case 'v':return VBY[p[1]]?vocabQ(VBY[p[1]],p[2]):null;
+    case 'x':return CTX[+p[1]]?ctxQ(+p[1]):null;
+    case 'p':return PARA[+p[1]]?paraQ(+p[1]):null;
+    case 'g':return GQ[+p[1]]?gformQ(+p[1]):null;
+    case 'o':return ORD[+p[1]]?starQ(+p[1]):null;
+    case 'b':return ORD[+p[1]]?buildQ(+p[1]):null;
+    case 'c':return VBY[p[1]]?conjQ(VBY[p[1]],p[2]):null;
+    case 'ct':return VBY[p[1]]?conjTQ(VBY[p[1]],p[2]):null;
+    case 'gp':return PAT[+p[1]]?patQ(+p[1],p[2]):null;
+    case 'kg':return KEIGO[+p[1]]?keigoQ(+p[1],p[2]):null;
+    case 'r':return RD[+p[1]]?readQ(+p[1],+p[2]):null;
+    case 't':return TR[+p[1]]?trQ(+p[1],p[2]):null;
+    case 'a':return VBY[p[1]]&&AFORMS[p[2]]?adjQ(VBY[p[1]],p[2]):null;
+    case 'n':return NUM[+p[1]]?numQ(+p[1]):null;
+  }}catch(e){console.error(e);}
+  return null;
+}
+
+/* Conjuntos de ids */
+const KRset=()=>new Set(KR().map(k=>k.k));
+const POOLS={
+  gform:()=>GQ.map((_,i)=>i).filter(i=>inT(GQT[i])).map(i=>`g:${i}`),
+  gstar:()=>ORD.map((_,i)=>i).filter(i=>inT(ORDT[i])).map(i=>`o:${i}`),
+  gbuild:()=>ORD.map((_,i)=>i).filter(i=>inT(ORDT[i])).map(i=>`b:${i}`),
+  gconj:()=>{const fs=conjForms();return CONJV.flatMap(v=>fs.map(f=>`c:${v.w}:${f}`));},
+  gconjt:()=>{const fs=conjForms();return CONJV.flatMap(v=>fs.map(f=>`ct:${v.w}:${f}`));},
+  gpat:()=>PAT.map((_,i)=>i).filter(i=>inT(PATT[i])).flatMap(i=>[`gp:${i}:pm`,`gp:${i}:mp`]),
+  gkeigo:()=>inT('keigo')?KEIGO.flatMap((k,i)=>[k[1]!=='—'?`kg:${i}:s`:null,k[2]!=='—'?`kg:${i}:k`:null]).filter(Boolean):[],
+  gtr:()=>TR.map((_,i)=>i).filter(i=>inT(TR[i].tp)).flatMap(i=>[`t:${i}:je`,`t:${i}:ej`,`t:${i}:b`]),
+  gadj:()=>{const fs=adjForms();return ADJ.flatMap(v=>fs.map(f=>`a:${v.w}:${f}`));},
+  gnum:()=>NUM.map((_,i)=>i).filter(i=>inT(NUM[i].s)).map(i=>`n:${i}`),
+  vtrje:()=>TR.map((_,i)=>`t:${i}:je`),
+  vtrej:()=>TR.map((_,i)=>`t:${i}:ej`),
+  vtrb:()=>TR.map((_,i)=>`t:${i}:b`),
+  vje:()=>V.map(v=>`v:${v.w}:je`),
+  vej:()=>V.map(v=>`v:${v.w}:ej`),
+  vread:()=>V.filter(v=>hasKanji(v.w)).map(v=>`v:${v.w}:r`),
+  vwrite:()=>V.filter(v=>hasKanji(v.w)).map(v=>`v:${v.w}:w`),
+  vtype:()=>V.map(v=>`v:${v.w}:t`),
+  vctx:()=>CTX.map((_,i)=>`x:${i}`),
+  vpara:()=>PARA.map((_,i)=>`p:${i}`),
+  kmean:()=>KR().map(k=>`k:${k.k}:m`),
+  kfrom:()=>KR().map(k=>`k:${k.k}:f`),
+  kon:()=>KR().filter(k=>k.on.length).map(k=>`k:${k.k}:o`),
+  kkun:()=>KR().filter(k=>k.kun.length).map(k=>`k:${k.k}:u`),
+  ktype:()=>KR().flatMap(k=>[`k:${k.k}:to`].concat(k.kun.length?[`k:${k.k}:tu`]:[])),
+  kword:()=>{const s=KRset();return V.filter(v=>hasKanji(v.w)&&[...v.w].some(c=>s.has(c))).map(v=>`v:${v.w}:r`);},
+  kdraw:()=>KR().map(k=>`k:${k.k}:d`)
+};
+function fromPool(name,n){return pickW(POOLS[name](),n).map(regen).filter(Boolean);}
+function mixPools(names,n){
+  const used=new Set(),out=[];let guard=0;
+  while(out.length<n&&guard++<n*6){const name=names[rnd(names.length)];const ids=POOLS[name]().filter(x=>!used.has(x));if(!ids.length)continue;
+    const id=pickW(ids,1)[0];used.add(id);const q=regen(id);if(q)out.push(q);}
+  return out;
+}
+function pickDistinct(list,n,key){const seen=new Set(),out=[];for(const x of shuffle(list)){const k=key(x);if(seen.has(k))continue;seen.add(k);out.push(x);if(out.length===n)break;}return out;}
+function matchItem(kind){
+  switch(kind){
+    case 'kmean':{const ks=pickDistinct(pickW(KR(),12,k=>`k:${k.k}:m`),5,k=>k.m);return {type:'match',tag:'Une kanji y significado',lk:true,pairs:ks.map(k=>({l:k.k,r:esc(k.m),id:`k:${k.k}:m`}))};}
+    case 'kon':{const ks=pickDistinct(pickW(KR(),12,k=>`k:${k.k}:o`),5,k=>k.on.join('、'));return {type:'match',tag:'Une kanji y onyomi',lk:true,pairs:ks.map(k=>({l:k.k,r:k.on.join('、'),id:`k:${k.k}:o`}))};}
+    case 'vmean':{const vs=pickDistinct(pickW(V,12,v=>`v:${v.w}:je`),5,v=>v.m);return {type:'match',tag:'Une palabra y significado',pairs:vs.map(v=>({l:ruby(v.w,v.r),r:esc(v.m),id:`v:${v.w}:je`}))};}
+    case 'vread':{const vs=pickDistinct(pickW(V.filter(v=>hasKanji(v.w)),12,v=>`v:${v.w}:r`),5,v=>v.r);return {type:'match',tag:'Une palabra y lectura',pairs:vs.map(v=>({l:v.w,r:v.r,id:`v:${v.w}:r`}))};}
+    case 'gpat':{let src=PAT.map((p,i)=>({p,i})).filter(x=>inT(PATT[x.i]));if(src.length<2)src=PAT.map((p,i)=>({p,i}));const ps=pickDistinct(src,5,x=>x.p.m);return {type:'match',tag:'Une patrón y significado',pairs:ps.map(x=>({l:esc(x.p.p),r:esc(x.p.m),id:`gp:${x.i}:pm`}))};}
+    case 'keigo':{const ks=pickDistinct(KEIGO.map((k,i)=>({k,i})).filter(x=>x.k[1]!=='—'),5,x=>x.k[1]);return {type:'match',tag:'Une el verbo con su 尊敬語',pairs:ks.map(x=>({l:x.k[0],r:x.k[1],id:`kg:${x.i}:s`}))};}
+    case 'gte':{const vs=sample(CONJV,5);return {type:'match',tag:'Une el verbo con su forma て',pairs:vs.map(v=>({l:ruby(v.w,v.r),r:conj(v.w,v.c,'te'),id:`c:${v.w}:te`}))};}
+  }
+}
+function readingItems(n){
+  const ps=shuffle(RD.map((_,i)=>i)).sort((a,b)=>{const s=i=>RD[i].qs.reduce((t,_,q)=>t+weight(`r:${i}:${q}`),0);return s(b)-s(a)+(Math.random()-.5);});
+  const out=[];for(const p of ps){if(out.length>=n)break;RD[p].qs.forEach((_,q)=>out.push(readQ(p,q)));}
+  return out;
+}
+function noken(){
+  const sec=(t,items)=>items.map(it=>Object.assign(it,{tag:t}));
+  return [].concat(
+    sec('問題1 · 漢字読み',fromPool('vread',5)),
+    sec('問題2 · 表記',fromPool('vwrite',3)),
+    sec('問題3 · 文脈規定',fromPool('vctx',4)),
+    sec('問題4 · 言い換え',fromPool('vpara',2)),
+    sec('問題5 · 文法形式',fromPool('gform',6)),
+    sec('問題6 · 文の組み立て ★',fromPool('gstar',2)),
+    sec('問題7 · 読解',readingItems(1).slice(0,3))
+  );
+}
+
+/* ================= SECCIONES ================= */
+const SECTIONS={
+  gram:{t:'Gramática',jp:'文法',gl:'文',d:'Partículas, formas verbales y patrones de tus apuntes.',topics:true,modes:[
+    {id:'gform',jp:'文法形式の判断',n:'Elige la forma correcta',d:'Completa la frase, como en el Noken',b:n=>fromPool('gform',n),p:'gform'},
+    {id:'gstar',jp:'文の組み立て',n:'La estrella ★',d:'Ordena y elige la pieza que va en la ★',b:n=>fromPool('gstar',n),p:'gstar'},
+    {id:'gbuild',jp:'並べ替え',n:'Construye la frase',d:'Toca las piezas en orden',b:n=>fromPool('gbuild',n),p:'gbuild'},
+    {id:'gconj',jp:'活用',n:'Conjugación',d:'Las formas verbales de los temas elegidos',b:n=>fromPool('gconj',n),p:'gconj'},
+    {id:'gconjt',jp:'活用（入力）',n:'Conjuga escribiendo',d:'Escribe la forma en kana o romaji',b:n=>fromPool('gconjt',n),p:'gconjt'},
+    {id:'gadj',jp:'形容詞',n:'Conjuga adjetivos',d:'い y な: negativo, pasado, くて, く／に, ければ, そう',b:n=>fromPool('gadj',n),p:'gadj'},
+    {id:'gnum',jp:'数字・時間',n:'Números, fechas, horas y edad',d:'¿Cómo se lee?',b:n=>fromPool('gnum',n),p:'gnum'},
+    {id:'gpat',jp:'文型',n:'¿Qué significa el patrón?',d:'〜ても, 〜はずだ, 〜ように…',b:n=>fromPool('gpat',n),p:'gpat'},
+    {id:'gkeigo',jp:'敬語',n:'Keigo',d:'尊敬語 y 謙譲語 de la tabla',b:n=>fromPool('gkeigo',n),p:'gkeigo'},
+    {id:'gtr',jp:'翻訳',n:'Traduce frases',d:'Japonés ↔ español con los temas elegidos',b:n=>fromPool('gtr',n),p:'gtr'},
+    {id:'gmatch',jp:'マッチング',n:'Unir parejas',d:'Patrones, keigo y forma て',b:n=>{const kinds=[];if(POOLS.gpat().length)kinds.push('gpat');if(inT('keigo'))kinds.push('keigo');if(conjForms().includes('te'))kinds.push('gte');return kinds.length?Array.from({length:Math.max(2,Math.round(n/5))},(_,i)=>matchItem(kinds[i%kinds.length])):[];},c:()=>POOLS.gpat().length+POOLS.gkeigo().length+(conjForms().includes('te')?1:0)},
+    {id:'gmix',jp:'まとめ',n:'Mezcla de gramática',d:'Un poco de todo (de los temas elegidos)',star:true,b:n=>mixPools(['gform','gform','gform','gstar','gconj','gadj','gnum','gpat','gkeigo','gtr','gtr'],n),c:()=>['gform','gstar','gconj','gadj','gnum','gpat','gkeigo','gtr'].reduce((a,p)=>a+POOLS[p]().length,0)}
+  ]},
+  vocab:{t:'Vocabulario',jp:'語彙',gl:'語',d:'Unas 400 palabras básicas del N4.',modes:[
+    {id:'vje',jp:'意味',n:'Japonés → español',d:'¿Qué significa la palabra?',b:n=>fromPool('vje',n)},
+    {id:'vej',jp:'日本語で',n:'Español → japonés',d:'Elige la palabra japonesa',b:n=>fromPool('vej',n)},
+    {id:'vread',jp:'漢字読み',n:'Lectura de palabras',d:'¿Cómo se lee? (estilo Noken)',b:n=>fromPool('vread',n)},
+    {id:'vwrite',jp:'表記',n:'Escritura con kanji',d:'¿Cómo se escribe? (estilo Noken)',b:n=>fromPool('vwrite',n)},
+    {id:'vctx',jp:'文脈規定',n:'Vocabulario en contexto',d:'La palabra que encaja en la frase',b:n=>fromPool('vctx',n)},
+    {id:'vpara',jp:'言い換え',n:'Mismo significado',d:'Elige la frase equivalente',b:n=>fromPool('vpara',n)},
+    {id:'vtype',jp:'書いてみよう',n:'Escribe la palabra',d:'De español a kana o romaji',b:n=>fromPool('vtype',n)},
+    {id:'vtrje',jp:'翻訳',n:'Traduce: japonés → español',d:'Lee la frase y elige su significado',b:n=>fromPool('vtrje',n)},
+    {id:'vtrej',jp:'翻訳',n:'Traduce: español → japonés',d:'Elige la frase japonesa correcta',b:n=>fromPool('vtrej',n)},
+    {id:'vtrb',jp:'翻訳',n:'Construye la traducción',d:'Monta la frase en japonés con piezas',b:n=>fromPool('vtrb',n)},
+    {id:'vmatch',jp:'マッチング',n:'Unir parejas',d:'Palabras, significados y lecturas',b:n=>Array.from({length:Math.max(2,Math.round(n/5))},(_,i)=>matchItem(i%2?'vread':'vmean'))},
+    {id:'vmix',jp:'まとめ',n:'Mezcla de vocabulario',d:'Un poco de todo, frases incluidas',star:true,b:n=>mixPools(['vje','vej','vread','vwrite','vctx','vpara','vtrje','vtrej','vtrb'],n)}
+  ]},
+  kanji:{t:'Kanji',jp:'漢字',gl:'字',d:'Los 319 kanji de tu lista N4, en bloques de 20.',range:true,modes:[
+    {id:'kmean',jp:'意味',n:'Significado',d:'Kanji → significado',b:n=>fromPool('kmean',n)},
+    {id:'kfrom',jp:'どの漢字',n:'¿Qué kanji es?',d:'Significado → kanji',b:n=>fromPool('kfrom',n)},
+    {id:'kon',jp:'音読み',n:'Onyomi',d:'Elige la lectura china',b:n=>fromPool('kon',n)},
+    {id:'kkun',jp:'訓読み',n:'Kunyomi',d:'Elige la lectura japonesa',b:n=>fromPool('kkun',n)},
+    {id:'ktype',jp:'読みを書く',n:'Escribe la lectura',d:'Onyomi o kunyomi en kana o romaji',b:n=>fromPool('ktype',n)},
+    {id:'kword',jp:'漢字読み',n:'Palabras con estos kanji',d:'Lee palabras que los usan',b:n=>fromPool('kword',n)},
+    {id:'kdraw',jp:'書き取り',n:'Escribir a mano',d:'Dibuja el kanji y compruébalo',b:n=>fromPool('kdraw',n)},
+    {id:'kmatch',jp:'マッチング',n:'Unir parejas',d:'Kanji con significado y onyomi',b:n=>Array.from({length:Math.max(2,Math.round(n/5))},(_,i)=>matchItem(i%2?'kon':'kmean'))},
+    {id:'kmix',jp:'まとめ',n:'Mezcla de kanji',d:'Un poco de todo',star:true,b:n=>mixPools(['kmean','kfrom','kon','kkun','kword'],n)}
+  ]},
+  all:{t:'Todo junto',jp:'総合',gl:'全',d:'Gramática, vocabulario, kanji y lectura mezclados.',modes:[
+    {id:'noken',jp:'模擬試験',n:'Simulacro Noken',d:'25 preguntas en el orden del examen (no depende de la longitud)',star:true,b:()=>allT(()=>noken())},
+    {id:'amix',jp:'ミックス',n:'Mezcla rápida',d:'Cualquier tipo de pregunta',b:n=>allT(()=>{const it=mixPools(['gform','gstar','gconj','gadj','gpat','gtr','vje','vej','vread','vwrite','vctx','vpara','kmean','kon','kkun','kfrom'],n-1);it.splice(rnd(it.length+1),0,matchItem(['kmean','vmean','gpat','kon','gte'][rnd(5)]));return it;})},
+    {id:'read',jp:'読解',n:'Lectura',d:'Textos cortos con preguntas',b:n=>readingItems(Math.min(n,12))},
+    {id:'review',jp:'復習',n:'Repasar mis fallos',d:'Lo que más fallas, primero',b:n=>failIds().slice(0,n).map(regen).filter(Boolean)}
+  ]}
+};
+
+/* ================= VISTAS ================= */
+const app=document.getElementById('app');
+let VIEW={name:'home'};
+let RUN=null;
+function go(name,data){VIEW=Object.assign({name},data||{});render();window.scrollTo(0,0);}
+function furiBtn(){return `<button class="iconbtn furi ${S.furi?'on':''}" data-act="furi" aria-pressed="${S.furi}" aria-label="Mostrar furigana" title="Furigana">ふ</button>`;}
+function header(back,title){
+  return `<header class="top"><div class="wrap bar">${back?`<button class="iconbtn" data-act="back" aria-label="Volver">←</button><div class="bar-t">${title||''}</div>`:`<span class="brand"><span class="brand-k">練習</span> Renshū N4</span>`}${furiBtn()}</div></header>`;
+}
+function render(){
+  document.body.classList.toggle('nofuri',!S.furi);
+  ({home:homeView,section:sectionView,quiz:quizView,result:resultView})[VIEW.name]();
+}
+function homeView(){
+  const acc=S.answered?Math.round(S.correct/S.answered*100)+'%':'—';
+  const fails=failIds().length;
+  const tile=s=>{const x=SECTIONS[s];return `<button class="tile ${s}" data-sec="${s}"><span class="gl">${x.gl}</span><span class="tt"><b>${x.t} <span style="color:var(--ai);font-weight:500">${x.jp}</span></b><span>${x.d}</span></span><span class="arr">›</span></button>`;};
+  app.innerHTML=header(false)+`<main class="wrap">
+    <section class="hero"><h1>今日も<span>がんばろう</span></h1><p>Práctica para el Noken 4 con tus apuntes. Sesiones cortas, para hacer en cualquier rato.</p>
+    <div class="stats"><div><b>${streak()}</b><span>días seguidos</span></div><div><b>${S.answered}</b><span>respuestas</span></div><div><b>${acc}</b><span>aciertos</span></div></div></section>
+    <div class="tiles">${['gram','vocab','kanji','all'].map(tile).join('')}</div>
+    ${fails?`<button class="review" data-act="review">Repasar mis fallos <span>${fails}</span></button>`:''}
+    <p class="foot">Tu progreso se guarda en este navegador. Para usarla como una app, añádela a la pantalla de inicio del móvil. El botón ふ muestra u oculta el furigana.</p>
+  </main>`;
+}
+function sectionView(){
+  const sec=SECTIONS[VIEW.sec];
+  let range='';
+  if(sec.range){
+    const chips=Array.from({length:KGROUPS},(_,g)=>{const a=g*KSIZE+1,b=Math.min(K.length,(g+1)*KSIZE);return `<button class="chip ${S.kg.includes(g)?'on':''}" data-kr="${g}">${a}–${b}</button>`;}).join('');
+    range=`<div class="lbl">Kanji que practicar · ${KR().length} seleccionados</div><div class="chips"><button class="chip ${S.kg.length?'':'on'}" data-kr="all">Todos</button>${chips}</div>`;
+  }
+  if(sec.topics){
+    const open=VIEW.open||[];
+    const groups=TGROUPS.map((g,gi)=>{
+      const sel=g.s.filter(t=>S.gt.includes(t)).length,full=sel===g.s.length;
+      return `<div class="tg ${sel?'has':''}"><div class="tgh"><button class="tgsel ${full?'on':''}" data-gg="${gi}" aria-label="Elegir el bloque entero"><span class="tck">${full?'✓':sel?'–':''}</span><span class="tgn">${g.n}</span><span class="tgc">${sel?sel+'/':''}${g.s.length}</span></button><button class="tgx" data-go="${gi}" aria-expanded="${open.includes(gi)}" aria-label="Ver los temas del bloque">${open.includes(gi)?'▴':'▾'}</button></div>${open.includes(gi)?`<div class="chips tgl">${g.s.map(t=>`<button class="chip ${S.gt.includes(t)?'on':''}" data-gt="${t}">${TOPICS[t]}</button>`).join('')}</div>`:''}</div>`;
+    }).join('');
+    const names=S.gt.map(t=>TOPICS[t]);
+    range=`<div class="lbl">Qué practicar</div><button class="chip ${S.gt.length?'':'on'}" data-gt="all" style="margin-bottom:8px">Todos los temas</button><div class="tgs">${groups}</div>${S.gt.length?`<p class="sub" style="margin-top:8px">Elegido: ${esc(names.slice(0,4).join(' · '))}${names.length>4?` y ${names.length-4} más`:''}</p>`:''}`;
+  }
+  const lens=[10,20,30].map(n=>`<button class="chip ${S.len===n?'on':''}" data-len="${n}">${n} preguntas</button>`).join('')+`<button class="chip ${S.len===0?'on':''}" data-len="0">∞ Sin fin</button>`;
+  const avail=m=>m.c?m.c():m.p?POOLS[m.p]().length:1;
+  app.innerHTML=header(true,sec.t)+`<main class="wrap">
+    <div class="sech"><span class="gl">${sec.gl}</span><div><h2>${sec.t} · ${sec.jp}</h2><p>${sec.d}</p></div></div>
+    ${range}
+    <div class="lbl">Longitud de la sesión</div><div class="chips">${lens}</div>
+    <div class="lbl">Ejercicios</div>
+    <div class="modes">${sec.modes.map(m=>{const a=avail(m);return `<button class="mode ${m.star?'star':''}" data-mode="${m.id}" ${a?'':'disabled style="opacity:.45"'}><span style="min-width:0"><span class="mj">${m.jp}</span><b>${m.n}</b><span class="d">${a?m.d:'No hay ejercicios de este tipo para los temas elegidos'}</span></span><span class="go">›</span></button>`;}).join('')}</div>
+  </main>`;
+}
+function startMode(secId,modeId){
+  const m=SECTIONS[secId].modes.find(x=>x.id===modeId);
+  const items=m.b(S.len||10).filter(Boolean);
+  if(!items.length){go('section',{sec:secId});return;}
+  RUN={sec:secId,mode:modeId,title:m.n,items,i:0,ok:0,done:0,wrongs:[],locked:false,inf:!S.len&&modeId!=='noken',b:m.b};
+  go('quiz');
+}
+function cur(){return RUN.items[RUN.i];}
+function quizView(){
+  const it=cur(),R=RUN;
+  const pct=Math.round(R.i/R.items.length*100);
+  const pas=it.passage?`<details class="passage" open><summary>${esc(it.passage.t)}</summary><div class="ptext">${rb(it.passage.txt)}</div></details>`:'';
+  const mid=R.inf?`<div class="bar-t" style="font-weight:500;font-size:14px;color:var(--muted)">∞ Sin fin · ${R.ok}/${R.done} aciertos</div><button class="btn" data-act="quit" style="padding:7px 12px;font-size:14px">Terminar</button>`
+    :`<button class="iconbtn" data-act="quit" aria-label="Salir">✕</button><div class="prog"><div class="prog-f" style="width:${pct}%"></div></div><span class="count">${R.i+1}/${R.items.length}</span>`;
+  app.innerHTML=`<header class="top"><div class="wrap bar">${mid}${furiBtn()}</div></header>
+  <main class="wrap qmain"><div class="tag">${it.tag||''}</div>${pas}<div class="prompt">${it.prompt||''}</div><div class="sub">${it.sub||''}</div><div id="qb"></div><div id="fb"></div></main>`;
+  R.locked=false;
+  const qb=document.getElementById('qb');
+  ({mc:renderMC,input:renderInput,order:renderOrder,match:renderMatch,draw:renderDraw})[it.type](it,qb);
+}
+function finish(ok,head,skipMark){
+  const it=cur(),R=RUN;
+  if(!skipMark)mark(it.id,ok);
+  R.done++;
+  if(ok)R.ok++;else R.wrongs.push({it,head});
+  const fb=document.getElementById('fb');
+  const last=!R.inf&&R.i===R.items.length-1;
+  fb.className='fb '+(ok?'ok':'ng');
+  fb.innerHTML=`<div class="fb-h">${ok?'✓ ¡Correcto!':'✗ '+(head||'Incorrecto')}</div>${it.explain?`<div class="fb-x">${it.explain}</div>`:''}<button class="btn primary" data-act="next" id="nextbtn">${last?'Ver resultado':'Siguiente →'}</button>`;
+  const nb=document.getElementById('nextbtn');
+  nb.scrollIntoView({block:'nearest',behavior:'smooth'});
+  setTimeout(()=>{try{nb.focus({preventScroll:true});}catch(e){}},50);
+}
+function next(){
+  RUN.i++;
+  if(RUN.inf&&RUN.i>=RUN.items.length-1){RUN.items=RUN.items.concat(RUN.b(10).filter(Boolean));}
+  if(RUN.i>=RUN.items.length){go('result');}else{quizView();window.scrollTo(0,0);}
+}
+function renderMC(it,qb){
+  qb.innerHTML=`<div class="opts ${it.kopt?'kopts':''}">${it.options.map((o,i)=>`<button class="opt" data-i="${i}"><span class="num">${i+1}</span><span class="ot">${o}</span></button>`).join('')}</div>`;
+  const bs=qb.querySelectorAll('.opt');
+  bs.forEach(b=>b.addEventListener('click',()=>{
+    if(RUN.locked)return;RUN.locked=true;
+    const i=+b.dataset.i,ok=i===it.ans;
+    bs.forEach(x=>x.disabled=true);
+    bs[it.ans].classList.add('ok');if(!ok)b.classList.add('ng');
+    finish(ok,ok?'':`La correcta es: <span class="jp">${it.options[it.ans]}</span>`);
+  }));
+}
+function renderInput(it,qb){
+  qb.innerHTML=`<form class="inform" id="inf" autocomplete="off"><input id="ans" class="tin" lang="ja" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="かな o romaji" aria-label="Tu respuesta"><div class="preview" id="pv"></div><div class="row"><button type="button" class="btn ghost" id="skip">No lo sé</button><button class="btn primary" id="chk">Comprobar</button></div></form>`;
+  const inp=qb.querySelector('#ans'),pv=qb.querySelector('#pv');
+  inp.addEventListener('input',()=>{const v=inp.value;pv.textContent=/[a-z]/i.test(v)?'→ '+romaji(v):'';});
+  const done=give=>{
+    if(RUN.locked)return;RUN.locked=true;
+    const n=normAns(inp.value);const ok=!give&&!!n&&it.accept.some(a=>normAns(a)===n);
+    inp.disabled=true;qb.querySelector('#chk').disabled=true;qb.querySelector('#skip').disabled=true;
+    finish(ok,ok?'':`Respuesta: <span class="jp">${it.show}</span>`);
+    if(ok)document.querySelector('#fb .fb-h').innerHTML=`✓ ¡Correcto! <span class="jp" style="font-weight:500">${it.show}</span>`;
+  };
+  qb.querySelector('#inf').addEventListener('submit',e=>{e.preventDefault();done(false);});
+  qb.querySelector('#skip').addEventListener('click',()=>done(true));
+  setTimeout(()=>inp.focus(),60);
+}
+function renderOrder(it,qb){
+  const all=it.toks.concat(it.extra||[]),need=it.toks.length,target=it.toks.join('');
+  const perm=shuffle(all.map((_,i)=>i));let placed=[];
+  const draw=()=>{
+    const slots=placed.map((p,j)=>`<button class="pc" data-r="${j}">${esc(all[p])}</button>`).join('')+'<span class="pc empty">・</span>'.repeat(Math.max(0,need-placed.length));
+    qb.innerHTML=`<div class="line">${esc(it.pre)}${slots}${esc(it.post)}</div><div class="pool">${perm.filter(i=>!placed.includes(i)).map(i=>`<button class="pc" data-p="${i}">${esc(all[i])}</button>`).join('')||'<span class="sub">Todas colocadas.</span>'}</div><div class="row"><button class="btn ghost" id="clr">Borrar</button><button class="btn primary" id="chk" ${placed.length!==need?'disabled':''}>Comprobar</button></div>`;
+    if(RUN.locked){qb.querySelectorAll('button').forEach(b=>b.disabled=true);return;}
+    qb.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{if(placed.length<need){placed.push(+b.dataset.p);draw();}});
+    qb.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{placed.splice(+b.dataset.r,1);draw();});
+    qb.querySelector('#clr').onclick=()=>{placed=[];draw();};
+    qb.querySelector('#chk').onclick=()=>{
+      RUN.locked=true;const ok=placed.map(p=>all[p]).join('')===target;draw();
+      finish(ok,ok?'':'Lo correcto es:');
+      if(!ok&&it.override){
+        const fb=document.getElementById('fb'),b=document.createElement('button');
+        b.className='btn';b.textContent='Mi orden también es válido';
+        b.onclick=()=>{const x=S.items[it.id];if(x&&x.w>0)x.w--;S.answered--;mark(it.id,true);RUN.ok++;RUN.wrongs.pop();fb.className='fb ok';fb.querySelector('.fb-h').textContent='✓ Contado como correcto';b.remove();};
+        fb.insertBefore(b,document.getElementById('nextbtn'));
+      }
+    };
+  };
+  draw();
+}
+function renderMatch(it,qb){
+  const n=it.pairs.length,L=shuffle([...Array(n).keys()]),Rr=shuffle([...Array(n).keys()]);
+  const done=new Set(),err=new Array(n).fill(false);let sel=null,errors=0;
+  qb.innerHTML=`<div class="match"><div class="mcol">${L.map(i=>`<button class="mb ${it.lk?'k':''}" data-s="l" data-i="${i}">${it.pairs[i].l}</button>`).join('')}</div><div class="mcol">${Rr.map(i=>`<button class="mb" data-s="r" data-i="${i}">${it.pairs[i].r}</button>`).join('')}</div></div>`;
+  const btn=(s,i)=>qb.querySelector(`[data-s="${s}"][data-i="${i}"]`);
+  qb.querySelectorAll('.mb').forEach(b=>b.addEventListener('click',()=>{
+    const s=b.dataset.s,i=+b.dataset.i;if(done.has(i)||RUN.locked)return;
+    if(!sel||sel.s===s){if(sel)btn(sel.s,sel.i).classList.remove('sel');sel={s,i};b.classList.add('sel');return;}
+    const other=btn(sel.s,sel.i);other.classList.remove('sel');
+    if(sel.i===i){done.add(i);b.classList.add('done');other.classList.add('done');b.disabled=other.disabled=true;}
+    else{errors++;const li=s==='l'?i:sel.i;err[li]=true;[b,other].forEach(x=>{x.classList.remove('bad');void x.offsetWidth;x.classList.add('bad');setTimeout(()=>x.classList.remove('bad'),400);});}
+    sel=null;
+    if(done.size===n){RUN.locked=true;it.pairs.forEach((p,k)=>mark(p.id,!err[k]));
+      it.explain=it.pairs.map(p=>`<span class="jp">${p.l}</span> — ${p.r}`).join('<br>');
+      finish(errors===0,`${errors} ${errors===1?'error':'errores'}`,true);}
+  }));
+}
+function renderDraw(it,qb){
+  const k=it.k;
+  qb.innerHTML=`<div class="drawinfo">音：${k.on.join('、')||'—'}　訓：${k.kun.join('、')||'—'}</div><div class="pad"><canvas id="cv" aria-label="Zona para dibujar"></canvas></div><div class="reveal" id="rv" hidden></div><div class="row" id="dr" style="margin-top:12px"><button class="btn ghost" id="clr">Borrar</button><button class="btn primary" id="show">Ver el kanji</button></div>`;
+  const cv=qb.querySelector('#cv'),ctx=cv.getContext('2d');
+  const fit=()=>{const r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;cv.width=r.width*d;cv.height=r.height*d;ctx.scale(d,d);ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=Math.max(6,r.width/34);ctx.strokeStyle=getComputedStyle(document.body).color;};
+  fit();let drawing=false,last=null;
+  const pt=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};
+  cv.addEventListener('pointerdown',e=>{drawing=true;last=pt(e);cv.setPointerCapture(e.pointerId);ctx.beginPath();ctx.arc(last[0],last[1],ctx.lineWidth/2,0,7);ctx.fillStyle=ctx.strokeStyle;ctx.fill();});
+  cv.addEventListener('pointermove',e=>{if(!drawing)return;const p=pt(e);ctx.beginPath();ctx.moveTo(last[0],last[1]);ctx.lineTo(p[0],p[1]);ctx.stroke();last=p;});
+  const up=()=>{drawing=false;};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  qb.querySelector('#clr').onclick=()=>{const r=cv.getBoundingClientRect();ctx.clearRect(0,0,r.width,r.height);};
+  qb.querySelector('#show').onclick=()=>{
+    const rv=qb.querySelector('#rv');rv.hidden=false;rv.innerHTML=`<span class="bigk">${k.k}</span><span class="sub" style="margin:0">¿Lo has escrito bien?</span>`;
+    qb.querySelector('#dr').innerHTML=`<button class="btn" id="no">✗ No</button><button class="btn primary" id="yes">✓ Sí</button>`;
+    const fin=ok=>{if(RUN.locked)return;RUN.locked=true;qb.querySelectorAll('#dr button').forEach(b=>b.disabled=true);finish(ok,ok?'':'A repasarlo');};
+    qb.querySelector('#yes').onclick=()=>fin(true);qb.querySelector('#no').onclick=()=>fin(false);
+  };
+}
+function resultView(){
+  const R=RUN,n=R.inf?R.done:R.items.length;
+  if(!n){go('section',{sec:R.sec});return;}
+  const pct=Math.round(R.ok/n*100);
+  const word=pct>=90?'すばらしい！':pct>=70?'よくできました':pct>=50?'もう少し！':'がんばろう';
+  const sum=w=>{const it=w.it;
+    if(it.type==='match')return `<div class="wp">${it.tag}</div><div>${w.head}</div>`;
+    const ans=it.type==='mc'?it.options[it.ans]:it.type==='input'?it.show:it.type==='order'?it.answerText:it.type==='draw'?`<span class="jk">${it.k.k}</span>`:'';
+    return `<div class="wp">${it.prompt||esc(it.tag)}</div>${it.sub&&it.type!=='order'?`<div class="sub" style="margin:2px 0">${it.sub}</div>`:''}<div class="wa">→ ${ans}</div>`;};
+  app.innerHTML=header(true,R.title)+`<main class="wrap">
+    <div class="score"><div class="kk">${word}</div><b>${R.ok}/${n}</b><span>${pct}% de aciertos</span></div>
+    ${R.wrongs.length?`<div class="lbl">Para repasar</div><div class="wlist">${R.wrongs.map(w=>`<div class="witem">${sum(w)}</div>`).join('')}</div>`:''}
+    <div class="actions"><button class="btn primary" data-act="again">Otra ronda</button><button class="btn" data-act="tosec">Volver a ${SECTIONS[R.sec].t}</button><button class="btn ghost" data-act="home">Inicio</button></div>
+  </main>`;
+}
+
+/* ================= EVENTOS ================= */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-act],[data-sec],[data-mode],[data-len],[data-kr],[data-gt],[data-gg],[data-go]');if(!t||t.disabled)return;
+  if(t.dataset.sec){go('section',{sec:t.dataset.sec});return;}
+  if(t.dataset.mode){startMode(VIEW.sec,t.dataset.mode);return;}
+  if(t.dataset.len!==undefined){S.len=+t.dataset.len;save();render();return;}
+  if(t.dataset.kr){const g=t.dataset.kr;if(g==='all')S.kg=[];else{const n=+g;S.kg=S.kg.includes(n)?S.kg.filter(x=>x!==n):S.kg.concat(n).sort((a,b)=>a-b);}save();render();return;}
+  if(t.dataset.gt){const g=t.dataset.gt;if(g==='all')S.gt=[];else S.gt=S.gt.includes(g)?S.gt.filter(x=>x!==g):S.gt.concat(g);save();render();return;}
+  if(t.dataset.gg!==undefined){const g=TGROUPS[+t.dataset.gg].s;const full=g.every(x=>S.gt.includes(x));S.gt=full?S.gt.filter(x=>!g.includes(x)):uniq(S.gt.concat(g));save();render();return;}
+  if(t.dataset.go!==undefined){const gi=+t.dataset.go;const o=VIEW.open||[];VIEW.open=o.includes(gi)?o.filter(x=>x!==gi):o.concat(gi);render();return;}
+  switch(t.dataset.act){
+    case 'furi':S.furi=!S.furi;save();document.body.classList.toggle('nofuri',!S.furi);document.querySelectorAll('[data-act="furi"]').forEach(b=>{b.classList.toggle('on',S.furi);b.setAttribute('aria-pressed',S.furi);});break;
+    case 'back':if(VIEW.name==='section')go('home');else if(VIEW.name==='result')go('section',{sec:RUN.sec});else go('home');break;
+    case 'quit':if(RUN.inf)go('result');else go('section',{sec:RUN.sec});break;
+    case 'next':next();break;
+    case 'again':startMode(RUN.sec,RUN.mode);break;
+    case 'tosec':go('section',{sec:RUN.sec});break;
+    case 'home':go('home');break;
+    case 'review':VIEW.sec='all';startMode('all','review');break;
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(VIEW.name!=='quiz')return;
+  const nb=document.getElementById('nextbtn');
+  if(nb&&e.key==='Enter'&&document.activeElement!==nb){e.preventDefault();next();return;}
+  if(!RUN.locked&&cur().type==='mc'&&/^[1-4]$/.test(e.key)){const b=document.querySelector(`.opt[data-i="${+e.key-1}"]`);if(b)b.click();}
+});
+render();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
+</script>
+</body>
+</html>
