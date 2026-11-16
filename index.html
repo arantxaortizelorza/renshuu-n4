@@ -1962,6 +1962,73 @@ const NOCONJ=new Set(['召し上がる','参る','申す','伺う','要る']);
 const CONJV=V.filter(v=>v.c[0]==='v'&&!NOCONJ.has(v.w));
 const KSIZE=20;
 const KGROUPS=Math.ceil(K.length/KSIZE);
+/* Furigana automático para frases. Los kanji que no están en la lista N4 se escriben en kana.
+   Formato: [contexto antes^]KANJI[+contexto después]=lectura  (# = un número, @ = katakana) */
+const FURI_RAW=`一=いち 一人=ひとり 一つ=ひと 一個=いっこ 一冊=いっさつ 一台=いちだい 一年=いちねん 一時間=いちじかん 一時間半=いちじかんはん 一本=いっぽん 一枚=いちまい 一生懸命=いっしょうけんめい 一番=いちばん 一緒=いっしょ 一週=いっしゅう 一週間=いっしゅうかん 一周=いっしゅう 一日=いちにち
+二=に 二つ=ふた 二人=ふたり 二個=にこ 二冊=にさつ 二匹=にひき 二十歳=はたち 二台=にだい 二時間=にじかん 二本=にほん 二枚=にまい 二足=にそく
+三=さん 三つ=みっ 三人=さんにん 三冊=さんさつ 三匹=さんびき 三千円=さんぜんえん 三台=さんだい 三年=さんねん 三年間=さんねんかん 三日=みっか 三時=さんじ 三時間=さんじかん 三本=さんぼん 三枚=さんまい
+四=よん 四時=よじ 五=ご 五つ=いつ 五冊=ごさつ 五匹=ごひき 五時=ごじ 五月=ごがつ 五本=ごほん 五枚=ごまい
+六時=ろくじ 六時半=ろくじはん 八日=ようか 八時=はちじ 十=じゅう 十二年間=じゅうにねんかん 十二時=じゅうにじ 十五分=じゅうごふん 十分=じゅうぶん 十年間=じゅうねんかん 十時=じゅうじ 十秒=じゅうびょう 千円=せんえん 半=はん 以上=いじょう
+#^時=じ #^時間=じかん #^分=ふん #^人=にん #^年=ねん #^月=がつ #^日=にち #^歳=さい #^円=えん #^本=ほん #^枚=まい #^回=かい
+十^歳=さい 十^年=ねん 十^月=がつ 十^時=じ
+年^間=かん 年^時=じ 年^分=ふん 年^年=ねん 週^間=かん 週^日=にち 週^時=じ 週^週=しゅう 秒^間=かん 秒^時=じ 秒^分=ふん 秒^後=ご 日^間=かん 日^時=じ 日^分=ふん 日^月=がつ
+分^前=まえ 分^後=ご 分^半=はん 分^間=かん 時^半=はん 時^前=まえ 時^分=ふん 時^間=かん
+何^時間=じかん 何^時=じ 何^曜日=ようび 何^月=がつ
+上=うえ 上+が=あ 上+げ=あ 上手=じょうず 上田=うえだ 下=した 下+げ=さ 下+さ=くだ 下手=へた
+世界=せかい 両親=りょうしん 並+べ=なら 中=なか 中国=ちゅうごく 中国人=ちゅうごくじん 中国語=ちゅうごくご 中村=なかむら 中華料理=ちゅうかりょうり
+乗=の 予約=よやく 予報=よほう 事件=じけん 亡=な 京都=きょうと 人=ひと 今=いま 今夜=こんや 今日=きょう 今晩=こんばん 今朝=けさ
+仕事=しごと 付=つ 休=やす 会=あ 会社=かいしゃ 会議=かいぎ 伺=うかが 住=す 住所=じゅうしょ 体=からだ 体操=たいそう
+何=なに 何+の=なん 何+で=なに 何+です=なん 何人=なんにん 何分=なんぷん 何年=なんねん 何日=なんにち 何時=なんじ 何時間=なんじかん 何曜日=なんようび 何月=なんがつ 何歳=なんさい
+作=つく 作文=さくぶん 使=つか 倒=たお 借=か 値段=ねだん 傘=かさ 働=はたら 元気=げんき 兄=あに 兄+さ=にい 先生=せんせい 先週=せんしゅう 風邪=かぜ
+入=はい 入+れ=い 気^入=い に^入+る=はい 入場券=にゅうじょうけん 全+く=まった 全然=ぜんぜん 全部=ぜんぶ
+公園=こうえん 写真=しゃしん 冬=ふゆ 冷=つめ 冷蔵庫=れいぞうこ 出=で 出+し=だ 出+さ=だ 出+す=だ 出+せ=だ 出発=しゅっぱつ 分=ふん 分+か=わ 切=き 切手=きって 前=まえ 助=たす 努力=どりょく 勉強=べんきょう 動=うご 勤=つと 医者=いしゃ
+参=まい 参加=さんか 友達=ともだち 反対=はんたい 取=と 召=め 台所=だいどころ 叱=しか 合=あ 合格=ごうかく 同=おな 名前=なまえ 名古屋=なごや 君=きみ 吸=す 味=あじ 咲=さ 品物=しなもの 問題=もんだい 困=こま 図書館=としょかん 国=くに 地図=ちず 地震=じしん 塗=ぬ 壁=かべ 壊=こわ 声=こえ 売=う
+夏=なつ 夏休=なつやす 外=そと 多=おお 多分=たぶん 夜=よる 大+き=おお 大切=たいせつ 大勢=おおぜい 大変=たいへん 大学生=だいがくせい 大阪=おおさか 天気=てんき 天皇=てんのう 太=ふと 失礼=しつれい 好=す 妹=いもうと 姉=あね 始=はじ 嫌=きら 子供=こども 字=じ 存=ぞん 存知=ぞんじ 季節=きせつ 学校=がっこう 学生=がくせい 安=やす 家=いえ 宿題=しゅくだい 富士山=ふじさん 寒=さむ 寝=ね 寺=てら 小=ちい 小説=しょうせつ 少=すこ 少+な=すく 届=とど 屋=や 山=やま 山田=やまだ 川=かわ 差=さ 帰=かえ 年=ねん 広=ひろ 店=みせ 店員=てんいん 座=すわ 庭=にわ 建=た 弁当=べんとう 弁護士=べんごし 弟=おとうと 弾=ひ 彼=かれ 彼女=かのじょ 待=ま 後=あと 後+ろ=うし 従業員=じゅうぎょういん 必+ず=かなら 必要=ひつよう 忘=わす 怒=おこ 怖=こわ 思=おも 怠=なま 急=いそ 急+に=きゅう 息=いき 悪=わる 意味=いみ 慣=な 戻=もど
+手=て 手伝=てつだ 手紙=てがみ 払=はら 押=お 拝見=はいけん 拾=ひろ 持=も 掃除=そうじ 授業=じゅぎょう 探=さが 揺=ゆ 撮=と 教=おし 教室=きょうしつ 教科書=きょうかしょ 散歩=さんぽ 料理=りょうり 新=あたら 新幹線=しんかんせん 新聞=しんぶん 新鮮=しんせん 旅行=りょこう
+日=ひ 日曜日=にちようび 日本=にほん 日本人=にほんじん 日本語=にほんご 日記=にっき 早=はや 明=あか 明日=あした 映画=えいが 春=はる 昨日=きのう 昼=ひる 時=とき 時計=とけい 時間=じかん 晩=ばん 晴=は 暇=ひま 暑=あつ 暗=くら 曜日=ようび 書=か 最+も=もっと 月=つき 服=ふく 朝=あさ 木=き 本=ほん 本当=ほんとう 机=つくえ
+来=く 来+い=こ 来+な=こ 来+よ=こ 来+ら=こ 来+ろ=こ 来+れ=く 来+た=き 来+て=き 来+ま=き 来+り=き 来+ず=こ 来+（=こ 来年=らいねん 来月=らいげつ 来週=らいしゅう 留学=りゅうがく 東京=とうきょう 植=う 楽=たの 横浜=よこはま 歌=うた 止=と 歩=ある 歯=は 歳=さい 死=し 残=のこ 残念=ざんねん 母=はは 毎日=まいにち 毎晩=まいばん 毎朝=まいあさ 毎週=まいしゅう 練習=れんしゅう 比=くら 気=き 水=みず 水曜日=すいようび 池=いけ 泣=な 注意=ちゅうい 泳=およ 洗=あら 洗濯=せんたく 海=うみ 消=き 渡=わた 準備=じゅんび 漢字=かんじ 無+く=な 無理=むり 無駄=むだ 熱=ねつ 熱心=ねっしん 父=ちち 父+さ=とう 牛乳=ぎゅうにゅう 物=もの 犬=いぬ 狭=せま 猫=ねこ 理由=りゆう 甘=あま 生=なま 生+き=い 生+ま=う 用事=ようじ 田中=たなか 申=もう 町=まち 留守=るす 疲=つか 病気=びょうき 痛=いた 登=のぼ 白=しろ 目=め 直=なお 眠=ねむ 眼鏡=めがね 着=き 着物=きもの 知=し 磨=みが 社員=しゃいん 社長=しゃちょう 祖母=そぼ 福岡=ふくおか 私=わたし 秋=あき 空=そら 空+い=あ 窓=まど 笑=わら 笑顔=えがお 箱=はこ 簡単=かんたん 約束=やくそく 終=お 経験=けいけん 続=つづ 美術館=びじゅつかん 習=なら 者=もの 聞=き 肉=にく 肩=かた 育=そだ 背=せ 脱=ぬ 色=いろ 花=はな 若=わか 苦=にが 苦労=くろう 英語=えいご 茶=ちゃ 荷物=にもつ 落=お 行=い 複雑=ふくざつ 褒=ほ 要=い 見=み 規則=きそく 覧=らん 親切=しんせつ 触=さわ 言=い 訪=たず 訪問=ほうもん 試験=しけん 話=はな 話+を=はなし 話+が=はなし 誕生日=たんじょうび 説明=せつめい 読=よ 誰=だれ 警官=けいかん 財布=さいふ 買=か 貸=か 質問=しつもん 赤=あか 走=はし 起=お 趣味=しゅみ 足=あし 足+り=た 踏=ふ 車=くるま 転=ころ 軽=かる 辞=や 辞書=じしょ 込=こ 迎=むか 送=おく 速=はや 週=しゅう 週末=しゅうまつ 遅=おそ 遊=あそ 運動=うんどう 運転=うんてん 道=みち 選=えら 部屋=へや 酒=さけ 重=おも 野菜=やさい 金=かね 金持=かねも 金曜日=きんようび 金魚=きんぎょ 鈴木=すずき 鉛筆=えんぴつ 銀行=ぎんこう 鏡=かがみ 長=なが 閉=し 開=あ 間=あいだ 間+に合=ま 降=ふ を^降=お ）^降+りた=お に^降=お 降+ろ=お 隣=となり 雑誌=ざっし 難=むずか 雨=あめ 雪=ゆき 電気=でんき 電話=でんわ 電話番号=でんわばんごう 電車=でんしゃ 青=あお 静=しず 非常口=ひじょうぐち 面白=おもしろ 靴=くつ 韓国=かんこく 音楽=おんがく 頭=あたま 顔=かお 風呂=ふろ 飛行機=ひこうき 食=た 飯=はん 飲=の 飼=か 飾=かざ 駅=えき 駅員=えきいん 騒=さわ 高=たか 魚=さかな 鳴=な 黒=くろ
+尊敬語=そんけいご 謙譲語=けんじょうご 冊=さつ 枚=まい 個=こ 匹=ひき 台=だい 秒=びょう 秒間=びょうかん 全体=ぜんたい 部分=ぶぶん 非常=ひじょう 抜=ぬ 薬=くすり 来+さ=こ 来+なさ=き @^人=じん 召し上=めしあ 差し上=さしあ 申し上=もうしあ 日間=にちかん 〜^日=にち`;
+const KS=new Set(K.map(k=>k.k));
+const isK=c=>/[一-鿿々〆]/.test(c);
+const FD={};
+FURI_RAW.trim().split(/\s+/).forEach(e=>{const q=e.indexOf('=');let x=e.slice(0,q),pre='',suf='';const r=e.slice(q+1);
+  const h=x.indexOf('^');if(h>=0){pre=x.slice(0,h);x=x.slice(h+1);}
+  const p=x.indexOf('+');if(p>=0){suf=x.slice(p+1);x=x.slice(0,p);}
+  (FD[x[0]]=FD[x[0]]||[]).push({k:x,pre,suf,r,sc:x.length*100+(pre?10:0)+suf.length});});
+function fseg(s,pre,post){
+  pre=pre||'';post=post||'';const full=pre+s+post,b=pre.length+s.length,out=[];let i=pre.length;
+  while(i<b){const c=full[i];
+    if(!isK(c)){let j=i;while(j<b&&!isK(full[j]))j++;out.push({t:full.slice(i,j)});i=j;continue;}
+    let best=null;
+    for(const e of FD[c]||[]){
+      if(i+e.k.length>b||full.substr(i,e.k.length)!==e.k)continue;
+      if(e.suf&&!full.startsWith(e.suf,i+e.k.length))continue;
+      if(e.pre){const pc=full.slice(0,i);if(e.pre==='#'?!/[0-9０-９]$/.test(pc):e.pre==='@'?!/[ァ-ヶー]$/.test(pc):!pc.endsWith(e.pre))continue;}
+      if(!best||e.sc>best.sc)best=e;}
+    if(best){out.push({t:best.k,r:best.r});i+=best.k.length;}else{out.push({t:c});i++;}
+  }
+  return out;
+}
+const knownK=t=>[...t].every(c=>!isK(c)||KS.has(c));
+const segH=g=>g.r?(knownK(g.t)?`<ruby>${g.t}<rt>${g.r}</rt></ruby>`:g.r):esc(g.t);
+const fu=(s,pre,post)=>fseg(String(s),pre,post).map(segH).join('');
+const fuP=parts=>parts.map((p,j)=>fu(p,parts.slice(0,j).join(''),parts.slice(j+1).join('')));
+const qClean=q=>q.replace(/\s*\([^)]*\)\s*$/,'');
+const fopt=(q,o)=>{const [a,b]=qClean(q).split('（　）');return fu(o,a,b||'');};
+const fill=(q,c)=>{const [a,b]=qClean(q).split('（　）');const h=fuP([a,c,b||'']);return `${h[0]}【${h[1]}】${h[2]}`;};
+function walign(w,r){const parts=w.match(/[一-鿿々〆]+|[^一-鿿々〆]+/g)||[];
+  r=toHira(r);const rd=[];
+  const go=(j,pos)=>{if(j===parts.length)return pos===r.length;const p=parts[j];
+    if(!isK(p[0])){const k=toHira(p);return r.startsWith(k,pos)&&go(j+1,pos+k.length);}
+    for(let e=pos+1;e<=r.length;e++){rd[j]=r.slice(pos,e);if(go(j+1,e))return true;}return false;};
+  if(!go(0,0))return null;return parts.map((p,j)=>isK(p[0])?{t:p,r:rd[j]}:{t:p});}
+function wh(v,s){
+  if(s===undefined)s=v.w;if(!hasKanji(s))return esc(s);
+  const al=v.w.includes('来')?null:walign(v.w,v.r);
+  if(al){let n=0;for(let j=0;j<al.length;j++)if(al[j].r)n=j+1;const P=al.slice(0,n),ps=P.map(g=>g.t).join('');
+    if(s.startsWith(ps))return (knownK(ps)?P.map(segH).join(''):esc(P.map(g=>g.r||g.t).join('')))+esc(s.slice(ps.length));}
+  return fu(s);
+}
 
 /* ================= ESTADO ================= */
 const KEY='renshu-n4-v1';
@@ -2089,6 +2156,7 @@ const RULES={
   tai:{v1:'Radical (forma ます sin ます) + たい. Se conjuga como adjetivo い.',v2:'Radical (quita る) + たい.',v3:'する→したい, 来る→来（き）たい.'}
 };
 
+const rul=(f,c)=>fu(RULES[f][c].replace(/来（.）/g,'来'));
 /* ================= GENERADORES ================= */
 function mc(o){
   const wrong=uniq(o.wrong).filter(x=>x!==o.correct).slice(0,3);
@@ -2098,7 +2166,7 @@ function mc(o){
 function blankify(q){
   let hint='';const m=q.match(/\s*\(([^)]+)\)\s*$/);
   if(m){hint=m[1];q=q.slice(0,m.index);}
-  return `<div class="psent">${esc(q).replace('（　）','<span class="blank"></span>')}</div>`+(hint?`<div class="hint">${esc(hint)}</div>`:'');
+  return `<div class="psent">${fu(q).replace('（　）','<span class="blank"></span>')}</div>`+(hint?`<div class="hint">${fu(hint)}</div>`:'');
 }
 const kunForms=s=>uniq([s.replace(/・/g,''),s.split('・')[0]]);
 function kWords(k){return V.filter(v=>v.w.includes(k.k)).slice(0,4).map(v=>`${ruby(v.w,v.r)} ${esc(v.m)}`).join(' · ');}
@@ -2171,11 +2239,11 @@ function vocabQ(v,t){
   }
 }
 function ctxQ(i){const [q,c,...rest]=CTX[i];const es=rest[3];
-  return mc({id:`x:${i}`,tag:'文脈規定 · vocabulario en contexto',prompt:blankify(q),sub:'Elige la palabra que mejor encaja.',correct:c,wrong:rest.slice(0,3),explain:`<span class="jp">${esc(q.replace('（　）','【'+c+'】'))}</span><br>${esc(es)}`});}
+  return mc({id:`x:${i}`,tag:'文脈規定 · vocabulario en contexto',prompt:blankify(q),sub:'Elige la palabra que mejor encaja.',correct:fopt(q,c),wrong:rest.slice(0,3).map(o=>fopt(q,o)),explain:`<span class="jp">${fill(q,c)}</span><br>${esc(es)}`});}
 function paraQ(i){const [q,c,...w]=PARA[i];
-  return mc({id:`p:${i}`,tag:'言い換え · mismo significado',prompt:`<div class="psent">${esc(q)}</div>`,sub:'¿Qué frase significa casi lo mismo?',correct:c,wrong:w,explain:`<span class="jp">${esc(q)}</span> ≈ <span class="jp">${esc(c)}</span>`});}
+  return mc({id:`p:${i}`,tag:'言い換え · mismo significado',prompt:`<div class="psent">${fu(q)}</div>`,sub:'¿Qué frase significa casi lo mismo?',correct:fu(c),wrong:w.map(x=>fu(x)),explain:`<span class="jp">${fu(q)}</span> ≈ <span class="jp">${fu(c)}</span>`});}
 function gformQ(i){const [q,c,d1,d2,d3,ex]=GQ[i];
-  return mc({id:`g:${i}`,tag:`文法 · ${esc(TOPICS[GQT[i]]||'elige la forma')}`,prompt:blankify(q),sub:'Elige lo que va en （　）.',correct:c,wrong:[d1,d2,d3],explain:`<span class="jp">${esc(q.replace(/\s*\([^)]*\)\s*$/,'').replace('（　）','【'+c+'】'))}</span><br>${esc(ex||'')}`});}
+  return mc({id:`g:${i}`,tag:`文法 · ${esc(TOPICS[GQT[i]]||'elige la forma')}`,prompt:blankify(q),sub:'Elige lo que va en （　）.',correct:fopt(q,c),wrong:[d1,d2,d3].map(o=>fopt(q,o)),explain:`<span class="jp">${fill(q,c)}</span><br>${fu(ex||'')}`});}
 /* Adjetivos */
 const AFORMS={neg:'forma negativa',past:'forma pasada',pastneg:'pasado negativo',te:'forma て (para unir)',adv:'forma adverbial (〜く／〜に)',naru:'forma 〜なる (volverse…)',ba:'condicional (〜ければ／〜なら)',sou:'apariencia (〜そう)'};
 const AK=Object.keys(AFORMS);
@@ -2188,37 +2256,38 @@ function adjQ(v,f){
   if(v.c==='ai'){c.push(v.w+NA_END[f]);c.push(v.w+AI_BAD[f]);}else{c.push(v.w+AI_END[f]);c.push(v.w+'な'+NA_END[f]);}
   shuffle(AK).forEach(g=>c.push(aconj(v.w,v.c,g)));
   const rule=v.c==='ai'?'Adjetivo い (quita la い): 〜くない · 〜かった · 〜くなかった · 〜くて · 〜く · 〜くなる · 〜ければ · 〜そう':'Adjetivo な: 〜ではない · 〜だった · 〜ではなかった · 〜で · 〜に · 〜になる · 〜なら · 〜そう';
-  return mc({id:`a:${v.w}:${f}`,tag:'形容詞 · conjuga el adjetivo',prompt:`<div class="pword">${ruby(v.w,v.r)}</div><div class="pmeta">${esc(v.m)}</div>`,sub:`¿Cuál es su <b>${AFORMS[f]}</b>?`,correct:ok,wrong:uniq(c).filter(x=>x!==ok),explain:`${rule}<br><span class="jp">${v.w} → <b>${ok}</b></span>`});
+  return mc({id:`a:${v.w}:${f}`,tag:'形容詞 · conjuga el adjetivo',prompt:`<div class="pword">${wh(v)}</div><div class="pmeta">${esc(v.m)}</div>`,sub:`¿Cuál es su <b>${AFORMS[f]}</b>?`,correct:wh(v,ok),wrong:uniq(c).filter(x=>x!==ok).map(x=>wh(v,x)),explain:`${rule}<br><span class="jp">${wh(v)} → <b>${wh(v,ok)}</b></span>`});
 }
 function numQ(i){const n=NUM[i];
   return mc({id:`n:${i}`,tag:`数字・時間 · ${esc(TOPICS[n.s])}`,prompt:`<div class="pword">${n.k}</div>`,sub:n.h?`¿Cómo se lee? (${esc(n.h)})`:'¿Cómo se lee?',correct:n.r,wrong:n.w,explain:`<span class="jp">${n.k}</span> = <b>${n.r}</b>`});}
 function starQ(i){const o=ORD[i];
   const slots=o.p.map((_,j)=>j===o.st?'<span class="slot star">★</span>':'<span class="slot"></span>').join('');
-  return mc({id:`o:${i}`,tag:'文の組み立て · la estrella ★',prompt:`<div class="psent">${esc(o.pre)}${slots}${esc(o.post)}</div>`,sub:'Ordena las piezas mentalmente. ¿Cuál va en la ★?',correct:o.p[o.st],wrong:o.p.filter((_,j)=>j!==o.st),explain:`<span class="jp">${esc(o.pre)}${o.p.map((x,j)=>j===o.st?`<b>${esc(x)}</b>`:esc(x)).join('')}${esc(o.post)}</span><br>${esc(o.es)}`});}
-function buildQ(i){const o=ORD[i];return {id:`b:${i}`,type:'order',tag:'並べ替え · construye la frase',toks:o.p,extra:[],pre:o.pre,post:o.post,prompt:`<div class="hint">${esc(o.es)}</div>`,sub:'Toca las piezas en el orden correcto.',answerText:esc(o.pre+o.p.join('')+o.post),explain:`<span class="jp">${esc(o.pre+o.p.join('')+o.post)}</span><br>${esc(o.es)}`};}
+  const h=fuP([o.pre,...o.p,o.post]),hp=h.slice(1,-1);
+  return mc({id:`o:${i}`,tag:'文の組み立て · la estrella ★',prompt:`<div class="psent">${h[0]}${slots}${h[h.length-1]}</div>`,sub:'Ordena las piezas mentalmente. ¿Cuál va en la ★?',correct:hp[o.st],wrong:hp.filter((_,j)=>j!==o.st),explain:`<span class="jp">${h[0]}${hp.map((x,j)=>j===o.st?`<b>${x}</b>`:x).join('')}${h[h.length-1]}</span><br>${esc(o.es)}`});}
+function buildQ(i){const o=ORD[i];const h=fuP([o.pre,...o.p,o.post]);return {id:`b:${i}`,type:'order',tag:'並べ替え · construye la frase',toks:o.p,extra:[],pre:o.pre,post:o.post,preH:h[0],postH:h[h.length-1],tokH:h.slice(1,-1),prompt:`<div class="hint">${esc(o.es)}</div>`,sub:'Toca las piezas en el orden correcto.',answerText:h.join(''),explain:`<span class="jp">${h.join('')}</span><br>${esc(o.es)}`};}
 function trQ(i,d){
   const t=TR[i],jp=t.toks.join('');
   const same=shuffle(TR.filter(x=>x!==t&&x.tp===t.tp)),oth=shuffle(TR.filter(x=>x!==t&&x.tp!==t.tp));
   const pickD=f=>uniq(same.concat(oth).map(f));
-  const explain=`<span class="jp">${esc(jp)}</span><br>${esc(t.es)}<br><span style="color:var(--muted)">Tema: ${esc(TOPICS[t.tp])}</span>`;
-  if(d==='je')return mc({id:`t:${i}:je`,tag:'翻訳 · japonés → español',prompt:`<div class="psent">${esc(jp)}</div>`,sub:'¿Qué significa esta frase?',correct:esc(t.es),wrong:pickD(x=>esc(x.es)),explain});
-  if(d==='ej')return mc({id:`t:${i}:ej`,tag:'翻訳 · español → japonés',prompt:`<div class="psent">${esc(t.es)}</div>`,sub:'¿Cuál es la traducción correcta?',correct:esc(jp),wrong:pickD(x=>esc(x.toks.join(''))),explain});
+  const explain=`<span class="jp">${fu(jp)}</span><br>${esc(t.es)}<br><span style="color:var(--muted)">Tema: ${fu(TOPICS[t.tp])}</span>`;
+  if(d==='je')return mc({id:`t:${i}:je`,tag:'翻訳 · japonés → español',prompt:`<div class="psent">${fu(jp)}</div>`,sub:'¿Qué significa esta frase?',correct:esc(t.es),wrong:pickD(x=>esc(x.es)),explain});
+  if(d==='ej')return mc({id:`t:${i}:ej`,tag:'翻訳 · español → japonés',prompt:`<div class="psent">${esc(t.es)}</div>`,sub:'¿Cuál es la traducción correcta?',correct:fu(jp),wrong:pickD(x=>fu(x.toks.join(''))),explain});
   const have=new Set(t.toks);
   const extra=sample(uniq(TR.filter(x=>x!==t).flatMap(x=>x.toks)).filter(x=>!have.has(x)),2);
-  return {id:`t:${i}:b`,type:'order',tag:'翻訳 · construye en japonés',prompt:`<div class="psent">${esc(t.es)}</div>`,sub:'Toca las piezas en orden. Sobran dos.',toks:t.toks,extra,pre:'',post:'',override:true,answerText:esc(jp),explain};
+  return {id:`t:${i}:b`,type:'order',tag:'翻訳 · construye en japonés',prompt:`<div class="psent">${esc(t.es)}</div>`,sub:'Toca las piezas en orden. Sobran dos.',toks:t.toks,extra,tokH:fuP(t.toks).concat(extra.map(x=>fu(x))),pre:'',post:'',override:true,answerText:fu(jp),explain};
 }
 function conjQ(v,f){const ok=conj(v.w,v.c,f);
-  return mc({id:`c:${v.w}:${f}`,tag:'活用 · conjugación',prompt:`<div class="pword">${ruby(v.w,v.r)}</div><div class="pmeta">${esc(v.m)}</div>`,sub:`¿Cuál es su <b>${FORMS[f]}</b>?`,correct:ok,wrong:conjDistract(v.w,v.c,f),explain:`${RULES[f][v.c]}<br><span class="jp">${v.w} → <b>${ok}</b></span>（${conj(v.r,v.c,f)}）`});}
+  return mc({id:`c:${v.w}:${f}`,tag:'活用 · conjugación',prompt:`<div class="pword">${wh(v)}</div><div class="pmeta">${esc(v.m)}</div>`,sub:`¿Cuál es su <b>${FORMS[f]}</b>?`,correct:wh(v,ok),wrong:conjDistract(v.w,v.c,f).map(x=>wh(v,x)),explain:`${rul(f,v.c)}<br><span class="jp">${wh(v)} → <b>${wh(v,ok)}</b></span>（${conj(v.r,v.c,f)}）`});}
 function conjTQ(v,f){const ok=conj(v.w,v.c,f),okr=conj(v.r,v.c,f);
-  return {id:`ct:${v.w}:${f}`,type:'input',tag:'活用 · escribe la forma',prompt:`<div class="pword">${ruby(v.w,v.r)}</div><div class="pmeta">${v.r} · ${esc(v.m)}</div>`,sub:`Escribe su <b>${FORMS[f]}</b> (kana o romaji).`,accept:[okr,ok],show:`${ok}（${okr}）`,explain:RULES[f][v.c]};}
+  return {id:`ct:${v.w}:${f}`,type:'input',tag:'活用 · escribe la forma',prompt:`<div class="pword">${wh(v)}</div><div class="pmeta">${v.r} · ${esc(v.m)}</div>`,sub:`Escribe su <b>${FORMS[f]}</b> (kana o romaji).`,accept:[okr,ok],show:`${wh(v,ok)}（${okr}）`,explain:rul(f,v.c)};}
 function patQ(i,d){const p=PAT[i];const others=PAT.filter(x=>x!==p);
-  if(d==='pm')return mc({id:`gp:${i}:pm`,tag:'文型 · ¿qué significa?',prompt:`<div class="pword" style="font-size:30px">${esc(p.p)}</div>`,sub:'¿Qué significa este patrón?',correct:esc(p.m),wrong:sample(others,3).map(x=>esc(x.m)),explain:`<span class="jp">${esc(p.e)}</span>`});
-  return mc({id:`gp:${i}:mp`,tag:'文型 · ¿qué patrón es?',prompt:`<div class="pmean">${esc(p.m)}</div>`,sub:'¿Con qué patrón se expresa?',correct:esc(p.p),wrong:sample(others,3).map(x=>esc(x.p)),explain:`<span class="jp">${esc(p.e)}</span>`});}
+  if(d==='pm')return mc({id:`gp:${i}:pm`,tag:'文型 · ¿qué significa?',prompt:`<div class="pword" style="font-size:30px">${fu(p.p)}</div>`,sub:'¿Qué significa este patrón?',correct:fu(p.m),wrong:sample(others,3).map(x=>fu(x.m)),explain:`<span class="jp">${fu(p.e)}</span>`});
+  return mc({id:`gp:${i}:mp`,tag:'文型 · ¿qué patrón es?',prompt:`<div class="pmean">${fu(p.m)}</div>`,sub:'¿Con qué patrón se expresa?',correct:fu(p.p),wrong:sample(others,3).map(x=>fu(x.p)),explain:`<span class="jp">${fu(p.e)}</span>`});}
 function keigoQ(i,d){const k=KEIGO[i];const c=d==='s'?k[1]:k[2];
   const pool=uniq(KEIGO.flatMap(x=>[x[1],x[2]])).filter(x=>x!=='—'&&x!==c);
   const other=d==='s'?k[2]:k[1];
   const wrong=(other!=='—'&&other!==c?[other]:[]).concat(shuffle(pool));
-  return mc({id:`kg:${i}:${d}`,tag:'敬語 · keigo',prompt:`<div class="pword">${k[0]}</div><div class="pmeta">${esc(k[3])}</div>`,sub:`¿Cuál es su forma <b>${d==='s'?'respetuosa (尊敬語)':'humilde (謙譲語)'}</b>?`,correct:c,wrong,explain:`${k[0]} → 尊敬語: <b>${k[1]}</b> · 謙譲語: <b>${k[2]}</b><br>Regla general: 尊敬語 = お + radical + になる · 謙譲語 = お + radical + する.`});}
+  return mc({id:`kg:${i}:${d}`,tag:'敬語 · keigo',prompt:`<div class="pword">${fu(k[0])}</div><div class="pmeta">${esc(k[3])}</div>`,sub:`¿Cuál es su forma <b>${d==='s'?'respetuosa (尊敬語)':'humilde (謙譲語)'}</b>?`,correct:fu(c),wrong:wrong.map(x=>fu(x)),explain:`${fu(k[0])} → ${fu('尊敬語')}: <b>${fu(k[1])}</b> · ${fu('謙譲語')}: <b>${fu(k[2])}</b><br>${fu('Regla general: 尊敬語 = お + radical + になる · 謙譲語 = お + radical + する.')}`});}
 function readQ(p,q){const P=RD[p],Q=P.qs[q];
   return mc({id:`r:${p}:${q}`,tag:`読解 · ${P.t}`,passage:P,prompt:`<div class="psent">${esc(Q[0])}</div>`,sub:`Pregunta ${q+1} de ${P.qs.length}`,correct:Q[1],wrong:Q.slice(2),explain:'Vuelve a leer el texto si dudas: la respuesta está en él.'});}
 
@@ -2289,9 +2358,9 @@ function matchItem(kind){
     case 'kon':{const ks=pickDistinct(pickW(KR(),12,k=>`k:${k.k}:o`),5,k=>k.on.join('、'));return {type:'match',tag:'Une kanji y onyomi',lk:true,pairs:ks.map(k=>({l:k.k,r:k.on.join('、'),id:`k:${k.k}:o`}))};}
     case 'vmean':{const vs=pickDistinct(pickW(V,12,v=>`v:${v.w}:je`),5,v=>v.m);return {type:'match',tag:'Une palabra y significado',pairs:vs.map(v=>({l:ruby(v.w,v.r),r:esc(v.m),id:`v:${v.w}:je`}))};}
     case 'vread':{const vs=pickDistinct(pickW(V.filter(v=>hasKanji(v.w)),12,v=>`v:${v.w}:r`),5,v=>v.r);return {type:'match',tag:'Une palabra y lectura',pairs:vs.map(v=>({l:v.w,r:v.r,id:`v:${v.w}:r`}))};}
-    case 'gpat':{let src=PAT.map((p,i)=>({p,i})).filter(x=>inT(PATT[x.i]));if(src.length<2)src=PAT.map((p,i)=>({p,i}));const ps=pickDistinct(src,5,x=>x.p.m);return {type:'match',tag:'Une patrón y significado',pairs:ps.map(x=>({l:esc(x.p.p),r:esc(x.p.m),id:`gp:${x.i}:pm`}))};}
-    case 'keigo':{const ks=pickDistinct(KEIGO.map((k,i)=>({k,i})).filter(x=>x.k[1]!=='—'),5,x=>x.k[1]);return {type:'match',tag:'Une el verbo con su 尊敬語',pairs:ks.map(x=>({l:x.k[0],r:x.k[1],id:`kg:${x.i}:s`}))};}
-    case 'gte':{const vs=sample(CONJV,5);return {type:'match',tag:'Une el verbo con su forma て',pairs:vs.map(v=>({l:ruby(v.w,v.r),r:conj(v.w,v.c,'te'),id:`c:${v.w}:te`}))};}
+    case 'gpat':{let src=PAT.map((p,i)=>({p,i})).filter(x=>inT(PATT[x.i]));if(src.length<2)src=PAT.map((p,i)=>({p,i}));const ps=pickDistinct(src,5,x=>x.p.m);return {type:'match',tag:'Une patrón y significado',pairs:ps.map(x=>({l:fu(x.p.p),r:fu(x.p.m),id:`gp:${x.i}:pm`}))};}
+    case 'keigo':{const ks=pickDistinct(KEIGO.map((k,i)=>({k,i})).filter(x=>x.k[1]!=='—'),5,x=>x.k[1]);return {type:'match',tag:'Une el verbo con su 尊敬語',pairs:ks.map(x=>({l:fu(x.k[0]),r:fu(x.k[1]),id:`kg:${x.i}:s`}))};}
+    case 'gte':{const vs=sample(CONJV,5);return {type:'match',tag:'Une el verbo con su forma て',pairs:vs.map(v=>({l:wh(v),r:wh(v,conj(v.w,v.c,'te')),id:`c:${v.w}:te`}))};}
   }
 }
 function readingItems(n){
@@ -2480,8 +2549,9 @@ function renderOrder(it,qb){
   const all=it.toks.concat(it.extra||[]),need=it.toks.length,target=it.toks.join('');
   const perm=shuffle(all.map((_,i)=>i));let placed=[];
   const draw=()=>{
-    const slots=placed.map((p,j)=>`<button class="pc" data-r="${j}">${esc(all[p])}</button>`).join('')+'<span class="pc empty">・</span>'.repeat(Math.max(0,need-placed.length));
-    qb.innerHTML=`<div class="line">${esc(it.pre)}${slots}${esc(it.post)}</div><div class="pool">${perm.filter(i=>!placed.includes(i)).map(i=>`<button class="pc" data-p="${i}">${esc(all[i])}</button>`).join('')||'<span class="sub">Todas colocadas.</span>'}</div><div class="row"><button class="btn ghost" id="clr">Borrar</button><button class="btn primary" id="chk" ${placed.length!==need?'disabled':''}>Comprobar</button></div>`;
+    const H=i=>it.tokH&&it.tokH[i]!==undefined?it.tokH[i]:esc(all[i]);
+    const slots=placed.map((p,j)=>`<button class="pc" data-r="${j}">${H(p)}</button>`).join('')+'<span class="pc empty">・</span>'.repeat(Math.max(0,need-placed.length));
+    qb.innerHTML=`<div class="line">${it.preH!==undefined?it.preH:esc(it.pre)}${slots}${it.postH!==undefined?it.postH:esc(it.post)}</div><div class="pool">${perm.filter(i=>!placed.includes(i)).map(i=>`<button class="pc" data-p="${i}">${H(i)}</button>`).join('')||'<span class="sub">Todas colocadas.</span>'}</div><div class="row"><button class="btn ghost" id="clr">Borrar</button><button class="btn primary" id="chk" ${placed.length!==need?'disabled':''}>Comprobar</button></div>`;
     if(RUN.locked){qb.querySelectorAll('button').forEach(b=>b.disabled=true);return;}
     qb.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{if(placed.length<need){placed.push(+b.dataset.p);draw();}});
     qb.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{placed.splice(+b.dataset.r,1);draw();});

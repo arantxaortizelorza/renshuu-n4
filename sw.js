@@ -1,6 +1,6 @@
 // Guarda la app en el móvil para que funcione sin conexión.
 // Al publicar una versión nueva, cambia VERSION para que los móviles la descarguen.
-const VERSION = 'renshu-n4-v1';
+const VERSION = 'renshu-n4-v2';
 const SHELL = [
   './',
   './index.html',
